@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WOWNOW 系统全景蓝图 (完整版)</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root{
+      --bg:#050910;
+      --panel:#101826;
+      --stroke:#2a3b57;
+      --text:#e6edf7;
+      --muted:#94a3b8;
+      
+      --front: #3b82f6; /* Blue */
+      --back: #10b981;  /* Emerald */
+      --mid: #f59e0b;   /* Amber */
+      
+      /* Line Colors */
+      --arrow-default: #64748b; /* Grey: Triggers */
+      --arrow-facts: #8b5cf6;   /* Purple: Facts Upload */
+      --arrow-svc: #38bdf8;     /* Sky: API Read */
+      --arrow-exec: #ef4444;    /* Red: Financial Exec */
+    }
+
+    *{box-sizing:border-box; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);}
+    
+    body{
+      margin:0;
+      background: #020408;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(59,130,246,0.1) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(16,185,129,0.1) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(245,158,11,0.05) 0px, transparent 50%);
+      color:var(--text);
+      font-family: "PingFang SC", system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+
+    .wrap{
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 30px 20px 0;
+    }
+
+    /* Header & Legend */
+    .header{
+      display:flex;
+      flex-wrap: wrap;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom: 24px;
+      gap: 20px;
+    }
+    h1{ margin:0; font-size: 24px; font-weight: 700; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+    
+    .legend{ display:flex; gap:12px; flex-wrap:wrap; font-size: 12px; color: var(--muted); background: rgba(255,255,255,0.03); padding: 8px 16px; border-radius: 99px; border:1px solid rgba(255,255,255,0.05);}
+    .l-item{ display:flex; align-items:center; gap:6px; }
+    .dot{ width:8px; height:8px; border-radius:50%; }
+    .line-icon{ width:24px; height:2px; display:inline-block; position:relative;}
+
+    /* Canvas Container */
+    .canvas-container{
+      position:relative;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(13, 20, 35, 0.4);
+      border-radius: 20px;
+      padding: 30px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.02) inset;
+      margin-bottom: 40px;
+    }
+
+    /* SVG Layer */
+    #svg-layer{
+      position:absolute;
+      top:0; left:0; width:100%; height:100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+    
+    /* Flow Animations */
+    @keyframes flow { to { stroke-dashoffset: -20; } }
+    .conn-line { fill: none; stroke-opacity: 0.5; transition: stroke-opacity 0.3s, stroke 0.3s, stroke-width 0.3s; }
+    .conn-line.anim { animation: flow 1s linear infinite; }
+    
+    /* Layout Grid */
+    .layers{ position:relative; z-index: 2; display: flex; flex-direction: column; gap: 36px; }
+    
+    .layer-box{
+      position:relative;
+      border: 1px dashed rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 20px 24px;
+      background: rgba(0,0,0,0.2);
+    }
+    .layer-label{
+      position: absolute;
+      top: -14px; left: 24px;
+      background: #0b111c;
+      padding: 2px 12px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      display:flex; align-items:center; gap:8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .grid-container{ display: grid; gap: 16px; }
+    .grid-4{ grid-template-columns: repeat(4, 1fr); }
+    .grid-5{ grid-template-columns: repeat(5, 1fr); }
+    .grid-2{ grid-template-columns: repeat(2, 1fr); }
+
+    /* Nodes / Cards */
+    .card{
+      position:relative;
+      background: linear-gradient(180deg, rgba(30,41,59,0.7), rgba(15,23,42,0.8));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 14px 16px;
+      cursor: default;
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.3s;
+      min-height: 100px;
+      display:flex; flex-direction:column;
+    }
+    .card:hover{
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px -8px rgba(0,0,0,0.6);
+      border-color: rgba(255,255,255,0.25);
+      z-index: 10;
+      background: linear-gradient(180deg, rgba(40,53,74,0.9), rgba(15,23,42,0.95));
+    }
+
+    /* Color Accents */
+    .card.front { border-top: 3px solid var(--front); }
+    .card.back { border-top: 3px solid var(--back); }
+    .card.mid { border-top: 3px solid var(--mid); }
+
+    /* Node Content */
+    .card-header{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 8px; }
+    .card-icon{ padding: 6px; border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--text); width:32px; height:32px; }
+    .card.front .card-icon { color: var(--front); background: rgba(59,130,246,0.15); }
+    .card.back .card-icon { color: var(--back); background: rgba(16,185,129,0.15); }
+    .card.mid .card-icon { color: var(--mid); background: rgba(245,158,11,0.15); }
+
+    .role-badge{ font-size: 10px; padding: 2px 8px; border-radius: 4px; background: rgba(255,255,255,0.08); color: var(--muted); border: 1px solid rgba(255,255,255,0.05); font-weight:500;}
+    
+    .card h3{ margin:0 0 6px 0; font-size: 14px; font-weight: 700; color: #fff; letter-spacing: 0.2px;}
+    .card p{ margin:0; font-size: 12px; color: var(--muted); line-height: 1.45; flex-grow: 1;}
+
+    /* Documentation Section */
+    .doc-section {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .doc-col h2 { font-size: 18px; margin-bottom: 16px; display:flex; align-items:center; gap:8px; }
+    .doc-col h2 svg { width: 20px; height: 20px; color: var(--mid); }
+    
+    .info-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .info-card h4 { margin: 0 0 8px 0; font-size: 14px; color: #fff; }
+    .info-card ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .info-card li { margin-bottom: 4px; }
+    
+    .flow-step {
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .step-num { 
+      background: rgba(255,255,255,0.1); 
+      width: 24px; height: 24px; 
+      border-radius: 50%; 
+      display:flex; align-items:center; justify-content:center;
+      font-weight: 700; color: #fff; font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    /* Focus Mode Logic */
+    body.has-focus .card, body.has-focus .conn-line, body.has-focus marker path { opacity: 0.1; transition: opacity 0.3s; }
+    body.has-focus .card.focused, body.has-focus .card.related, body.has-focus .conn-line.focused { opacity: 1 !important; stroke-opacity: 1 !important; }
+    body.has-focus .conn-line.focused { stroke-width: 2.5px; filter: drop-shadow(0 0 4px currentColor); }
+    
+    /* Responsive */
+    @media (max-width: 1200px) { 
+      .grid-4, .grid-5 { grid-template-columns: repeat(3, 1fr); } 
+      .doc-section { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 900px) { .grid-4, .grid-5 { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .grid-4, .grid-5, .grid-2 { grid-template-columns: 1fr; } }
+
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="header">
+    <h1>WOWNOW 系统全景蓝图</h1>
+    <div class="legend">
+      <div class="l-item"><span class="dot" style="background:var(--front)"></span>前台</div>
+      <div class="l-item"><span class="dot" style="background:var(--back)"></span>后台</div>
+      <div class="l-item"><span class="dot" style="background:var(--mid)"></span>中台</div>
+      <div style="width:1px; height:12px; background:rgba(255,255,255,0.2); margin:0 8px;"></div>
+      <div class="l-item"><span class="line-icon" style="background:var(--arrow-default)"></span>触发</div>
+      <div class="l-item"><span class="line-icon" style="border-top:2px dashed var(--arrow-svc); height:0;"></span>数据服务</div>
+      <div class="l-item"><span class="line-icon" style="background:var(--arrow-facts); border-top:2px dashed var(--arrow-facts); height:0;"></span>事实事件(Facts)</div>
+      <div class="l-item"><span class="line-icon" style="background:var(--arrow-exec)"></span>资金执行</div>
+    </div>
+  </div>
+
+  <div class="canvas-container">
+    <svg id="svg-layer"></svg>
+
+    <div class="layers">
+      
+      <div class="layer-box" style="border-color: rgba(59,130,246,0.25);">
+        <div class="layer-label" style="color:var(--front); border-color:var(--front)">
+          <i data-lucide="layout"></i> 前台层 (Front)
+        </div>
+        <div class="grid-container grid-5">
+          <div class="card front" id="front_user">
+            <div class="card-header"><i data-lucide="smartphone" class="card-icon"></i><span class="role-badge">C端</span></div>
+            <h3>用户端 (App/小程序)</h3>
+            <p>下单 · 内容生成 · 支付 · 开票申请</p>
+          </div>
+          <div class="card front" id="front_dealer">
+            <div class="card-header"><i data-lucide="store" class="card-icon"></i><span class="role-badge">B端</span></div>
+            <h3>经销商运营台</h3>
+            <p>点位运营 · 订单查看 · 结算查看</p>
+          </div>
+          <div class="card front" id="front_ops">
+            <div class="card-header"><i data-lucide="wrench" class="card-icon"></i><span class="role-badge">运营</span></div>
+            <h3>运维工作台</h3>
+            <p>告警处理 · 巡检 · 工单执行</p>
+          </div>
+          <div class="card front" id="front_cs">
+            <div class="card-header"><i data-lucide="headset" class="card-icon"></i><span class="role-badge">新增</span></div>
+            <h3>客服工作台</h3>
+            <p>客诉处理 · 订单查询 · 咨询应答</p>
+          </div>
+          <div class="card front" id="front_bi">
+            <div class="card-header"><i data-lucide="bar-chart-2" class="card-icon"></i><span class="role-badge">只读</span></div>
+            <h3>管理看板 Dashboard</h3>
+            <p>KPI 监控 (口径来自中台)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="layer-box" style="border-color: rgba(16,185,129,0.25);">
+        <div class="layer-label" style="color:var(--back); border-color:var(--back)">
+          <i data-lucide="server"></i> 后台层 (Backend)
+        </div>
+        <div class="grid-container grid-4">
+          <div class="card back" id="be_order">
+            <div class="card-header"><i data-lucide="shopping-bag" class="card-icon"></i></div>
+            <h3>订单后台</h3>
+            <p>订单创建 · 状态流转</p>
+          </div>
+          <div class="card back" id="be_pay">
+            <div class="card-header"><i data-lucide="credit-card" class="card-icon"></i></div>
+            <h3>支付后台</h3>
+            <p>收款 · 退款 · 对账</p>
+          </div>
+          <div class="card back" id="be_iam">
+            <div class="card-header"><i data-lucide="shield-check" class="card-icon"></i><span class="role-badge">用户管理</span></div>
+            <h3>用户中心 (IAM)</h3>
+            <p>注册登录 · 身份认证 · 权限管理</p>
+          </div>
+          <div class="card back" id="be_mes">
+            <div class="card-header"><i data-lucide="cpu" class="card-icon"></i></div>
+            <h3>NFC 产线 (MES)</h3>
+            <p>写卡 · 加工执行</p>
+          </div>
+          
+          <div class="card back" id="be_trace">
+            <div class="card-header"><i data-lucide="qr-code" class="card-icon"></i></div>
+            <h3>NFC Trace 溯源</h3>
+            <p>基膜/Tag 流转追溯</p>
+          </div>
+          <div class="card back" id="be_cms">
+            <div class="card-header"><i data-lucide="image" class="card-icon"></i></div>
+            <h3>NFC CMS 内容后台</h3>
+            <p>内容管理 · 绑定 · 版本</p>
+          </div>
+          <div class="card back" id="be_device">
+            <div class="card-header"><i data-lucide="wifi" class="card-icon"></i></div>
+            <h3>设备后台</h3>
+            <p>设备状态 · 点位归属 · 日志</p>
+          </div>
+          <div class="card back" id="be_ops_back">
+            <div class="card-header"><i data-lucide="clipboard-list" class="card-icon"></i></div>
+            <h3>运维后台 (EAM/工单)</h3>
+            <p>告警 · 工单 · 备件 · 资产</p>
+          </div>
+
+          <div class="card back" id="be_erp">
+            <div class="card-header"><i data-lucide="package" class="card-icon"></i></div>
+            <h3>ERP 供应链</h3>
+            <p>采购 · 库存 · 耗材 · BOM · 计划</p>
+          </div>
+          <div class="card back" id="be_crm">
+            <div class="card-header"><i data-lucide="users" class="card-icon"></i></div>
+            <h3>CRM 后台</h3>
+            <p>客户档案 · 经销商合同 · 权益</p>
+          </div>
+          <div class="card back" id="be_fin">
+            <div class="card-header"><i data-lucide="landmark" class="card-icon"></i></div>
+            <h3>财务执行系统</h3>
+            <p>应收应付 · 付款 · 凭证 (执行)</p>
+          </div>
+          <div class="card back" id="be_tax">
+            <div class="card-header"><i data-lucide="file-text" class="card-icon"></i></div>
+            <h3>税务/发票系统</h3>
+            <p>开票 · 税控 · 申报 (执行)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="layer-box" style="border-color: rgba(245,158,11,0.25);">
+        <div class="layer-label" style="color:var(--mid); border-color:var(--mid)">
+          <i data-lucide="layers"></i> 中台层 (Middle)
+        </div>
+        <div class="grid-container grid-2">
+          <div class="card mid" id="mid_data">
+            <div class="card-header"><i data-lucide="database" class="card-icon"></i><span class="role-badge">事实中台</span></div>
+            <h3>数据中台</h3>
+            <p>
+              <strong>核心职责</strong>: 主数据 · 事实表 · 指标口径 · 审计追溯 · API<br/>
+              <strong style="color:var(--mid)">关键输出</strong>: 唯一事实来源 (SSoT) · 统一指标
+            </p>
+          </div>
+          <div class="card mid" id="mid_settle">
+            <div class="card-header"><i data-lucide="scale" class="card-icon"></i><span class="role-badge">规则中台</span></div>
+            <h3>分账中台</h3>
+            <p>
+              <strong>核心职责</strong>: 分账规则 · 计算 · 状态 · 异常裁决<br/>
+              <strong style="color:var(--mid)">关键输出</strong>: 结算清单 · 应收应付
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="doc-section">
+    <div class="doc-col">
+      <h2><i data-lucide="book-open"></i> 层级任务与核心职责</h2>
+      
+      <div class="info-card">
+        <h4 style="color:var(--front)">1. 前台层 (Front): 触达与交互</h4>
+        <ul>
+          <li><strong>职责</strong>: 负责与人（用户/员工/经销商）进行交互，接收指令并展示结果。</li>
+          <li><strong>特点</strong>: "只负责操作，不负责裁决"。所有复杂逻辑下沉至后台或中台。</li>
+          <li><strong>新增</strong>: <strong>客服工作台</strong> 作为售后服务的统一入口；<strong>用户管理</strong> 包含C端App注册与B端账号管理。</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <h4 style="color:var(--back)">2. 后台层 (Backend): 业务执行单元</h4>
+        <ul>
+          <li><strong>职责</strong>: 具体的业务逻辑执行者（如：生成一张订单、扣减一次库存、写一张NFC卡）。</li>
+          <li><strong>特点</strong>: "把事做完，上报事实"。每个后台系统专注于特定领域（Domain），产生不可篡改的原子事实数据。</li>
+          <li><strong>用户管理</strong>: 由 <strong>用户中心 (IAM)</strong> 负责身份/权限，<strong>CRM</strong> 负责商业关系/合同。</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <h4 style="color:var(--mid)">3. 中台层 (Middle): 裁决与数据资产</h4>
+        <ul>
+          <li><strong>数据中台</strong>: 唯一的"事实来源" (SSoT)。汇聚所有后台的流水，清洗为标准数据，并对外提供查询 API。</li>
+          <li><strong>分账中台</strong>: 唯一的"规则裁决者"。基于数据中台的事实，计算该给谁分多少钱，并指令财务系统打款。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="doc-col">
+      <h2><i data-lucide="git-merge"></i> 关键流转总结</h2>
+      <div class="info-card">
+        <div class="flow-step">
+          <div class="step-num">1</div>
+          <div><strong>触发 (前台 -> 后台)</strong><br>用户下单、客服发起退款、运维提交工单。</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">2</div>
+          <div><strong>执行与上报 (后台 -> 数据中台)</strong><br>订单系统生成订单，支付系统扣款。完成后，作为<span style="color:var(--arrow-facts)">事实(Facts)</span>异步上报给数据中台。</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">3</div>
+          <div><strong>裁决 (数据中台 <-> 分账中台)</strong><br>中台基于上报的事实，计算分账规则，生成应收应付清单。</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">4</div>
+          <div><strong>资金执行 (中台 -> 财务系统)</strong><br>分账中台指令财务执行系统进行打款/开票。</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">5</div>
+          <div><strong>反馈 (API 服务)</strong><br>前台通过调用数据中台 API 读取最终状态与报表。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Initialize Icons
+  lucide.createIcons();
+
+  const svg = document.getElementById('svg-layer');
+  const cards = document.querySelectorAll('.card');
+  const body = document.body;
+
+  // Connection Data
+  const connections = [
+    // --- Front -> Backend Triggers ---
+    { from: 'front_user', to: 'be_order', type: 'default' },   
+    { from: 'front_user', to: 'be_pay', type: 'default' },     
+    { from: 'front_user', to: 'be_iam', type: 'default' },     // Login Trigger
+    { from: 'front_dealer', to: 'be_order', type: 'default' }, 
+    { from: 'front_ops', to: 'be_ops_back', type: 'default' }, 
+    
+    // CS Triggers
+    { from: 'front_cs', to: 'be_order', type: 'default' },     // Check order/Refund
+    { from: 'front_cs', to: 'be_crm', type: 'default' },       // Check User Info
+
+    // --- Backend -> Data Platform (Facts Upload) ---
+    { from: 'be_order', to: 'mid_data', type: 'facts' },
+    { from: 'be_pay', to: 'mid_data', type: 'facts' },
+    { from: 'be_iam', to: 'mid_data', type: 'facts' },      // Login/User facts
+    { from: 'be_mes', to: 'mid_data', type: 'facts' },      
+    { from: 'be_trace', to: 'mid_data', type: 'facts' },    
+    { from: 'be_cms', to: 'mid_data', type: 'facts' },      
+    { from: 'be_device', to: 'mid_data', type: 'facts' },   
+    { from: 'be_ops_back', to: 'mid_data', type: 'facts' }, 
+    { from: 'be_erp', to: 'mid_data', type: 'facts' },      
+    { from: 'be_crm', to: 'mid_data', type: 'facts' },      
+    
+    // --- Execution Feedback (ReadOnly) ---
+    { from: 'be_fin', to: 'mid_data', type: 'facts' },      
+    { from: 'be_tax', to: 'mid_data', type: 'facts' },      
+
+    // --- Middle Inter-connection ---
+    { from: 'mid_data', to: 'mid_settle', type: 'default' }, 
+
+    // --- Settlement -> Execution ---
+    { from: 'mid_settle', to: 'be_fin', type: 'exec' },      
+
+    // --- Data Service (API) Outputs ---
+    { from: 'mid_data', to: 'front_bi', type: 'service' },     
+    { from: 'mid_settle', to: 'front_dealer', type: 'service' }, 
+    { from: 'mid_data', to: 'be_order', type: 'service' },
+    { from: 'mid_data', to: 'be_ops_back', type: 'service' },
+    { from: 'mid_data', to: 'front_cs', type: 'service' }, // CS reads data
+  ];
+
+  // Helper: Get element center/anchor
+  function getAnchor(el) {
+    const rect = el.getBoundingClientRect();
+    const container = document.querySelector('.canvas-container').getBoundingClientRect();
+    return {
+      x: rect.left - container.left + rect.width / 2,
+      y: rect.top - container.top + rect.height / 2,
+      top: rect.top - container.top,
+      bottom: rect.bottom - container.top,
+      w: rect.width,
+      h: rect.height
+    };
+  }
+
+  // Draw Lines
+  function draw() {
+    svg.innerHTML = `
+      <defs>
+        <marker id="m-default" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L10,3 L0,6 Z" fill="var(--arrow-default)" /></marker>
+        <marker id="m-facts" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L10,3 L0,6 Z" fill="var(--arrow-facts)" /></marker>
+        <marker id="m-svc" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L10,3 L0,6 Z" fill="var(--arrow-svc)" /></marker>
+        <marker id="m-exec" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L10,3 L0,6 Z" fill="var(--arrow-exec)" /></marker>
+      </defs>
+    `;
+
+    connections.forEach((conn) => {
+      const el1 = document.getElementById(conn.from);
+      const el2 = document.getElementById(conn.to);
+      if(!el1 || !el2) return;
+
+      const a = getAnchor(el1);
+      const b = getAnchor(el2);
+
+      let color = 'var(--arrow-default)';
+      let marker = 'url(#m-default)';
+      let dash = 'none';
+      let width = 2;
+      let animClass = '';
+
+      if (conn.type === 'facts') { 
+        color = 'var(--arrow-facts)'; marker = 'url(#m-facts)'; 
+        animClass = 'anim'; dash = '4 4';
+      }
+      else if (conn.type === 'service') { 
+        color = 'var(--arrow-svc)'; marker = 'url(#m-svc)'; 
+        dash = '6 4'; animClass = 'anim'; 
+      }
+      else if (conn.type === 'exec') { 
+        color = 'var(--arrow-exec)'; marker = 'url(#m-exec)'; 
+        width = 2.5;
+      }
+
+      // Smart Anchor Logic
+      let x1 = a.x, y1 = a.y, x2 = b.x, y2 = b.y;
+      
+      // Vertical flow preference
+      if(Math.abs(b.y - a.y) > Math.abs(b.x - a.x)){
+        if(b.y > a.y) { y1 = a.bottom; y2 = b.top; }
+        else { y1 = a.top; y2 = b.bottom; }
+      } else {
+        if(b.x > a.x) { x1 = a.x + a.w/2; x2 = b.x - b.w/2; }
+        else { x1 = a.x - a.w/2; x2 = b.x + b.w/2; }
+      }
+
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      const dy = Math.abs(y2 - y1);
+      const cpY = dy * 0.5; 
+      const d = `M ${x1} ${y1} C ${x1} ${y1 + (y2>y1?cpY:-cpY)}, ${x2} ${y2 + (y2>y1?-cpY:cpY)}, ${x2} ${y2}`;
+
+      path.setAttribute('d', d);
+      path.setAttribute('stroke', color);
+      path.setAttribute('stroke-width', width);
+      path.setAttribute('stroke-dasharray', dash);
+      path.setAttribute('marker-end', marker);
+      path.setAttribute('class', `conn-line ${animClass}`);
+      path.setAttribute('data-from', conn.from);
+      path.setAttribute('data-to', conn.to);
+
+      svg.appendChild(path);
+    });
+  }
+
+  // Interactive Highlighting
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      body.classList.add('has-focus');
+      card.classList.add('focused');
+
+      const id = card.id;
+      const lines = document.querySelectorAll('.conn-line');
+      
+      lines.forEach(line => {
+        const from = line.getAttribute('data-from');
+        const to = line.getAttribute('data-to');
+        
+        if(from === id || to === id) {
+          line.classList.add('focused');
+          const targetId = (from === id) ? to : from;
+          document.getElementById(targetId).classList.add('related');
+        }
+      });
+    });
+
+    card.addEventListener('mouseleave', () => {
+      body.classList.remove('has-focus');
+      cards.forEach(c => c.classList.remove('focused', 'related'));
+      document.querySelectorAll('.conn-line').forEach(l => l.classList.remove('focused'));
+    });
+  });
+
+  window.addEventListener('load', draw);
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(draw, 100);
+  });
+
+</script>
+</body>
+</html>
