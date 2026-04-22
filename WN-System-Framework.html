@@ -267,7 +267,7 @@
         <div class="layer-label" style="color:var(--back); border-color:var(--back)">
           <i data-lucide="server"></i> 后台层 (Backend)
         </div>
-        <div class="grid-container grid-4">
+        <div class="grid-container grid-5">
           <div class="card back" id="be_order">
             <div class="card-header"><i data-lucide="shopping-bag" class="card-icon"></i></div>
             <h3>订单后台</h3>
@@ -283,6 +283,32 @@
             <h3>用户中心 (IAM)</h3>
             <p>注册登录 · 身份认证 · 权限管理</p>
           </div>
+          <div class="card back" id="be_crm">
+            <div class="card-header"><i data-lucide="users" class="card-icon"></i></div>
+            <h3>CRM 后台</h3>
+            <p>客户档案 · 经销商合同 · 权益</p>
+          </div>
+          <div class="card back" id="be_cdp">
+            <div class="card-header"><i data-lucide="database" class="card-icon"></i></div>
+            <h3>用户数据中心 (CDP)</h3>
+            <p>行为采集 · 标签规则 · 用户分群 · 洞察分析</p>
+          </div>
+          
+          <div class="card back" id="be_ma">
+            <div class="card-header"><i data-lucide="megaphone" class="card-icon"></i></div>
+            <h3>市场营销管理中心 (MA)</h3>
+            <p>优惠券 · 推广活动 · 资源分发 · 效果监控</p>
+          </div>
+          <div class="card back" id="be_cm">
+            <div class="card-header"><i data-lucide="palette" class="card-icon"></i></div>
+            <h3>内容管理中心 (CM)</h3>
+            <p>AI 模板 · 专题/风格 · 内容捆绑 · 数据监控</p>
+          </div>
+          <div class="card back" id="be_cms">
+            <div class="card-header"><i data-lucide="image" class="card-icon"></i></div>
+            <h3>NFC CMS 内容后台</h3>
+            <p>内容管理 · 绑定 · 版本</p>
+          </div>
           <div class="card back" id="be_mes">
             <div class="card-header"><i data-lucide="cpu" class="card-icon"></i></div>
             <h3>NFC 产线 (MES)</h3>
@@ -293,11 +319,6 @@
             <div class="card-header"><i data-lucide="qr-code" class="card-icon"></i></div>
             <h3>NFC Trace 溯源</h3>
             <p>基膜/Tag 流转追溯</p>
-          </div>
-          <div class="card back" id="be_cms">
-            <div class="card-header"><i data-lucide="image" class="card-icon"></i></div>
-            <h3>NFC CMS 内容后台</h3>
-            <p>内容管理 · 绑定 · 版本</p>
           </div>
           <div class="card back" id="be_device">
             <div class="card-header"><i data-lucide="wifi" class="card-icon"></i></div>
@@ -314,11 +335,6 @@
             <div class="card-header"><i data-lucide="package" class="card-icon"></i></div>
             <h3>ERP 供应链</h3>
             <p>采购 · 库存 · 耗材 · BOM · 计划</p>
-          </div>
-          <div class="card back" id="be_crm">
-            <div class="card-header"><i data-lucide="users" class="card-icon"></i></div>
-            <h3>CRM 后台</h3>
-            <p>客户档案 · 经销商合同 · 权益</p>
           </div>
           <div class="card back" id="be_fin">
             <div class="card-header"><i data-lucide="landmark" class="card-icon"></i></div>
@@ -379,6 +395,8 @@
           <li><strong>职责</strong>: 具体的业务逻辑执行者（如：生成一张订单、扣减一次库存、写一张NFC卡）。</li>
           <li><strong>特点</strong>: "把事做完，上报事实"。每个后台系统专注于特定领域（Domain），产生不可篡改的原子事实数据。</li>
           <li><strong>用户管理</strong>: 由 <strong>用户中心 (IAM)</strong> 负责身份/权限，<strong>CRM</strong> 负责商业关系/合同。</li>
+          <li><strong>经营增长域</strong>: <strong>用户数据中心 (CDP)</strong> 负责行为标签与人群洞察，<strong>市场营销管理中心 (MA)</strong> 负责券/活动投放闭环，<strong>内容管理中心 (CM)</strong> 负责 AI 模板与内容资产管理。</li>
+          <li><strong>口径约束</strong>: CDP、MA、CM 负责执行与运营动作，其结果仍统一回流 <strong>数据中台</strong>，避免形成多套统计口径。</li>
         </ul>
       </div>
 
@@ -396,11 +414,11 @@
       <div class="info-card">
         <div class="flow-step">
           <div class="step-num">1</div>
-          <div><strong>触发 (前台 -> 后台)</strong><br>用户下单、客服发起退款、运维提交工单。</div>
+          <div><strong>触发 (前台 -> 后台)</strong><br>用户下单、领券/参与活动、调用内容模板，客服发起退款、运维提交工单。</div>
         </div>
         <div class="flow-step">
           <div class="step-num">2</div>
-          <div><strong>执行与上报 (后台 -> 数据中台)</strong><br>订单系统生成订单，支付系统扣款。完成后，作为<span style="color:var(--arrow-facts)">事实(Facts)</span>异步上报给数据中台。</div>
+          <div><strong>执行与上报 (后台 -> 数据中台)</strong><br>订单系统生成订单，支付系统扣款，营销系统发券，内容中心记录模板调用，CDP 沉淀行为标签。完成后，作为<span style="color:var(--arrow-facts)">事实(Facts)</span>异步上报给数据中台。</div>
         </div>
         <div class="flow-step">
           <div class="step-num">3</div>
@@ -434,7 +452,11 @@
     { from: 'front_user', to: 'be_order', type: 'default' },   
     { from: 'front_user', to: 'be_pay', type: 'default' },     
     { from: 'front_user', to: 'be_iam', type: 'default' },     // Login Trigger
+    { from: 'front_user', to: 'be_cdp', type: 'default' },     // Behavior Capture
+    { from: 'front_user', to: 'be_ma', type: 'default' },      // Promotion Trigger
+    { from: 'front_user', to: 'be_cm', type: 'default' },      // Content Template Trigger
     { from: 'front_dealer', to: 'be_order', type: 'default' }, 
+    { from: 'front_dealer', to: 'be_ma', type: 'default' },    // Campaign Operation
     { from: 'front_ops', to: 'be_ops_back', type: 'default' }, 
     
     // CS Triggers
@@ -445,6 +467,9 @@
     { from: 'be_order', to: 'mid_data', type: 'facts' },
     { from: 'be_pay', to: 'mid_data', type: 'facts' },
     { from: 'be_iam', to: 'mid_data', type: 'facts' },      // Login/User facts
+    { from: 'be_cdp', to: 'mid_data', type: 'facts' },      // User behavior/tag facts
+    { from: 'be_ma', to: 'mid_data', type: 'facts' },       // Campaign delivery facts
+    { from: 'be_cm', to: 'mid_data', type: 'facts' },       // Content/template facts
     { from: 'be_mes', to: 'mid_data', type: 'facts' },      
     { from: 'be_trace', to: 'mid_data', type: 'facts' },    
     { from: 'be_cms', to: 'mid_data', type: 'facts' },      
