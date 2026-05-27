@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WowNow 产品路线争议：差异化生态 vs 标品化同质竞争</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --bg: #050910;
+      --panel: #101826;
+      --stroke: #2a3b57;
+      --text: #e6edf7;
+      --muted: #94a3b8;
+      
+      /* 路线颜色 */
+      --eco: #3b82f6;      /* 生态路线 - 蓝色 */
+      --retail: #ef4444;   /* 零售路线 - 红色 */
+      --balance: #8b5cf6;  /* 平衡路线 - 紫色 */
+      --accent: #f59e0b;   /* 强调色 - 橙色 */
+      --success: #10b981;  /* 成功 - 绿色 */
+      
+      /* 渐变 */
+      --gradient-eco: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      --gradient-retail: linear-gradient(135deg, #ef4444, #f97316);
+      --gradient-balance: linear-gradient(135deg, #8b5cf6, #06b6d4);
+    }
+
+    * { box-sizing: border-box; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+    
+    body {
+      margin: 0;
+      background: #020408;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(59,130,246,0.1) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(239,68,68,0.08) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(139,92,246,0.06) 0px, transparent 50%);
+      color: var(--text);
+      font-family: "PingFang SC", system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+
+    .wrap {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 30px 20px 0;
+    }
+
+    /* 导航 */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(5, 9, 16, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 30px;
+    }
+    .nav-content {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 16px;
+      font-weight: 700;
+      background: var(--gradient-eco);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .nav-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid transparent;
+    }
+    .nav-link:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.1);
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 60px 20px 50px;
+      position: relative;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(239,68,68,0.15);
+      border: 1px solid rgba(239,68,68,0.3);
+      color: #fca5a5;
+      padding: 8px 16px;
+      border-radius: 99px;
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      margin: 0 0 16px;
+      font-size: 42px;
+      font-weight: 800;
+      background: linear-gradient(to right, #fff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+    .hero-subtitle {
+      font-size: 20px;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+    .hero-quote {
+      max-width: 800px;
+      margin: 0 auto 40px;
+      padding: 24px 32px;
+      background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.1));
+      border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 16px;
+      font-size: 18px;
+      line-height: 1.6;
+      color: #bfdbfe;
+      position: relative;
+    }
+    .hero-quote::before {
+      content: '"';
+      position: absolute;
+      top: 8px;
+      left: 16px;
+      font-size: 48px;
+      color: rgba(59,130,246,0.3);
+      font-family: Georgia, serif;
+      line-height: 1;
+    }
+    .hero-diagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+    .hero-box {
+      padding: 20px 28px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      min-width: 180px;
+    }
+    .hero-box.eco {
+      background: rgba(59,130,246,0.15);
+      border: 1px solid rgba(59,130,246,0.3);
+      color: #93c5fd;
+    }
+    .hero-box.retail {
+      background: rgba(239,68,68,0.15);
+      border: 1px solid rgba(239,68,68,0.3);
+      color: #fca5a5;
+    }
+    .hero-arrow {
+      font-size: 24px;
+      color: var(--muted);
+    }
+    .hero-fork {
+      background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(6,182,212,0.2));
+      border: 1px solid rgba(139,92,246,0.3);
+      color: #c4b5fd;
+      padding: 16px 24px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 50px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .section-header h2 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-header h2 svg {
+      width: 24px;
+      height: 24px;
+      color: var(--accent);
+    }
+    .section-desc {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    /* Cards */
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .card {
+      background: linear-gradient(180deg, rgba(30,41,59,0.7), rgba(15,23,42,0.8));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+    .card.eco::before { background: var(--gradient-eco); }
+    .card.retail::before { background: var(--gradient-retail); }
+    .card.balance::before { background: var(--gradient-balance); }
+    .card-header-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .card-icon-wrap {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card.eco .card-icon-wrap { background: rgba(59,130,246,0.15); color: #93c5fd; }
+    .card.retail .card-icon-wrap { background: rgba(239,68,68,0.15); color: #fca5a5; }
+    .card.balance .card-icon-wrap { background: rgba(139,92,246,0.15); color: #c4b5fd; }
+    .card h3 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 700;
+    }
+    .card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+    .card li { margin-bottom: 4px; }
+    .card-emphasis {
+      margin-top: 16px;
+      padding: 12px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 8px;
+      font-size: 13px;
+      color: #bfdbfe;
+      border-left: 3px solid var(--eco);
+    }
+
+    /* Compare Table */
+    .compare-table {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .compare-col {
+      background: linear-gradient(180deg, rgba(30,41,59,0.5), rgba(15,23,42,0.6));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 28px;
+      position: relative;
+    }
+    .compare-col.eco { border-top: 3px solid var(--eco); }
+    .compare-col.retail { border-top: 3px solid var(--retail); }
+    .compare-col h3 {
+      margin: 0 0 20px;
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .compare-col.eco h3 { color: #93c5fd; }
+    .compare-col.retail h3 { color: #fca5a5; }
+    .compare-col ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.9;
+    }
+    .compare-col li { margin-bottom: 6px; }
+    .compare-footer {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 20px;
+      background: rgba(139,92,246,0.08);
+      border: 1px solid rgba(139,92,246,0.2);
+      border-radius: 12px;
+      font-size: 15px;
+      color: #c4b5fd;
+      font-weight: 600;
+    }
+
+    /* Flow Diagram */
+    .flow-diagram {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    .flow-col {
+      background: rgba(0,0,0,0.2);
+      border-radius: 16px;
+      padding: 28px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .flow-col.eco { border-left: 4px solid var(--eco); }
+    .flow-col.retail { border-left: 4px solid var(--retail); }
+    .flow-col h3 {
+      margin: 0 0 20px;
+      font-size: 17px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .flow-col.eco h3 { color: #93c5fd; }
+    .flow-col.retail h3 { color: #fca5a5; }
+    .flow-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .flow-step .num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .flow-col.eco .num { background: rgba(59,130,246,0.2); color: #93c5fd; }
+    .flow-col.retail .num { background: rgba(239,68,68,0.2); color: #fca5a5; }
+    .flow-arrow-down {
+      text-align: center;
+      color: var(--muted);
+      font-size: 18px;
+      margin: 4px 0;
+    }
+    .flow-warning {
+      margin-top: 20px;
+      padding: 16px;
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.2);
+      border-radius: 10px;
+      font-size: 13px;
+      color: #fca5a5;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    /* Tabs */
+    .tabs {
+      margin-bottom: 30px;
+    }
+    .tab-list {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+      padding: 4px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .tab {
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      white-space: nowrap;
+    }
+    .tab:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    .tab.active {
+      background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(139,92,246,0.2));
+      color: #fff;
+      border: 1px solid rgba(139,92,246,0.3);
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Perspective Cards */
+    .perspective-card {
+      background: linear-gradient(180deg, rgba(30,41,59,0.5), rgba(15,23,42,0.6));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+    .perspective-card h4 {
+      margin: 0 0 16px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .perspective-card h4 svg { color: var(--accent); }
+    .perspective-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .perspective-box {
+      padding: 16px;
+      border-radius: 10px;
+      font-size: 13px;
+    }
+    .perspective-box.good {
+      background: rgba(16,185,129,0.08);
+      border: 1px solid rgba(16,185,129,0.15);
+    }
+    .perspective-box.bad {
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.15);
+    }
+    .perspective-box h5 {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .perspective-box.good h5 { color: #6ee7b7; }
+    .perspective-box.bad h5 { color: #fca5a5; }
+    .perspective-box ul {
+      margin: 0;
+      padding-left: 16px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .perspective-conclusion {
+      padding: 14px 18px;
+      background: rgba(139,92,246,0.08);
+      border-left: 3px solid var(--balance);
+      border-radius: 0 10px 10px 0;
+      font-size: 14px;
+      color: #c4b5fd;
+      font-weight: 600;
+    }
+
+    /* Pyramid */
+    .pyramid-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      margin: 30px 0;
+    }
+    .pyramid-layer {
+      position: relative;
+      padding: 20px 28px;
+      border-radius: 12px;
+      text-align: center;
+      color: #fff;
+    }
+    .pyramid-layer.top {
+      width: 40%;
+      background: linear-gradient(135deg, rgba(59,130,246,0.3), rgba(139,92,246,0.3));
+      border: 1px solid rgba(139,92,246,0.4);
+      clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
+      padding: 24px 40px 28px;
+    }
+    .pyramid-layer.mid {
+      width: 65%;
+      background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(6,182,212,0.25));
+      border: 1px solid rgba(6,182,212,0.4);
+      clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+      padding: 24px 50px 28px;
+    }
+    .pyramid-layer.bot {
+      width: 90%;
+      background: linear-gradient(135deg, rgba(16,185,129,0.25), rgba(59,130,246,0.25));
+      border: 1px solid rgba(16,185,129,0.4);
+      clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%);
+      padding: 24px 60px 28px;
+    }
+    .pyramid-layer h4 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .pyramid-layer p {
+      margin: 0;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+    .pyramid-detail {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .pyramid-card {
+      background: linear-gradient(180deg, rgba(30,41,59,0.5), rgba(15,23,42,0.6));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .pyramid-card h4 {
+      margin: 0 0 12px;
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pyramid-card.must { border-top: 3px solid var(--success); }
+    .pyramid-card.must h4 { color: #6ee7b7; }
+    .pyramid-card.ban { border-top: 3px solid var(--retail); }
+    .pyramid-card.ban h4 { color: #fca5a5; }
+    .pyramid-card.example { border-top: 3px solid var(--accent); }
+    .pyramid-card.example h4 { color: #fcd34d; }
+    .pyramid-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    /* Red Lines */
+    .redline-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .redline-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 18px 22px;
+      background: linear-gradient(90deg, rgba(239,68,68,0.08), transparent);
+      border: 1px solid rgba(239,68,68,0.15);
+      border-radius: 12px;
+      border-left: 3px solid var(--retail);
+    }
+    .redline-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(239,68,68,0.2);
+      color: #fca5a5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .redline-content h4 {
+      margin: 0 0 6px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #fca5a5;
+    }
+    .redline-content p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Metrics */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .metrics-group {
+      background: linear-gradient(180deg, rgba(30,41,59,0.5), rgba(15,23,42,0.6));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .metrics-group h4 {
+      margin: 0 0 16px;
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .metrics-group.sales h4 { color: #93c5fd; }
+    .metrics-group.activation h4 { color: #6ee7b7; }
+    .metrics-group.conversion h4 { color: #fcd34d; }
+    .metrics-group.content h4 { color: #c4b5fd; }
+    .metrics-group.longterm h4 { color: #fca5a5; }
+    .metrics-group ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.9;
+    }
+    .metrics-footer {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 20px;
+      background: rgba(139,92,246,0.08);
+      border: 1px solid rgba(139,92,246,0.2);
+      border-radius: 12px;
+      font-size: 15px;
+      color: #c4b5fd;
+      font-weight: 600;
+    }
+
+    /* Accordion */
+    .accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .accordion-item {
+      background: linear-gradient(180deg, rgba(30,41,59,0.5), rgba(15,23,42,0.6));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .accordion-header:hover { background: rgba(255,255,255,0.03); }
+    .accordion-header svg { transition: transform 0.3s; color: var(--muted); }
+    .accordion-item.open .accordion-header svg { transform: rotate(180deg); }
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .accordion-item.open .accordion-body { max-height: 2000px; }
+    .accordion-content {
+      padding: 0 22px 22px;
+    }
+    .accordion-content ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.9;
+    }
+    .accordion-content li { margin-bottom: 8px; }
+
+    /* Final Recommendation */
+    .final-rec {
+      background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.1));
+      border: 1px solid rgba(139,92,246,0.25);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+    }
+    .final-rec h3 {
+      margin: 0 0 20px;
+      font-size: 24px;
+      font-weight: 800;
+      background: var(--gradient-balance);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .final-rec-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 30px;
+      text-align: left;
+    }
+    .final-rec-card {
+      padding: 20px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .final-rec-card h4 {
+      margin: 0 0 12px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #c4b5fd;
+    }
+    .final-rec-card ul {
+      margin: 0;
+      padding-left: 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      margin-top: 50px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .cards-3, .compare-table, .flow-diagram, .perspective-grid, .pyramid-detail, .metrics-grid, .final-rec-grid {
+        grid-template-columns: 1fr;
+      }
+      .compare-footer, .metrics-footer { grid-column: 1; }
+      .hero h1 { font-size: 32px; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero h1 { font-size: 26px; }
+      .hero-subtitle { font-size: 16px; }
+      .pyramid-layer.top, .pyramid-layer.mid, .pyramid-layer.bot { width: 95%; clip-path: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 导航 -->
+<nav class="nav">
+  <div class="nav-content">
+    <div class="nav-logo">
+      <i data-lucide="git-branch" style="width:20px;height:20px;"></i>
+      WowNow 路线讨论
+    </div>
+    <div class="nav-links">
+      <a href="#hero" class="nav-link">概述</a>
+      <a href="#conflict" class="nav-link">核心矛盾</a>
+      <a href="#compare" class="nav-link">路线对比</a>
+      <a href="#perspective" class="nav-link">多视角</a>
+      <a href="#structure" class="nav-link">三层结构</a>
+      <a href="#redline" class="nav-link">战略红线</a>
+      <a href="#metrics" class="nav-link">指标体系</a>
+      <a href="#questions" class="nav-link">讨论问题</a>
+      <a href="#final" class="nav-link">最终建议</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- Hero 区域 -->
+  <section class="hero" id="hero">
+    <h1>WowNow 产品路线争议</h1>
+    <p class="hero-subtitle">差异化生态 vs 标品化同质竞争</p>
+    
+    <div class="hero-quote">
+      标品可以是入口，但不能是终点；品类可以是语言，但不能是定位；IP 可以是流量，但不能是护城河。
+    </div>
+    
+    <div class="hero-diagram">
+      <div class="hero-box eco">
+        <i data-lucide="cpu" style="width:18px;height:18px;display:inline;vertical-align:middle;margin-right:6px;"></i>
+        AI 定制生态
+      </div>
+      <div class="hero-arrow">↔</div>
+      <div class="hero-fork">战略分岔点</div>
+      <div class="hero-arrow">↔</div>
+      <div class="hero-box retail">
+        <i data-lucide="shopping-bag" style="width:18px;height:18px;display:inline;vertical-align:middle;margin-right:6px;"></i>
+        标品 / IP 零售
+      </div>
+    </div>
+    
+    <p style="max-width: 800px; margin: 30px auto 0; color: var(--muted); font-size: 14px; line-height: 1.8;">
+      当前争议表面上是首页按场景还是按品类、是否做标品、是否引入 IP、TimeForge 是否做即取库存、是否上第三方电商；但本质上是 WowNow 是否继续坚持"AI 创作 + 定制化制造 + TimeTag 数字内容入口 + 分布式制造生态"的差异化路线，还是逐步转向"标品 / IP / 具象品类 / 电商销售"的成熟零售路线。
+    </p>
+  </section>
+
+  <!-- 二、核心矛盾总览 -->
+  <section class="section" id="conflict">
+    <div class="section-header">
+      <h2><i data-lucide="scale"></i> 核心矛盾总览</h2>
+    </div>
+    <div class="cards-3">
+      <div class="card eco">
+        <div class="card-header-row">
+          <div class="card-icon-wrap"><i data-lucide="cpu" style="width:20px;height:20px;"></i></div>
+          <h3>产品部关注</h3>
+        </div>
+        <ul>
+          <li>AI 创作</li>
+          <li>TimeTag 数字内容入口</li>
+          <li>TimeForge 分布式制造</li>
+          <li>AI 音乐</li>
+          <li>数字回忆录</li>
+          <li>用户资产与复购</li>
+        </ul>
+      </div>
+      <div class="card retail">
+        <div class="card-header-row">
+          <div class="card-icon-wrap"><i data-lucide="shopping-bag" style="width:20px;height:20px;"></i></div>
+          <h3>市场部关注</h3>
+        </div>
+        <ul>
+          <li>具象品类</li>
+          <li>标品 / IP</li>
+          <li>即买即取</li>
+          <li>第三方电商</li>
+          <li>快速成交</li>
+          <li>融资销售数据</li>
+        </ul>
+      </div>
+      <div class="card balance">
+        <div class="card-header-row">
+          <div class="card-icon-wrap"><i data-lucide="alert-circle" style="width:20px;height:20px;"></i></div>
+          <h3>真正矛盾</h3>
+        </div>
+        <ul>
+          <li>短期销售数据 vs 长期生态护城河</li>
+          <li>用户认知效率 vs 品牌差异化</li>
+          <li>销售转化速度 vs 公司战略定位</li>
+          <li>标品销量 vs TimeTag 心智</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-emphasis" style="margin-top: 20px; text-align: center; border-left: none; border: 1px solid rgba(139,92,246,0.2); background: rgba(139,92,246,0.08);">
+      <i data-lucide="info" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;color:var(--balance);"></i>
+      这不是简单的产品与市场之争，而是公司产品定义和战略方向之争。
+    </div>
+  </section>
+
+  <!-- 三、原产品定义 vs 市场部新定义 -->
+  <section class="section" id="compare">
+    <div class="section-header">
+      <h2><i data-lucide="git-compare"></i> 原产品定义 vs 市场部新定义</h2>
+    </div>
+    <div class="compare-table">
+      <div class="compare-col eco">
+        <h3><i data-lucide="cpu" style="width:20px;height:20px;"></i> 原产品定义：AI 柔性制造与实体内容生态</h3>
+        <ul>
+          <li><strong>TimeTag：</strong>实体载体 + NFC 数字内容入口</li>
+          <li><strong>TimeForge：</strong>分布式 AI 定制化制造终端</li>
+          <li><strong>用户端平台：</strong>创作、下单、绑定、分享、复购</li>
+          <li><strong>AI 创作：</strong>生成图像、音乐、内容、表达素材</li>
+          <li><strong>数字回忆录：</strong>沉淀照片、视频、音乐、文字、语音、故事</li>
+          <li><strong>TimeEcho：</strong>展示和播放 TimeTag 内容的家庭/空间设备</li>
+          <li><strong>基模供应链：</strong>支撑 TimeTag 标准化、加工适配、NFC 绑定和质量稳定</li>
+          <li><strong>用户买的是：</strong>一枚可以被赠送、收藏和打开的实体记忆</li>
+        </ul>
+      </div>
+      <div class="compare-col retail">
+        <h3><i data-lucide="shopping-bag" style="width:20px;height:20px;"></i> 市场部新定义倾向：标品/IP/具象品类零售</h3>
+        <ul>
+          <li><strong>产品表达：</strong>冰箱贴、吊坠、纪念币、钥匙扣等具象品类</li>
+          <li><strong>销售方式：</strong>标品、IP 款、即买即取、第三方电商</li>
+          <li><strong>生产方式：</strong>TimeForge 闲时预制、提前备货、部分批量生产</li>
+          <li><strong>用户理解：</strong>先对标已有品类，降低认知门槛</li>
+          <li><strong>商业目标：</strong>快速形成销售数据、提高转化、支持融资</li>
+          <li><strong>B 端模式：</strong>大客户做有限定制或活动纪念品</li>
+          <li><strong>用户买的是：</strong>一个熟悉、好看、可即取的具体商品</li>
+        </ul>
+      </div>
+      <div class="compare-footer">
+        <i data-lucide="alert-triangle" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;"></i>
+        关键差异：原定义的竞争维度是差异化生态；市场部路线的竞争维度容易转向成熟标品零售。
+      </div>
+    </div>
+  </section>
+
+  <!-- 四、战略路线对比图 -->
+  <section class="section">
+    <div class="section-header">
+      <h2><i data-lucide="route"></i> 战略路线对比图</h2>
+    </div>
+    <div class="flow-diagram">
+      <div class="flow-col eco">
+        <h3><i data-lucide="cpu" style="width:20px;height:20px;"></i> 路线 A：差异化生态路线</h3>
+        <div class="flow-step"><span class="num">1</span> 用户创作</div>
+        <div class="flow-arrow-down">↓</div>
+        <div class="flow-step"><span class="num">2</span> AI 图像 / AI 音乐 / 内容生成</div>
+        <div class="flow-arrow-down">↓</div>
+        <div class="flow-step"><span class="num">3</span> TimeTag 设计</div>
+        <div class="flow-arrow-down">↓</div>
+        <div class="flow-step"><span class="num">4</span> TimeForge 分布式制造</div>
+        <div class="flow-arrow-down">↓</div>
+        <div class="flow-step"><span class="num">5</span> NFC 内容绑定</div>
+        <div class="flow-arrow-down">↓</div>
+        <div class="flow-step"><span class="num">6</span> 数字回忆录沉淀</div>
+        <div class="flow-arrow-down">↓</div>
+        <div class="flow-step"><span class="num">7</span> TimeEcho 展示播放</div>
+        <div class="flow-arrow-down">↓</div>
+        <div class="flow-step"><span class="num">8</span> 赠送 / 收藏 / 表达 / 分享 / 复购</div>
+      </div>
+      <div class="flow-col retail">
+        <h3><i data-lucide="shopping-bag" style="width:20px;height:20px;"></i> 路线 B：标品化零售路线</h3>
+        <div class="flow-step"><span class="num">1</span> IP 图案 / 固定模板</div>
+        <div class="flow-arrow-down">↓</div>
+        <div class="flow-step"><span class="num">2</span> 批量预制</div>
+        <div class="flow-arrow-down">↓</div>
+        <div class="flow-step"><span class="num">3</span> 设备或电商销售</div>
+        <div class="flow-arrow-down">↓</div>
+        <div class="flow-step"><span class="num">4</span> 用户买到冰箱贴 / 吊坠 / 纪念币</div>
+        <div class="flow-arrow-down">↓</div>
+        <div class="flow-step"><span class="num">5</span> 交易结束</div>
+        <div class="flow-warning">
+          <i data-lucide="alert-triangle" style="width:18px;height:18px;flex-shrink:0;"></i>
+          <span>短期销售可能更快，但可能导致 AI、TimeForge、TimeEcho、数字回忆录、用户平台价值被削弱。</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 五、不同视角分析 -->
+  <section class="section" id="perspective">
+    <div class="section-header">
+      <h2><i data-lucide="eye"></i> 不同视角分析</h2>
+    </div>
+    <div class="tabs">
+      <div class="tab-list">
+        <button class="tab active" data-tab="user">用户视角</button>
+        <button class="tab" data-tab="platform">平台视角</button>
+        <button class="tab" data-tab="timeforge">TimeForge</button>
+        <button class="tab" data-tab="timeecho">TimeEcho</button>
+        <button class="tab" data-tab="supply">供应链</button>
+        <button class="tab" data-tab="marketing">市场营销</button>
+        <button class="tab" data-tab="investor">投资人</button>
+        <button class="tab" data-tab="company">公司视角</button>
+      </div>
+
+      <!-- 用户视角 -->
+      <div class="tab-content active" id="tab-user">
+        <div class="perspective-card">
+          <h4><i data-lucide="users" style="width:18px;height:18px;"></i> 用户不是先理解生态，而是先判断"这是什么、为什么买、值不值"</h4>
+          <div class="perspective-grid">
+            <div class="perspective-box good">
+              <h5>市场路线好处</h5>
+              <ul>
+                <li>理解成本低</li>
+                <li>购买决策快</li>
+                <li>即取体验好</li>
+                <li>适合冲动消费</li>
+              </ul>
+            </div>
+            <div class="perspective-box bad">
+              <h5>市场路线风险</h5>
+              <ul>
+                <li>用户只记得具体品类</li>
+                <li>用户按普通商品比较价格和质感</li>
+                <li>用户不理解 NFC、AI 音乐、数字回忆录</li>
+                <li>交易结束即关系结束</li>
+              </ul>
+            </div>
+          </div>
+          <div class="perspective-conclusion">
+            结论：用具象品类降低理解门槛，但必须用内容、定制和情绪价值建立 TimeTag 心智。
+          </div>
+        </div>
+      </div>
+
+      <!-- 平台视角 -->
+      <div class="tab-content" id="tab-platform">
+        <div class="perspective-card">
+          <h4><i data-lucide="layout" style="width:18px;height:18px;"></i> WowNow 生态视角：用户端及平台</h4>
+          <div class="perspective-grid">
+            <div class="perspective-box good">
+              <h5>原本平台价值</h5>
+              <ul>
+                <li>AI 创作</li>
+                <li>产品选择</li>
+                <li>内容绑定</li>
+                <li>数字回忆录</li>
+                <li>分享传播</li>
+                <li>复购推荐</li>
+                <li>用户资产沉淀</li>
+              </ul>
+            </div>
+            <div class="perspective-box bad">
+              <h5>市场路线风险</h5>
+              <ul>
+                <li>平台变成普通货架</li>
+                <li>用户资产沉淀不足</li>
+                <li>AI 入口被边缘化</li>
+                <li>数字回忆录无法成立</li>
+                <li>复购依赖持续出新款</li>
+              </ul>
+            </div>
+          </div>
+          <div class="perspective-conclusion">
+            结论：用户端平台不能只做商品货架，必须承载创作、内容绑定、数字回忆录和复购。
+          </div>
+        </div>
+      </div>
+
+      <!-- TimeForge -->
+      <div class="tab-content" id="tab-timeforge">
+        <div class="perspective-card">
+          <h4><i data-lucide="factory" style="width:18px;height:18px;"></i> WowNow 生态视角：TimeForge</h4>
+          <p style="color: var(--muted); font-size: 14px; margin-bottom: 16px;">TimeForge 原定位：分布式 AI 定制化制造终端</p>
+          <div class="perspective-grid">
+            <div class="perspective-box good">
+              <h5>好处</h5>
+              <ul>
+                <li>提高设备利用率</li>
+                <li>降低等待成本</li>
+                <li>增加设备流水</li>
+                <li>验证点位价值</li>
+                <li>适合景区/展会/商场</li>
+              </ul>
+            </div>
+            <div class="perspective-box bad">
+              <h5>风险</h5>
+              <ul>
+                <li>TimeForge 售货机化</li>
+                <li>分布式制造变分布式库存</li>
+                <li>设备复杂度不合理</li>
+                <li>定制产能被挤压</li>
+                <li>投资人质疑重设备模式</li>
+              </ul>
+            </div>
+          </div>
+          <div class="perspective-conclusion">
+            结论：TimeForge 可以有即取缓存仓和闲时生产，但不能被定义成自动售货机。
+          </div>
+        </div>
+      </div>
+
+      <!-- TimeEcho -->
+      <div class="tab-content" id="tab-timeecho">
+        <div class="perspective-card">
+          <h4><i data-lucide="speaker" style="width:18px;height:18px;"></i> WowNow 生态视角：TimeEcho</h4>
+          <p style="color: var(--muted); font-size: 14px; margin-bottom: 16px;">TimeEcho 原价值：把 TimeTag 里的数字内容、AI 音乐和数字回忆录带回家庭、空间和展示场景</p>
+          <div class="perspective-grid">
+            <div class="perspective-box good">
+              <h5>好处</h5>
+              <ul>
+                <li>TimeTag 数量增加</li>
+                <li>IP/场景内容可展示</li>
+                <li>AI 音乐有硬件出口</li>
+                <li>数字回忆录有空间入口</li>
+                <li>适合套装销售</li>
+              </ul>
+            </div>
+            <div class="perspective-box bad">
+              <h5>风险</h5>
+              <ul>
+                <li>TimeTag 没有内容，TimeEcho 没有可播放资产</li>
+                <li>用户不激活 NFC，使用场景减少</li>
+                <li>AI 音乐被弱化</li>
+                <li>数字回忆录不沉淀</li>
+                <li>TimeEcho 变成非必要硬件</li>
+              </ul>
+            </div>
+          </div>
+          <div class="perspective-conclusion">
+            结论：TimeEcho 的价值取决于 TimeTag 是否有值得反复打开的内容。
+          </div>
+        </div>
+      </div>
+
+      <!-- 供应链 -->
+      <div class="tab-content" id="tab-supply">
+        <div class="perspective-card">
+          <h4><i data-lucide="truck" style="width:18px;height:18px;"></i> WowNow 生态视角：基模供应链</h4>
+          <p style="color: var(--muted); font-size: 14px; margin-bottom: 16px;">关键判断：TimeTag 基模 + CNC/UV 加工，在纯实体质量和单位成本上，并不一定优于市场上的量产纪念币、冰箱贴、谷子或成熟 IP 周边。</p>
+          <div class="perspective-grid">
+            <div class="perspective-box good">
+              <h5>基模原本价值</h5>
+              <ul>
+                <li>适配 TimeForge 自动取料、加工、出件</li>
+                <li>适配 CNC/UV 图像和浮雕表现</li>
+                <li>适配 NFC 读取、写入、防伪和绑定</li>
+                <li>支持小批量多样化</li>
+                <li>支持批次追溯</li>
+                <li>支持 TimeTag 标准体系</li>
+              </ul>
+            </div>
+            <div class="perspective-box bad">
+              <h5>市场路线风险</h5>
+              <ul>
+                <li>基模变普通耗材</li>
+                <li>进入成本战</li>
+                <li>品质被拿来与量产标品比较</li>
+                <li>供应链刚性增强</li>
+                <li>定制适配能力下降</li>
+                <li>NFC/数字入口被弱化</li>
+              </ul>
+            </div>
+          </div>
+          <div class="perspective-conclusion">
+            结论：基模不是普通物料，而是承载 AI 内容、NFC 入口、制造工艺和数字回忆的实体标准。
+          </div>
+        </div>
+      </div>
+
+      <!-- 市场营销 -->
+      <div class="tab-content" id="tab-marketing">
+        <div class="perspective-card">
+          <h4><i data-lucide="megaphone" style="width:18px;height:18px;"></i> 市场营销视角</h4>
+          <div class="perspective-grid">
+            <div class="perspective-box good">
+              <h5>市场诉求合理性</h5>
+              <ul>
+                <li>降低用户认知</li>
+                <li>提升转化</li>
+                <li>获取销售数据</li>
+                <li>提高设备利用率</li>
+                <li>引入 IP 拉新</li>
+                <li>第三方电商扩大触达</li>
+                <li>B 端有限定制快速成交</li>
+              </ul>
+            </div>
+            <div class="perspective-box bad">
+              <h5>市场路线问题</h5>
+              <ul>
+                <li>过度强调具体品类</li>
+                <li>过度依赖标品</li>
+                <li>过度依赖 IP</li>
+                <li>过度依赖电商</li>
+                <li>过度追求即取</li>
+                <li>过度追求销量</li>
+              </ul>
+            </div>
+          </div>
+          <div class="perspective-conclusion">
+            结论：市场部可以使用标品、IP、品类、电商作为拉新和销售工具，但不能用这些工具重新定义 WowNow。
+          </div>
+        </div>
+      </div>
+
+      <!-- 投资人 -->
+      <div class="tab-content" id="tab-investor">
+        <div class="perspective-card">
+          <h4><i data-lucide="trending-up" style="width:18px;height:18px;"></i> 投资人视角</h4>
+          <div class="perspective-grid">
+            <div class="perspective-box good">
+              <h5>投资人会问</h5>
+              <ul>
+                <li>WowNow 到底是什么公司？</li>
+                <li>为什么需要 TimeForge？</li>
+                <li>为什么不是工厂集中生产？</li>
+                <li>为什么不是普通 IP 周边？</li>
+                <li>用户为什么复购？</li>
+                <li>用户资产在哪里？</li>
+                <li>标品销量是否可持续？</li>
+                <li>毛利结构如何？</li>
+                <li>设备网络是否可规模化？</li>
+              </ul>
+            </div>
+            <div class="perspective-box bad">
+              <h5>投资人关注指标</h5>
+              <ul>
+                <li>标品销量</li>
+                <li>NFC 激活率</li>
+                <li>内容绑定率</li>
+                <li>标品转半定制率</li>
+                <li>AI 音乐使用率</li>
+                <li>数字回忆录创建率</li>
+                <li>复购率</li>
+                <li>定制订单占比</li>
+                <li>TimeForge 定制产能占比</li>
+              </ul>
+            </div>
+          </div>
+          <div class="perspective-conclusion">
+            结论：如果标品销量不能导向用户激活、内容绑定、定制转化和复购，它只是短期销售，不是生态增长。
+          </div>
+        </div>
+      </div>
+
+      <!-- 公司视角 -->
+      <div class="tab-content" id="tab-company">
+        <div class="perspective-card">
+          <h4><i data-lucide="building-2" style="width:18px;height:18px;"></i> 公司视角</h4>
+          <div class="perspective-grid">
+            <div class="perspective-box good">
+              <h5>生态路线投入</h5>
+              <ul>
+                <li>AI 创作体验</li>
+                <li>小程序/App</li>
+                <li>TimeForge 研发</li>
+                <li>TimeTag 标准</li>
+                <li>数字回忆录</li>
+                <li>AI 音乐</li>
+                <li>TimeEcho</li>
+                <li>数据系统</li>
+              </ul>
+            </div>
+            <div class="perspective-box bad">
+              <h5>标品路线长期风险</h5>
+              <ul>
+                <li>公司定位下沉</li>
+                <li>技术投入失去必要性</li>
+                <li>组织能力跑偏</li>
+                <li>毛利被压缩</li>
+                <li>品牌心智被稀释</li>
+                <li>融资故事变弱</li>
+                <li>长期护城河削弱</li>
+              </ul>
+            </div>
+          </div>
+          <div class="perspective-conclusion">
+            结论：公司不能因为短期数据压力，把自己带入一个更低壁垒、更低估值、更重库存、更强同质化的竞争模型。
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 六、各种利弊对比 -->
+  <section class="section">
+    <div class="section-header">
+      <h2><i data-lucide="bar-chart-2"></i> 各种利弊对比</h2>
+    </div>
+    <div class="cards-3">
+      <div class="card eco">
+        <div class="card-header-row">
+          <div class="card-icon-wrap"><i data-lucide="cpu" style="width:20px;height:20px;"></i></div>
+          <h3>原产品生态路线利弊</h3>
+        </div>
+        <ul>
+          <li><strong>用户认知：</strong>一旦理解心智更强 / 教育成本高</li>
+          <li><strong>产品差异化：</strong>AI + 定制 + 内容 + 制造闭环明显 / 初期不容易一句话讲清</li>
+          <li><strong>TimeForge：</strong>战略价值强 / 设备投入重</li>
+          <li><strong>TimeTag：</strong>内容入口 / 需要用户理解 NFC 和内容绑定</li>
+          <li><strong>AI 音乐：</strong>情绪表达核心能力 / 需要场景设计</li>
+          <li><strong>数字回忆录：</strong>长期用户资产 / 需要持续使用</li>
+          <li><strong>市场转化：</strong>高价值场景有溢价 / 短期转化慢</li>
+          <li><strong>投资价值：</strong>平台生态故事强 / 需要数据证明</li>
+          <li><strong>竞争壁垒：</strong>更难复制 / 前期建设复杂</li>
+        </ul>
+      </div>
+      <div class="card retail">
+        <div class="card-header-row">
+          <div class="card-icon-wrap"><i data-lucide="shopping-bag" style="width:20px;height:20px;"></i></div>
+          <h3>市场部标品/IP路线利弊</h3>
+        </div>
+        <ul>
+          <li><strong>用户认知：</strong>熟悉品类理解快 / 用户只记得具体品类</li>
+          <li><strong>销售转化：</strong>标品/IP/即取更快 / 交易结束即流失</li>
+          <li><strong>融资数据：</strong>短期数据更容易形成 / 不能证明生态价值</li>
+          <li><strong>TimeForge：</strong>提高利用率 / 售货机化</li>
+          <li><strong>供应链：</strong>订单提升 / 成本库存品控内卷</li>
+          <li><strong>AI 创作：</strong>可作为卖点 / 被边缘化</li>
+          <li><strong>AI 音乐：</strong>可做主题内容 / 变成固定 BGM</li>
+          <li><strong>数字回忆录：</strong>可作为后续入口 / 用户不绑定</li>
+          <li><strong>IP 合作：</strong>拉新快 / 品牌心智被 IP 占据</li>
+          <li><strong>第三方电商：</strong>扩大渠道 / 用户资产被截断</li>
+          <li><strong>长期竞争：</strong>快速进入市场 / 同质化竞争</li>
+        </ul>
+      </div>
+      <div class="card balance">
+        <div class="card-header-row">
+          <div class="card-icon-wrap"><i data-lucide="check-circle-2" style="width:20px;height:20px;"></i></div>
+          <h3>标品类型判断</h3>
+        </div>
+        <ul>
+          <li><strong style="color:#fca5a5">不建议：</strong>纯固定图案冰箱贴、纯 IP 固定纪念币、无 NFC 内容入口产品、只靠外观质感产品</li>
+          <li><strong style="color:#6ee7b7">建议：</strong>可二次绑定内容的即取款、场景模板款、城市限定+个人回忆绑定、B 端活动纪念款、入门体验款</li>
+          <li><strong style="color:#fcd34d">强烈建议：</strong>IP 共创款（用户与 IP 共同生成专属内容）</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 七、推荐路线：三层产品结构 -->
+  <section class="section" id="structure">
+    <div class="section-header">
+      <h2><i data-lucide="layers"></i> 推荐路线：三层产品结构</h2>
+    </div>
+    <div class="pyramid-container">
+      <div class="pyramid-layer top">
+        <h4>第三层：深度 AI 定制</h4>
+        <p>品牌高度和生态壁垒 · 高客单价 · 高情绪价值</p>
+      </div>
+      <div class="pyramid-layer mid">
+        <h4>第二层：半定制模板</h4>
+        <p>主力转化商品 · 兼顾效率、转化和差异化</p>
+      </div>
+      <div class="pyramid-layer bot">
+        <h4>第一层：即取标品</h4>
+        <p>入口商品 · 拉新、降低理解门槛、提高设备利用率</p>
+      </div>
+    </div>
+    <div class="pyramid-detail">
+      <div class="pyramid-card must">
+        <h4><i data-lucide="check-circle" style="width:16px;height:16px;"></i> 即取标品必须要求</h4>
+        <ul>
+          <li>NFC 激活</li>
+          <li>内容绑定</li>
+          <li>二次定制</li>
+          <li>导流小程序</li>
+        </ul>
+      </div>
+      <div class="pyramid-card ban">
+        <h4><i data-lucide="ban" style="width:16px;height:16px;"></i> 禁止方向</h4>
+        <ul>
+          <li>不能成为纯普通冰箱贴/纪念币/吊坠</li>
+          <li>不能只靠外观质感竞争</li>
+          <li>不能失去 NFC 数字入口</li>
+          <li>不能截断用户关系</li>
+        </ul>
+      </div>
+      <div class="pyramid-card example">
+        <h4><i data-lucide="lightbulb" style="width:16px;height:16px;"></i> 半定制模板示例</h4>
+        <ul>
+          <li>固定模板 + 用户照片/名字/日期</li>
+          <li>祝福、音乐、视频</li>
+          <li>生日、旅行、宠物、情侣</li>
+          <li>毕业、城市、IP、B 端活动</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-emphasis" style="margin-top: 20px; text-align: center; border-left: none; border: 1px solid rgba(245,158,11,0.2); background: rgba(245,158,11,0.08);">
+      <i data-lucide="star" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;color:var(--accent);"></i>
+      半定制模板应该成为 WowNow 的主力商业模型。
+    </div>
+  </section>
+
+  <!-- 八、战略红线 -->
+  <section class="section" id="redline">
+    <div class="section-header">
+      <h2><i data-lucide="shield-alert"></i> 战略红线</h2>
+    </div>
+    <div class="redline-list">
+      <div class="redline-item">
+        <div class="redline-num">1</div>
+        <div class="redline-content">
+          <h4>标品必须保留 NFC 或数字内容入口</h4>
+          <p>失去 NFC，TimeTag 就变成普通实体商品，差异化消失。</p>
+        </div>
+      </div>
+      <div class="redline-item">
+        <div class="redline-num">2</div>
+        <div class="redline-content">
+          <h4>标品必须支持二次绑定或二次定制</h4>
+          <p>标品只是入口，必须能引导用户进入定制和内容生态。</p>
+        </div>
+      </div>
+      <div class="redline-item">
+        <div class="redline-num">3</div>
+        <div class="redline-content">
+          <h4>TimeForge 不能被定义成售货机</h4>
+          <p>分布式制造是核心壁垒，售货机化会摧毁战略价值。</p>
+        </div>
+      </div>
+      <div class="redline-item">
+        <div class="redline-num">4</div>
+        <div class="redline-content">
+          <h4>首页不能只按冰箱贴、吊坠、纪念币分类</h4>
+          <p>品类是语言不是定位，必须按场景和情绪价值组织。</p>
+        </div>
+      </div>
+      <div class="redline-item">
+        <div class="redline-num">5</div>
+        <div class="redline-content">
+          <h4>IP 不能只是贴图授权</h4>
+          <p>IP 必须结合用户共创、内容绑定或半定制才有价值。</p>
+        </div>
+      </div>
+      <div class="redline-item">
+        <div class="redline-num">6</div>
+        <div class="redline-content">
+          <h4>第三方电商不能截断用户关系</h4>
+          <p>电商订单必须导回 WowNow 小程序，建立用户资产。</p>
+        </div>
+      </div>
+      <div class="redline-item">
+        <div class="redline-num">7</div>
+        <div class="redline-content">
+          <h4>销售数据必须拆分标品、半定制、深度定制</h4>
+          <p>混在一起无法判断生态健康度和转化漏斗。</p>
+        </div>
+      </div>
+      <div class="redline-item">
+        <div class="redline-num">8</div>
+        <div class="redline-content">
+          <h4>必须统计 NFC 激活率、内容绑定率、AI 音乐使用率、数字回忆录创建率</h4>
+          <p>只看 GMV 无法证明 WowNow 不是普通文创零售。</p>
+        </div>
+      </div>
+      <div class="redline-item">
+        <div class="redline-num">9</div>
+        <div class="redline-content">
+          <h4>基模供应商不能只按普通耗材降成本管理</h4>
+          <p>基模是 TimeTag 标准体系共建方，不是普通物料商。</p>
+        </div>
+      </div>
+      <div class="redline-item">
+        <div class="redline-num">10</div>
+        <div class="redline-content">
+          <h4>TimeEcho 必须绑定可反复打开的内容资产</h4>
+          <p>没有内容沉淀，TimeEcho 只是不必要的硬件。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 九、关键指标体系 -->
+  <section class="section" id="metrics">
+    <div class="section-header">
+      <h2><i data-lucide="gauge"></i> 关键指标体系</h2>
+    </div>
+    <div class="metrics-grid">
+      <div class="metrics-group sales">
+        <h4><i data-lucide="shopping-cart" style="width:16px;height:16px;"></i> 短期销售指标</h4>
+        <ul>
+          <li>标品销量</li>
+          <li>GMV</li>
+          <li>客单价</li>
+          <li>点位成交率</li>
+        </ul>
+      </div>
+      <div class="metrics-group activation">
+        <h4><i data-lucide="zap" style="width:16px;height:16px;"></i> 生态激活指标</h4>
+        <ul>
+          <li>NFC 激活率</li>
+          <li>内容绑定率</li>
+          <li>小程序导回率</li>
+          <li>第三方电商导回率</li>
+        </ul>
+      </div>
+      <div class="metrics-group conversion">
+        <h4><i data-lucide="git-merge" style="width:16px;height:16px;"></i> 定制转化指标</h4>
+        <ul>
+          <li>标品转半定制率</li>
+          <li>半定制订单占比</li>
+          <li>深度 AI 定制订单占比</li>
+          <li>TimeForge 定制产能占比</li>
+        </ul>
+      </div>
+      <div class="metrics-group content">
+        <h4><i data-lucide="music" style="width:16px;height:16px;"></i> 内容价值指标</h4>
+        <ul>
+          <li>AI 音乐生成率</li>
+          <li>AI 音乐播放率</li>
+          <li>数字回忆录创建率</li>
+          <li>二次访问率</li>
+        </ul>
+      </div>
+      <div class="metrics-group longterm">
+        <h4><i data-lucide="trending-up" style="width:16px;height:16px;"></i> 长期价值指标</h4>
+        <ul>
+          <li>复购率</li>
+          <li>用户内容资产数量</li>
+          <li>TimeEcho 读取次数</li>
+          <li>IP 用户转 WowNow 用户率</li>
+        </ul>
+      </div>
+      <div class="metrics-footer">
+        <i data-lucide="target" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;"></i>
+        核心指标不是单纯 GMV，而是标品是否把用户带回 WowNow 的 AI、定制、内容和复购闭环。
+      </div>
+    </div>
+  </section>
+
+  <!-- 十、应该讨论的问题 -->
+  <section class="section" id="questions">
+    <div class="section-header">
+      <h2><i data-lucide="help-circle"></i> 应该讨论的问题</h2>
+    </div>
+    <div class="accordion">
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <span>1. 公司定位</span>
+          <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <ul>
+              <li>WowNow 到底要成为 AI 柔性制造生态，还是文创/IP 标品零售品牌？</li>
+              <li>TimeTag 的核心定义是"实体数字内容入口"，还是"冰箱贴/吊坠/纪念币等实体商品"？</li>
+              <li>我们是否接受短期销售数据可能把公司带向低壁垒方向？</li>
+              <li>我们要用什么标准判断一条市场路线是否伤害 WowNow 差异化？</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <span>2. 用户认知</span>
+          <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <ul>
+              <li>用户第一次接触 WowNow 时，应该先理解"品类"，还是先理解"TimeTag 能做什么"？</li>
+              <li>首页到底应该以场景为主、品类为辅，还是品类为主、场景为辅？</li>
+              <li>如何让用户知道 TimeTag 不只是一个冰箱贴，而是可以打开内容的实体记忆？</li>
+              <li>用户购买前是否必须看到 NFC、AI 音乐、数字回忆录的价值？</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <span>3. 标品</span>
+          <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <ul>
+              <li>标品在 WowNow 中的定位是主业务，还是生态入口？</li>
+              <li>哪些标品可以做，哪些标品坚决不能作为主线做？</li>
+              <li>标品是否必须支持 NFC 激活、内容绑定或二次定制？</li>
+              <li>标品是否要承担利润目标，还是主要承担拉新目标？</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <span>4. TimeForge</span>
+          <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <ul>
+              <li>TimeForge 的主定义是定制制造终端，还是即取销售设备？</li>
+              <li>即取缓存仓的比例应该是多少？</li>
+              <li>设备产能中，定制订单和预制订单的比例如何控制？</li>
+              <li>如果未来大部分订单是标品，TimeForge 的重模式是否还成立？</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <span>5. 基模供应链</span>
+          <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <ul>
+              <li>TimeTag 基模是否要和量产纪念币、冰箱贴拼成本和质感？</li>
+              <li>基模供应商是普通物料供应商，还是 TimeTag 标准体系共建方？</li>
+              <li>基模标准是否需要覆盖 NFC、加工适配、批次追溯、内容绑定和防伪？</li>
+              <li>如果标品比例提高，库存、滞销和品控风险如何承担？</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <span>6. AI 音乐</span>
+          <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <ul>
+              <li>AI 音乐是核心表达能力，还是标品附赠功能？</li>
+              <li>哪些场景最适合 AI 音乐？</li>
+              <li>用户是否可以在购买标品后替换或生成自己的音乐？</li>
+              <li>AI 音乐是否能提升客单价、分享率、复购率？</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <span>7. 数字回忆录</span>
+          <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <ul>
+              <li>数字回忆录是核心产品能力，还是附属功能？</li>
+              <li>每一枚 TimeTag 是否都应该引导用户创建或绑定回忆内容？</li>
+              <li>标品是否也必须进入数字回忆录链路？</li>
+              <li>如何把单枚 TimeTag 变成用户长期的内容资产？</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <span>8. TimeEcho</span>
+          <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <ul>
+              <li>TimeEcho 的存在依赖哪些 TimeTag 内容资产？</li>
+              <li>如果 TimeTag 只是标品，TimeEcho 是否还有必要？</li>
+              <li>TimeEcho 应该主打 AI 音乐、数字回忆录，还是 IP 内容展示？</li>
+              <li>如何通过 TimeEcho 带动 TimeTag 复购？</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <span>9. IP</span>
+          <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <ul>
+              <li>IP 是流量入口，还是产品核心？</li>
+              <li>是否允许纯 IP 标品成为主销商品？</li>
+              <li>IP 合作是否必须包含用户共创、内容绑定或半定制？</li>
+              <li>如何避免用户记住 IP，而不记住 WowNow？</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <span>10. 第三方电商</span>
+          <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <ul>
+              <li>第三方电商的角色是销售渠道，还是主交易平台？</li>
+              <li>电商订单如何导回 WowNow 小程序？</li>
+              <li>电商商品是否必须包含 NFC 激活和内容绑定引导？</li>
+              <li>哪些产品适合电商，哪些必须留在 WowNow 用户端？</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <span>11. 融资数据</span>
+          <i data-lucide="chevron-down" style="width:18px;height:18px;"></i>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-content">
+            <ul>
+              <li>我们要给投资人展示的是销售额，还是生态增长数据？</li>
+              <li>标品销量是否能够证明 WowNow 的长期价值？</li>
+              <li>是否需要拆分标品、半定制、深度定制的收入和转化？</li>
+              <li>哪些指标能证明 WowNow 不是普通文创零售？</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 十一、最终建议 -->
+  <section class="section" id="final">
+    <div class="section-header">
+      <h2><i data-lucide="check-circle"></i> 最终建议</h2>
+    </div>
+    <div class="final-rec">
+      <h3>坚持差异化生态路线，以标品为入口而非终点</h3>
+      <p style="color: var(--muted); font-size: 15px; line-height: 1.7; max-width: 700px; margin: 0 auto;">
+        WowNow 的核心竞争力不是标品销售，而是"AI 创作 + 定制化制造 + 数字内容入口 + 用户资产沉淀"的完整生态。
+        标品可以作为降低认知门槛的入口，但必须引导用户进入定制、内容绑定和复购闭环。
+      </p>
+      <div class="final-rec-grid">
+        <div class="final-rec-card">
+          <h4>产品策略</h4>
+          <ul>
+            <li>坚持三层产品结构</li>
+            <li>半定制模板作为主力</li>
+            <li>标品必须保留 NFC 入口</li>
+            <li>IP 必须结合用户共创</li>
+          </ul>
+        </div>
+        <div class="final-rec-card">
+          <h4>运营策略</h4>
+          <ul>
+            <li>建立生态激活指标体系</li>
+            <li>拆分标品/定制数据</li>
+            <li>电商导回小程序</li>
+            <li>内容绑定引导流程</li>
+          </ul>
+        </div>
+        <div class="final-rec-card">
+          <h4>组织策略</h4>
+          <ul>
+            <li>产品部与市场部对齐 KPI</li>
+            <li>战略红线不可突破</li>
+            <li>投资人展示生态数据</li>
+            <li>长期价值优先于短期销量</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <div class="footer">
+    <p>WowNow 内部战略讨论文档 · 差异化生态 vs 标品化同质竞争</p>
+    <p style="margin-top: 8px; opacity: 0.7;">本页面仅供内部讨论使用，请勿外传</p>
+  </div>
+
+</div>
+
+<script>
+  // 初始化 Lucide 图标
+  lucide.createIcons();
+
+  // Tab 切换
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Accordion 折叠
+  document.querySelectorAll('.accordion-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const item = header.parentElement;
+      item.classList.toggle('open');
+    });
+  });
+
+  // 平滑滚动
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
