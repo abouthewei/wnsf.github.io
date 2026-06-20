@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WOWNOW DMI 方案讨论页</title>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --bg:#f8fafc;--panel:#ffffff;--stroke:#e2e8f0;--text:#1e293b;--muted:#64748b;
+  --front:#2563eb;--back:#059669;--mid:#d97706;--primary:#7c3aed;--primary-light:#8b5cf6;
+  --accent:#2563eb;--accent-light:#3b82f6;--success:#059669;--warning:#d97706;--danger:#dc2626;
+  --gradient-front:linear-gradient(135deg,#2563eb,#7c3aed);
+  --gradient-back:linear-gradient(135deg,#059669,#0891b2);
+  --gradient-mid:linear-gradient(135deg,#d97706,#dc2626);
+  --card-bg:#ffffff;
+  --card-border:#e2e8f0;--radius:16px;--radius-sm:12px;
+  --shadow:0 1px 3px rgba(0,0,0,0.08),0 4px 12px rgba(0,0,0,0.05);
+  --trans:0.3s cubic-bezier(0.4,0,0.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;transition:all 0.2s cubic-bezier(0.4,0,0.2,1)}
+html{scroll-behavior:smooth;font-size:16px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"PingFang SC",system-ui,-apple-system,sans-serif;overflow-x:hidden;min-height:100vh;padding-bottom:80px;padding-left:240px}
+.nav{position:fixed;left:0;top:0;bottom:0;width:240px;z-index:100;background:#ffffff;backdrop-filter:blur(12px);border-right:1px solid var(--card-border);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;box-shadow:var(--shadow)}
+.nav-content{padding:20px 16px;display:flex;flex-direction:column;height:100%;gap:4px}
+.nav-logo{font-size:15px;font-weight:700;background:var(--gradient-front);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:flex;align-items:center;gap:8px;padding:8px 12px;margin-bottom:12px;flex-shrink:0}
+.nav-links{display:flex;flex-direction:column;gap:2px;flex:1}
+.nav-link{color:var(--muted);text-decoration:none;font-size:13px;padding:8px 12px;border-radius:8px;border:1px solid transparent;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.nav-link:hover{color:var(--text);background:rgba(37,99,235,0.06);border-color:rgba(37,99,235,0.12)}
+.nav-link.active{color:#fff;background:var(--gradient-front);border-color:transparent;box-shadow:var(--shadow)}
+.nav-link-num{width:20px;height:20px;border-radius:5px;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#f1f5f9;color:var(--muted)}
+.nav-link.active .nav-link-num{background:rgba(255,255,255,0.25);color:#fff}
+.wrap{max-width:1200px;margin:0 auto;padding:30px 30px 0}
+.hero{text-align:center;padding:60px 20px 50px;position:relative}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.15);color:var(--primary);padding:8px 16px;border-radius:99px;font-size:13px;margin-bottom:24px}
+.hero h1{margin:0 0 16px;font-size:42px;font-weight:800;background:linear-gradient(to right,#1e293b,#64748b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-0.5px}
+.hero-subtitle{font-size:20px;color:var(--muted);margin-bottom:40px}
+.hero-quote{max-width:800px;margin:0 auto 40px;padding:24px 32px;background:#ffffff;border:1px solid var(--card-border);border-radius:16px;font-size:18px;line-height:1.6;color:var(--text);position:relative;box-shadow:var(--shadow)}
+.hero-quote::before{content:'\201C';position:absolute;top:8px;left:16px;font-size:48px;color:rgba(37,99,235,0.2);font-family:Georgia,serif;line-height:1}
+.hero-diagram{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;margin-top:30px}
+.hero-box{padding:20px 28px;border-radius:12px;font-size:15px;font-weight:600;min-width:180px}
+.hero-box.front{background:rgba(37,99,235,0.08);border:1px solid rgba(37,99,235,0.15);color:var(--front)}
+.hero-box.back{background:rgba(5,150,105,0.08);border:1px solid rgba(5,150,105,0.15);color:var(--back)}
+.hero-arrow{font-size:24px;color:var(--muted)}
+.hero-fork{background:#ffffff;border:1px solid var(--card-border);color:var(--primary);padding:16px 24px;border-radius:12px;font-size:14px;font-weight:700;box-shadow:var(--shadow)}
+.section{margin-bottom:50px;scroll-margin-top:30px}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--card-border)}
+.section-header h2{margin:0;font-size:22px;font-weight:700;display:flex;align-items:center;gap:10px}
+.section-header h2 svg{width:24px;height:24px;color:var(--mid)}
+.section-desc{color:var(--muted);font-size:14px;margin-bottom:24px;line-height:1.6}
+.cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:24px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.card.front::before{background:var(--gradient-front)}
+.card.back::before{background:var(--gradient-back)}
+.card.mid::before{background:var(--gradient-mid)}
+.card-header-row{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.card-icon-wrap{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.card.front .card-icon-wrap{background:rgba(37,99,235,0.08);color:var(--front)}
+.card.back .card-icon-wrap{background:rgba(5,150,105,0.08);color:var(--back)}
+.card.mid .card-icon-wrap{background:rgba(217,119,6,0.08);color:var(--mid)}
+.card h3{margin:0;font-size:17px;font-weight:700}
+.card ul{margin:0;padding-left:18px;color:var(--muted);font-size:13px;line-height:1.8}
+.card li{margin-bottom:4px}
+.card-emphasis{margin-top:16px;padding:12px;background:#f1f5f9;border-radius:8px;font-size:13px;color:var(--accent);border-left:3px solid var(--front)}
+.compare-table{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.compare-col{background:#ffffff;border:1px solid var(--card-border);border-radius:16px;padding:28px;position:relative;box-shadow:var(--shadow)}
+.compare-col.front{border-top:3px solid var(--front)}
+.compare-col.back{border-top:3px solid var(--back)}
+.compare-col h3{margin:0 0 20px;font-size:18px;font-weight:700;display:flex;align-items:center;gap:10px}
+.compare-col.front h3{color:var(--front)}
+.compare-col.back h3{color:var(--back)}
+.compare-col ul{margin:0;padding-left:18px;color:var(--muted);font-size:14px;line-height:1.9}
+.compare-col li{margin-bottom:6px}
+.compare-footer{grid-column:1/-1;text-align:center;padding:20px;background:#f1f5f9;border:1px solid var(--card-border);border-radius:12px;font-size:15px;color:var(--primary);font-weight:600}
+.flow-diagram{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-bottom:30px}
+.flow-col{background:#ffffff;border-radius:16px;padding:28px;border:1px solid var(--card-border);box-shadow:var(--shadow)}
+.flow-col.front{border-left:4px solid var(--front)}
+.flow-col.back{border-left:4px solid var(--back)}
+.flow-col h3{margin:0 0 20px;font-size:17px;font-weight:700;display:flex;align-items:center;gap:10px}
+.flow-col.front h3{color:var(--front)}
+.flow-col.back h3{color:var(--back)}
+.flow-step{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#f8fafc;border-radius:10px;margin-bottom:10px;font-size:14px;color:var(--text)}
+.flow-step .num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.flow-col.front .num{background:rgba(37,99,235,0.1);color:var(--front)}
+.flow-col.back .num{background:rgba(5,150,105,0.1);color:var(--back)}
+.flow-arrow-down{text-align:center;color:var(--muted);font-size:18px;margin:4px 0}
+.tabs{margin-bottom:30px}
+.tab-list{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;padding:4px;background:#f1f5f9;border-radius:12px;border:1px solid var(--card-border)}
+.tab{padding:10px 18px;border-radius:8px;font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;border:none;background:transparent;white-space:nowrap}
+.tab:hover{color:var(--text);background:#e2e8f0}
+.tab.active{background:var(--gradient-front);color:#fff;border:1px solid transparent}
+.tab-content{display:none}
+.tab-content.active{display:block;animation:fadeIn 0.3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.perspective-card{background:#ffffff;border:1px solid var(--card-border);border-radius:16px;padding:28px;margin-bottom:20px;box-shadow:var(--shadow)}
+.perspective-card h4{margin:0 0 16px;font-size:16px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px}
+.perspective-card h4 svg{color:var(--mid)}
+.perspective-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.perspective-box{padding:16px;border-radius:10px;font-size:13px}
+.perspective-box.good{background:rgba(5,150,105,0.06);border:1px solid rgba(5,150,105,0.12)}
+.perspective-box.bad{background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.12)}
+.perspective-box h5{margin:0 0 10px;font-size:13px;font-weight:700}
+.perspective-box.good h5{color:var(--back)}
+.perspective-box.bad h5{color:var(--danger)}
+.perspective-box ul{margin:0;padding-left:16px;color:var(--muted);line-height:1.7}
+.perspective-conclusion{padding:14px 18px;background:#f1f5f9;border-left:3px solid var(--primary);border-radius:0 10px 10px 0;font-size:14px;color:var(--primary);font-weight:600}
+.pyramid-container{display:flex;flex-direction:column;align-items:center;gap:16px;margin:30px 0}
+.pyramid-layer{position:relative;padding:20px 28px;border-radius:12px;text-align:center;color:#fff}
+.pyramid-layer.top{width:40%;background:linear-gradient(135deg,#2563eb,#7c3aed);border:1px solid rgba(124,58,237,0.3);clip-path:polygon(15% 0%,85% 0%,100% 100%,0% 100%);padding:24px 40px 28px}
+.pyramid-layer.mid{width:65%;background:linear-gradient(135deg,#7c3aed,#0891b2);border:1px solid rgba(8,145,178,0.3);clip-path:polygon(10% 0%,90% 0%,100% 100%,0% 100%);padding:24px 50px 28px}
+.pyramid-layer.bot{width:90%;background:linear-gradient(135deg,#059669,#2563eb);border:1px solid rgba(37,99,235,0.3);clip-path:polygon(5% 0%,95% 0%,100% 100%,0% 100%);padding:24px 60px 28px}
+.pyramid-layer h4{margin:0 0 8px;font-size:16px;font-weight:700}
+.pyramid-layer p{margin:0;font-size:13px;opacity:0.9}
+.pyramid-detail{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:30px}
+.pyramid-card{background:#ffffff;border:1px solid var(--card-border);border-radius:16px;padding:24px;box-shadow:var(--shadow)}
+.pyramid-card h4{margin:0 0 12px;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px}
+.pyramid-card.must{border-top:3px solid var(--success)}
+.pyramid-card.must h4{color:var(--back)}
+.pyramid-card.ban{border-top:3px solid var(--danger)}
+.pyramid-card.ban h4{color:var(--danger)}
+.pyramid-card.example{border-top:3px solid var(--mid)}
+.pyramid-card.example h4{color:var(--mid)}
+.pyramid-card ul{margin:0;padding-left:18px;color:var(--muted);font-size:13px;line-height:1.8}
+.redline-list{display:flex;flex-direction:column;gap:12px}
+.redline-item{display:flex;align-items:flex-start;gap:16px;padding:18px 22px;background:rgba(220,38,38,0.04);border:1px solid rgba(220,38,38,0.1);border-radius:12px;border-left:3px solid var(--danger)}
+.redline-num{width:32px;height:32px;border-radius:50%;background:rgba(220,38,38,0.1);color:var(--danger);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.redline-content h4{margin:0 0 6px;font-size:15px;font-weight:700;color:var(--danger)}
+.redline-content p{margin:0;font-size:13px;color:var(--muted);line-height:1.6}
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.metrics-group{background:#ffffff;border:1px solid var(--card-border);border-radius:16px;padding:24px;box-shadow:var(--shadow)}
+.metrics-group h4{margin:0 0 16px;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px}
+.metrics-group ul{margin:0;padding-left:18px;color:var(--muted);font-size:13px;line-height:1.9}
+.metrics-footer{grid-column:1/-1;text-align:center;padding:20px;background:#f1f5f9;border:1px solid var(--card-border);border-radius:12px;font-size:15px;color:var(--primary);font-weight:600}
+.accordion{display:flex;flex-direction:column;gap:10px}
+.accordion-item{background:#ffffff;border:1px solid var(--card-border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+.accordion-header{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;cursor:pointer;font-size:15px;font-weight:600;color:var(--text)}
+.accordion-header:hover{background:#f8fafc}
+.accordion-header svg{transition:transform 0.3s;color:var(--muted)}
+.accordion-item.open .accordion-header svg{transform:rotate(180deg)}
+.accordion-body{max-height:0;overflow:hidden;transition:max-height 0.3s ease}
+.accordion-item.open .accordion-body{max-height:2000px}
+.accordion-content{padding:0 22px 22px}
+.accordion-content ul{margin:0;padding-left:18px;color:var(--muted);font-size:14px;line-height:1.9}
+.accordion-content li{margin-bottom:8px}
+.table-wrap{overflow-x:auto;margin:16px 0;border-radius:var(--radius-sm)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:#ffffff;border:1px solid var(--card-border);border-radius:var(--radius-sm);box-shadow:var(--shadow)}
+th{background:#f1f5f9;padding:12px 16px;text-align:left;font-weight:600;color:var(--front);white-space:nowrap;border-bottom:1px solid var(--card-border)}
+td{padding:11px 16px;border-bottom:1px solid #f1f5f9;line-height:1.6;color:var(--text)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f8fafc}
+.tag-list{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.tag-item{padding:5px 14px;border-radius:16px;font-size:12.5px;font-weight:600}
+.tag-purple{background:rgba(124,58,237,0.08);color:var(--primary);border:1px solid rgba(124,58,237,0.15)}
+.tag-blue{background:rgba(37,99,235,0.08);color:var(--accent);border:1px solid rgba(37,99,235,0.15)}
+.tag-green{background:rgba(5,150,105,0.08);color:var(--success);border:1px solid rgba(5,150,105,0.15)}
+.tag-orange{background:rgba(217,119,6,0.08);color:var(--warning);border:1px solid rgba(217,119,6,0.15)}
+.tree{font-family:"SF Mono","Menlo","Consolas",monospace;font-size:13.5px;line-height:2;padding:20px 24px;background:#f8fafc;border:1px solid var(--card-border);border-radius:var(--radius-sm);white-space:pre;overflow-x:auto;color:var(--text)}
+.phase-card{background:#ffffff;border:1px solid var(--card-border);border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:var(--shadow)}
+.phase-badge{display:inline-block;padding:4px 14px;border-radius:16px;font-size:12px;font-weight:700;margin-bottom:12px}
+.phase-p0{background:rgba(124,58,237,0.08);color:var(--primary)}
+.phase-p1{background:rgba(37,99,235,0.08);color:var(--accent)}
+.phase-p2{background:rgba(5,150,105,0.08);color:var(--success)}
+.phase-title{font-size:17px;font-weight:700;margin-bottom:10px;color:var(--text)}
+.phase-desc{font-size:14px;color:var(--muted);margin-bottom:12px;line-height:1.7}
+.phase-list{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.phase-list li{padding:5px 12px;font-size:13px;background:#f1f5f9;border-radius:8px;border:1px solid var(--card-border);color:var(--text)}
+.metric-card{background:#ffffff;border:1px solid var(--card-border);border-radius:12px;padding:18px 20px;text-align:center;border-top:3px solid var(--front);box-shadow:var(--shadow)}
+.metric-value{font-size:28px;font-weight:800;background:var(--gradient-front);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.metric-label{font-size:12.5px;color:var(--muted);margin-top:4px}
+.final-rec{background:#ffffff;border:1px solid var(--card-border);border-radius:20px;padding:40px;text-align:center;box-shadow:var(--shadow)}
+.final-rec h3{margin:0 0 20px;font-size:24px;font-weight:800;background:var(--gradient-front);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.final-rec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:30px;text-align:left}
+.final-rec-card{padding:20px;background:#f8fafc;border-radius:12px;border:1px solid var(--card-border)}
+.final-rec-card h4{margin:0 0 12px;font-size:15px;font-weight:700;color:var(--primary)}
+.final-rec-card ul{margin:0;padding-left:16px;color:var(--muted);font-size:13px;line-height:1.8}
+.footer{text-align:center;padding:40px 20px;color:var(--muted);font-size:13px;border-top:1px solid var(--card-border);margin-top:50px}
+@media print{.nav{display:none!important}body{padding-left:0!important}.wrap{padding:0;max-width:100%}body{background:#fff;color:#1a1a1a}.card,.phase-card,.perspective-card,.metrics-group,.pyramid-card,.accordion-item,.compare-col,.flow-col,.redline-item,.final-rec,.final-rec-card,.metric-card{box-shadow:none;border:1px solid #ddd;background:#f8f8f8}.hero{background:#f0f0f0;border:1px solid #ddd}h1,h2,h3,h4,.section-header h2,.card h3,.phase-title{color:#1a1a1a!important;-webkit-text-fill-color:#1a1a1a!important}.accordion-body{max-height:none!important;overflow:visible!important}.tab-content{display:block!important}}
+@media(max-width:1200px){.cards-3,.compare-table,.flow-diagram,.perspective-grid,.pyramid-detail,.metrics-grid,.final-rec-grid{grid-template-columns:1fr}.compare-footer,.metrics-footer{grid-column:1}.hero h1{font-size:32px}}
+@media(max-width:768px){.nav{width:100%;height:auto;bottom:auto;border-right:none;border-bottom:1px solid var(--card-border)}body{padding-left:0!important;padding-top:52px}.nav-content{flex-direction:row;padding:10px 16px;gap:0}.nav-logo{margin-bottom:0;padding:4px 8px}.nav-links{flex-direction:row;gap:4px;overflow-x:auto;padding-bottom:4px}.nav-link{padding:4px 10px;font-size:12px}.nav-link-num{display:none}.hero h1{font-size:26px}.hero-subtitle{font-size:16px}.pyramid-layer.top,.pyramid-layer.mid,.pyramid-layer.bot{width:95%;clip-path:none}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-content">
+    <div class="nav-logo"><i data-lucide="layers" style="width:18px;height:18px;"></i> WOWNOW DMI</div>
+    <div class="nav-links">
+      <a href="#hero" class="nav-link active"><span class="nav-link-num">00</span>概述</a>
+      <a href="#s1" class="nav-link"><span class="nav-link-num">01</span>DMI 是什么</a>
+      <a href="#s2" class="nav-link"><span class="nav-link-num">02</span>为什么需要</a>
+      <a href="#s3" class="nav-link"><span class="nav-link-num">03</span>业务闭环</a>
+      <a href="#s4" class="nav-link"><span class="nav-link-num">04</span>角色关系</a>
+      <a href="#s5" class="nav-link"><span class="nav-link-num">05</span>资产权利</a>
+      <a href="#s6" class="nav-link"><span class="nav-link-num">06</span>设备利益</a>
+      <a href="#s7" class="nav-link"><span class="nav-link-num">07</span>产品策略</a>
+      <a href="#s8" class="nav-link"><span class="nav-link-num">08</span>P0 范围</a>
+      <a href="#s9" class="nav-link"><span class="nav-link-num">09</span>暂不做</a>
+      <a href="#s10" class="nav-link"><span class="nav-link-num">10</span>各端设计</a>
+      <a href="#s11" class="nav-link"><span class="nav-link-num">11</span>流程示例</a>
+      <a href="#s12" class="nav-link"><span class="nav-link-num">12</span>分期规划</a>
+      <a href="#s13" class="nav-link"><span class="nav-link-num">13</span>风险管控</a>
+      <a href="#s14" class="nav-link"><span class="nav-link-num">14</span>讨论问题</a>
+    </div>
+  </div>
+</nav>
+<div class="wrap">
+
+<section class="hero" id="hero">
+  <div class="hero-badge"><i data-lucide="layers" style="width:14px;height:14px;"></i> WOWNOW DMI 方案讨论</div>
+  <h1>WOWNOW DMI 方案讨论页</h1>
+  <p class="hero-subtitle">基于「Admin 统一配置 + 商务代理创建」模式</p>
+  <div class="hero-quote">DMI 不是优惠券、团购或普通订单系统，而是 WOWNOW 从"单用户定制"升级为"组织型批量发行"的基础能力。第一版不做完整 B 端 SaaS，而是先跑通核心闭环。</div>
+  <div class="hero-diagram">
+    <div class="hero-box front"><i data-lucide="user" style="width:18px;height:18px;display:inline;vertical-align:middle;margin-right:6px;"></i> 单用户定制</div>
+    <div class="hero-arrow">→</div>
+    <div class="hero-fork">DMI 升级</div>
+    <div class="hero-arrow">→</div>
+    <div class="hero-box back"><i data-lucide="users" style="width:18px;height:18px;display:inline;vertical-align:middle;margin-right:6px;"></i> 组织型批量发行</div>
+  </div>
+  <p style="max-width:800px;margin:30px auto 0;color:var(--muted);font-size:14px;line-height:1.8;">DMI，Digital Mass Issuance，是 WOWNOW 面向个人、企业、学校、品牌、IP、渠道和自营场景的 TimeTag 实体数字资产批量发行系统。通过 Admin 统一配置、商务代理创建，先跑通发行、领取、创作、下单、资产、NFC、生产、履约、数据和分账记录的核心闭环。</p>
+</section>
+
+<section class="section" id="s1">
+  <div class="section-header"><h2><i data-lucide="help-circle"></i> DMI 是什么</h2></div>
+  <div class="cards-3">
+    <div class="card mid">
+      <div class="card-header-row"><div class="card-icon-wrap"><i data-lucide="x-circle" style="width:20px;height:20px;"></i></div><h3>它不是</h3></div>
+      <ul><li>不是优惠券系统</li><li>不是普通团购系统</li><li>不是普通订单系统</li><li>不是单纯 NFC 管理系统</li></ul>
+    </div>
+    <div class="card back">
+      <div class="card-header-row"><div class="card-icon-wrap"><i data-lucide="check-circle" style="width:20px;height:20px;"></i></div><h3>它是</h3></div>
+      <ul><li>一个 DMI 项目</li><li>多个领取用户</li><li>多个下单权益</li><li>多个个性化作品</li><li>多个 TimeTag 资产</li><li>有限 TimeForge 设备生产</li><li>持续 NFC 内容运营</li><li>多主体收益分账</li></ul>
+    </div>
+    <div class="card front">
+      <div class="card-header-row"><div class="card-icon-wrap"><i data-lucide="alert-circle" style="width:20px;height:20px;"></i></div><h3>核心结论</h3></div>
+      <ul><li>从"一个用户下一个定制订单"</li><li>升级为"一个组织发起一次发行"</li><li>多个用户自主领取、创作、下单</li><li>生产和绑定资产</li><li>这是 WOWNOW 的关键基础设施</li></ul>
+    </div>
+  </div>
+  <div class="card-emphasis" style="margin-top:20px;text-align:center;border-left:none;border:1px solid rgba(124,58,237,0.15);background:rgba(124,58,237,0.06);"><i data-lucide="info" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;color:var(--primary);"></i> DMI 是 WOWNOW 从"单用户定制"升级为"组织型批量发行"的关键基础设施。</div>
+</section>
+
+<section class="section" id="s2">
+  <div class="section-header"><h2><i data-lucide="target"></i> 为什么 WOWNOW 现在需要 DMI</h2></div>
+  <div class="compare-table">
+    <div class="compare-col" style="border-top:3px solid var(--danger)">
+      <h3 style="color:var(--danger)"><i data-lucide="alert-triangle" style="width:20px;height:20px;"></i> 当前问题</h3>
+      <ul><li><strong>批量项目难承接</strong> — 企业、学校、品牌活动来了，只能人工收集、人工处理</li><li><strong>个性化和批量冲突</strong> — 组织方不可能替每个用户收集照片、文案、内容</li><li><strong>生产履约不闭环</strong> — 领取、创作、下单、生产、配送、售后无法系统化管理</li><li><strong>TimeForge 产能难调度</strong> — 设备有限，但订单可能来自自营、渠道、企业、个人</li><li><strong>B 端数据不可沉淀</strong> — 客户不知道谁领取、谁创作、谁生产、谁触碰 NFC</li><li><strong>渠道收益不好定义</strong> — 渠道可能同时带客户、持有设备、负责履约</li><li><strong>NFC 后续运营断裂</strong> — 实物发出后，内容、权益、触碰数据没有统一运营入口</li></ul>
+    </div>
+    <div class="compare-col back">
+      <h3><i data-lucide="zap" style="width:20px;height:20px;"></i> DMI 价值</h3>
+      <ul><li><strong>对 WOWNOW</strong> — 从单个 AI 定制订单升级为组织型发行平台</li><li><strong>对企业 / 学校 / 组织</strong> — 降低收集、校对、设计、分发、售后成本</li><li><strong>对用户</strong> — 自己领取、自己创作、自己绑定，获得专属 TimeTag</li><li><strong>对渠道</strong> — 可以通过销售、设备、履约获得收益</li><li><strong>对 IP / 品牌</strong> — 将周边变成可追踪、可运营的实体数字资产</li><li><strong>对 TimeForge</strong> — 让有限设备产能进入可调度、可结算的商业体系</li></ul>
+    </div>
+    <div class="compare-footer"><i data-lucide="alert-circle" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;"></i> DMI 是承接企业、学校、品牌、IP 与渠道型项目的必要基础设施，否则批量项目只能依赖人工交付，无法规模化。</div>
+  </div>
+</section>
+
+<section class="section" id="s3">
+  <div class="section-header"><h2><i data-lucide="route"></i> DMI 的完整业务闭环</h2></div>
+  <p class="section-desc">DMI 不是某一个页面，而是一条从发行、领取、创作、资产、生产、履约到数据分账的完整链路。</p>
+  <div class="flow-diagram">
+    <div class="flow-col front">
+      <h3><i data-lucide="settings" style="width:20px;height:20px;"></i> 项目配置阶段</h3>
+      <div class="flow-step"><span class="num">1</span>商务 / 自营 / 渠道在 Admin 创建 DMI 项目</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">2</span>配置发行方、销售方、渠道、设备方、履约方</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">3</span>配置领取规则、下单规则、资产规则、NFC 规则、补发规则、分账规则</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">4</span>生成项目链接 / 二维码 / Code</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">5</span>客户分发给用户</div>
+    </div>
+    <div class="flow-col back">
+      <h3><i data-lucide="package" style="width:20px;height:20px;"></i> 用户闭环阶段</h3>
+      <div class="flow-step"><span class="num">6</span>用户领取资格</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">7</span>用户获得下单权益</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">8</span>用户选择产品 / 模板 / 场景</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">9</span>用户通过 TimeWeave 创作作品</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">10</span>用户确认作品、NFC 内容、履约方式</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">11</span>生成 TimeTag Asset</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">12</span>生成生产订单</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">13</span>派单给 WOWNOW 自营设备或渠道设备</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">14</span>TimeForge 生产、质检、写入 NFC</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">15</span>自提 / 配送 / 现场领取</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">16</span>用户进入"我的资产"</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">17</span>后续 NFC 访问、加购、补发、权益运营</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">18</span>客户查看数据</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">19</span>平台生成分账结算记录</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="s4">
+  <div class="section-header"><h2><i data-lucide="users"></i> DMI 涉及的角色关系</h2></div>
+  <p class="section-desc">DMI 的角色必须拆开，不能只按"谁创建项目"来判断收益、责任和权限。</p>
+  <div class="cards-3">
+    <div class="card front">
+      <div class="card-header-row"><div class="card-icon-wrap"><i data-lucide="user-plus" style="width:20px;height:20px;"></i></div><h3>可以发起 DMI 的角色</h3></div>
+      <ul><li>个人用户</li><li>企业 / 组织 / 机构</li><li>IP / 品牌方</li><li>WOWNOW 自营</li><li>WOWNOW 渠道运营商</li></ul>
+    </div>
+    <div class="card back">
+      <div class="card-header-row"><div class="card-icon-wrap"><i data-lucide="briefcase" style="width:20px;height:20px;"></i></div><h3>业务主体</h3></div>
+      <ul><li><strong>Creator</strong> 创建人 — 谁在系统里创建项目</li><li><strong>Issuer</strong> 发行方 — 项目名义上的发行主体</li><li><strong>Customer</strong> 客户主体 — 谁采购、付款、签合同</li><li><strong>Seller</strong> 销售方 — 谁带来客户或订单</li><li><strong>Channel</strong> 渠道方 — 是否来自渠道运营商</li><li><strong>Platform</strong> 平台方 — WOWNOW</li><li><strong>Manufacturer</strong> 生产方 — 谁的设备实际生产</li><li><strong>Fulfillment</strong> 履约方 — 谁负责交付和售后</li><li><strong>IP Owner</strong> 内容方 — 谁提供 IP、音乐、品牌、素材、授权</li></ul>
+    </div>
+    <div class="card mid">
+      <div class="card-header-row"><div class="card-icon-wrap"><i data-lucide="alert-triangle" style="width:20px;height:20px;"></i></div><h3>重点不等式</h3></div>
+      <ul><li>创建人 ≠ 发行方</li><li>发行方 ≠ 销售方</li><li>销售方 ≠ 生产方</li><li>生产方 ≠ 履约方</li></ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="s5">
+  <div class="section-header"><h2><i data-lucide="shield"></i> TimeTag 资产与权利归属</h2></div>
+  <p class="section-desc">DMI 用户下单后，TimeTag 默认进入用户的"我的 TimeTag 资产"，但必须标注资产类型和权利边界；进入用户资产 ≠ 用户拥有全部作品版权。</p>
+  <div class="tabs">
+    <div class="tab-list">
+      <button class="tab active" data-tab="asset-include">TimeTag 包含</button>
+      <button class="tab" data-tab="rights">权利区分</button>
+      <button class="tab" data-tab="types">资产类型</button>
+      <button class="tab" data-tab="relation">资产与实体关系</button>
+    </div>
+    <div class="tab-content active" id="tab-asset-include">
+      <div class="perspective-card">
+        <h4><i data-lucide="package" style="width:18px;height:18px;"></i> DMI 下 TimeTag 包含</h4>
+        <div class="tag-list" style="margin-bottom:16px"><span class="tag-item tag-purple">TimeTag 实物</span><span class="tag-item tag-blue">用户或组织创作的作品</span><span class="tag-item tag-green">NFC 绑定的数字内容 / 权益</span><span class="tag-item tag-orange">后续可运营、可补发、可加购的资产记录</span></div>
+      </div>
+    </div>
+    <div class="tab-content" id="tab-rights">
+      <div class="perspective-card">
+        <h4><i data-lucide="scale" style="width:18px;height:18px;"></i> 必须区分的权利</h4>
+        <div class="table-wrap"><table><thead><tr><th>权利类型</th><th>含义</th><th>示例</th></tr></thead><tbody>
+          <tr><td>实体所有权</td><td>实物 TimeTag 归谁</td><td>用户拥有实体 Tag</td></tr>
+          <tr><td>作品版权</td><td>图案、音乐、文字、设计版权归谁</td><td>用户原创 / IP 方 / 组织方 / 平台模板</td></tr>
+          <tr><td>数字内容管理权</td><td>NFC 打开后的内容谁能编辑</td><td>用户可编辑 / 组织可更新 / 平台维护</td></tr>
+          <tr><td>IP 授权使用权</td><td>用户是否只是被授权收藏或使用</td><td>粉丝卡、品牌联名款</td></tr>
+          <tr><td>NFC 权益访问权</td><td>是否拥有门票、会员、优惠等权益</td><td>门票、会员卡、隐藏内容</td></tr>
+          <tr><td>补发重制权益</td><td>遗失后能否重新制作</td><td>免费补发 / 自费补发 / 不支持</td></tr>
+          <tr><td>转赠权</td><td>用户能否把资产转给别人</td><td>P0 不做，P1 后按资产类型配置</td></tr>
+          <tr><td>商业使用权</td><td>用户能否商用图案或内容</td><td>默认不可商用</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+    <div class="tab-content" id="tab-types">
+      <div class="perspective-card">
+        <h4><i data-lucide="tags" style="width:18px;height:18px;"></i> 资产类型标签</h4>
+        <div class="tag-list" style="margin-bottom:16px"><span class="tag-item tag-purple">原创资产</span><span class="tag-item tag-blue">授权资产</span><span class="tag-item tag-green">权益资产</span><span class="tag-item tag-orange">纪念资产</span><span class="tag-item tag-purple">平台模板资产</span><span class="tag-item tag-blue">临时资产</span><span class="tag-item tag-green">组织资产</span></div>
+      </div>
+    </div>
+    <div class="tab-content" id="tab-relation">
+      <div class="perspective-card">
+        <h4><i data-lucide="git-branch" style="width:18px;height:18px;"></i> 资产与实体 Tag 的关系</h4>
+        <div class="tree">TimeTag Asset
+├── Physical Tag 1：旧 Tag，正常 / 挂失 / 作废
+└── Physical Tag 2：补发新 Tag，正常</div>
+        <div class="perspective-conclusion" style="margin-top:16px">用户遗失的是实体 Physical Tag，不一定丢失 TimeTag Asset。补发时，原 TimeTag Asset 保留，旧 Physical Tag 冻结 / 作废，新 Physical Tag 绑定到原资产，NFC 内容可继承原资产内容。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="s6">
+  <div class="section-header"><h2><i data-lucide="cpu"></i> TimeForge 设备与利益关系</h2></div>
+  <p class="section-desc">DMI 发起权可以开放，但 TimeForge 产能权是有限主体持有的。项目可以由不同角色发起，但生产收益必须按实际设备归属结算。</p>
+  <div class="compare-table">
+    <div class="compare-col front">
+      <h3><i data-lucide="settings" style="width:20px;height:20px;"></i> 收益拆分原则</h3>
+      <ul><li><strong>WOWNOW 提供平台、账户、资产、NFC、数据</strong> → WOWNOW 固定收平台服务费</li><li><strong>谁带来客户 / 订单</strong> → 谁拿销售收益</li><li><strong>谁的设备实际生产</strong> → 谁拿生产收益</li><li><strong>谁负责交付和售后</strong> → 谁拿履约收益</li><li><strong>谁提供 IP / 内容授权</strong> → 谁拿授权收益</li></ul>
+    </div>
+    <div class="compare-col back">
+      <h3><i data-lucide="truck" style="width:20px;height:20px;"></i> 典型场景</h3>
+      <ul><li><strong>自营 + 自营设备</strong> → WOWNOW 拿平台 + 销售 + 生产 + 履约收益</li><li><strong>自营 + 渠道设备</strong> → WOWNOW 拿平台 + 销售，渠道拿生产 / 履约</li><li><strong>渠道项目 + 渠道设备</strong> → 渠道拿销售 + 生产 + 履约，WOWNOW 拿平台费</li><li><strong>渠道项目 + 自营设备</strong> → 渠道拿销售，WOWNOW 拿平台 + 生产</li><li><strong>IP + 渠道 + 渠道设备</strong> → IP 拿授权，渠道拿销售 / 生产 / 履约，WOWNOW 拿平台费</li></ul>
+    </div>
+    <div class="compare-footer"><i data-lucide="info" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;"></i> 核心原则：谁实际生产，谁获得设备生产收益；WOWNOW 始终保留平台服务收益。</div>
+  </div>
+</section>
+
+<section class="section" id="s7">
+  <div class="section-header"><h2><i data-lucide="layers"></i> 当前阶段产品策略</h2></div>
+  <p class="section-desc">第一版采用「Admin 统一配置 + 商务代理创建」，不先建设完整 B 端 SaaS。</p>
+  <div class="pyramid-container">
+    <div class="pyramid-layer top"><h4>第三层：完整 B 端 SaaS</h4><p>P2 目标 · 企业自助后台 · IP/品牌自助 · 多级渠道 · 自动结算</p></div>
+    <div class="pyramid-layer mid"><h4>第二层：B 端运营支持</h4><p>P1 目标 · 白名单 · 作品审核 · 多履约 · NFC 权限 · 遗失补发 · 渠道受限后台 · 结算报表</p></div>
+    <div class="pyramid-layer bot"><h4>第一层：Admin 代理创建</h4><p>P0 目标 · Admin 统一配置 · 商务代理创建 · 先跑通核心闭环</p></div>
+  </div>
+  <div class="pyramid-detail">
+    <div class="pyramid-card must"><h4><i data-lucide="check-circle" style="width:16px;height:16px;"></i> 为什么先做代理创建</h4><ul><li>规则复杂，容易配错</li><li>商务属性强，需要报价、合同</li><li>早期要控风险，版权、内容、资产需把关</li><li>研发成本低，先不做完整 B 端 SaaS</li><li>更适合验证，用商务代建先跑通闭环</li></ul></div>
+    <div class="pyramid-card ban"><h4><i data-lucide="ban" style="width:16px;height:16px;"></i> 当前阶段不做</h4><ul><li>企业自助创建后台</li><li>IP / 品牌自助创建</li><li>完整渠道后台</li></ul></div>
+    <div class="pyramid-card example"><h4><i data-lucide="lightbulb" style="width:16px;height:16px;"></i> 角色创建方式</h4><ul><li>个人用户 → C 端轻量创建</li><li>WOWNOW 自营 → Admin 创建</li><li>商务 / 运营 → Admin 代理创建</li><li>渠道运营商 → Admin 受限账号</li><li>企业 / 组织 → 商务代理创建</li><li>IP / 品牌方 → 商务代理创建</li></ul></div>
+  </div>
+</section>
+
+<section class="section" id="s8">
+  <div class="section-header"><h2><i data-lucide="check-square"></i> P0 第一版功能范围</h2></div>
+  <p class="section-desc">P0 的目标是跑通 DMI 核心闭环，而不是一次性做完整平台。</p>
+  <div class="cards-3">
+    <div class="card front">
+      <div class="card-header-row"><div class="card-icon-wrap"><i data-lucide="settings" style="width:20px;height:20px;"></i></div><h3>项目与配置</h3></div>
+      <ul><li>Admin DMI 项目创建</li><li>商务代建流程</li><li>项目模板（企业礼、学校纪念、品牌活动、IP 发行）</li><li>产品与规则（领取规则、下单规则、Seat / Code）</li></ul>
+    </div>
+    <div class="card back">
+      <div class="card-header-row"><div class="card-icon-wrap"><i data-lucide="user" style="width:20px;height:20px;"></i></div><h3>用户与创作</h3></div>
+      <ul><li>用户领取创作（登录、领取、TimeWeave 创作、确认作品）</li><li>订单 / 支付基础（支持免费权益下单，预留补差价 / 加购能力）</li><li>资产与 NFC（生成 TimeTag Asset，绑定基础内容和访问链接）</li></ul>
+    </div>
+    <div class="card mid">
+      <div class="card-header-row"><div class="card-icon-wrap"><i data-lucide="bar-chart-2" style="width:20px;height:20px;"></i></div><h3>生产与数据</h3></div>
+      <ul><li>生产履约（指定设备生产，支持自提或统一配送）</li><li>客户查看与数据（进度、审核、导出、看板）</li><li>分账记录（记录收益归属，不做自动打款）</li><li>操作日志（关键规则修改、发布、派单、分账变更）</li><li>基础通知（领取成功、下单成功、生产完成、审核结果）</li></ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="s9">
+  <div class="section-header"><h2><i data-lucide="shield-alert"></i> P0 第一版暂不做什么</h2></div>
+  <p class="section-desc">明确不做范围，是为了避免第一版膨胀，优先用真实项目验证核心链路。</p>
+  <div class="redline-list">
+    <div class="redline-item"><div class="redline-num">1</div><div class="redline-content"><h4>企业自助创建后台</h4><p>规则复杂，先由商务代理创建</p></div></div>
+    <div class="redline-item"><div class="redline-num">2</div><div class="redline-content"><h4>IP / 品牌自助创建</h4><p>涉及授权、收益、风控</p></div></div>
+    <div class="redline-item"><div class="redline-num">3</div><div class="redline-content"><h4>完整渠道后台</h4><p>先用 Admin 受限账号处理</p></div></div>
+    <div class="redline-item"><div class="redline-num">4</div><div class="redline-content"><h4>自动分账打款</h4><p>第一版先做分账记录和结算报表</p></div></div>
+    <div class="redline-item"><div class="redline-num">5</div><div class="redline-content"><h4>多级渠道分销</h4><p>第一版过重</p></div></div>
+    <div class="redline-item"><div class="redline-num">6</div><div class="redline-content"><h4>复杂权益核销</h4><p>先做 NFC 内容绑定</p></div></div>
+    <div class="redline-item"><div class="redline-num">7</div><div class="redline-content"><h4>高级 ROI 分析</h4><p>先做基础漏斗</p></div></div>
+    <div class="redline-item"><div class="redline-num">8</div><div class="redline-content"><h4>复杂设备智能调度</h4><p>先支持指定设备 / 简单派单</p></div></div>
+    <div class="redline-item"><div class="redline-num">9</div><div class="redline-content"><h4>完整遗失补发自动化</h4><p>P0 预留入口，P1 完整做</p></div></div>
+    <div class="redline-item"><div class="redline-num">10</div><div class="redline-content"><h4>资产转赠 / 交易</h4><p>涉及权利、风控、售后，后置</p></div></div>
+    <div class="redline-item"><div class="redline-num">11</div><div class="redline-content"><h4>复杂版权授权系统</h4><p>P0 用项目配置和人工审核控制</p></div></div>
+  </div>
+</section>
+
+<section class="section" id="s10">
+  <div class="section-header"><h2><i data-lucide="layout"></i> DMI 各端交互设计</h2></div>
+  <p class="section-desc">P0 不是一个后台解决所有问题，而是 Admin、客户查看页、用户领取端、TimeForge 设备端四端协同。</p>
+  <div class="tabs">
+    <div class="tab-list">
+      <button class="tab active" data-tab="admin">Admin 后台</button>
+      <button class="tab" data-tab="client">客户查看页</button>
+      <button class="tab" data-tab="user">用户领取端</button>
+      <button class="tab" data-tab="device">TimeForge 设备端</button>
+    </div>
+    <div class="tab-content active" id="tab-admin">
+      <div class="perspective-card">
+        <h4><i data-lucide="settings" style="width:18px;height:18px;"></i> Admin 后台</h4>
+        <div class="perspective-grid">
+          <div class="perspective-box good"><h5>功能</h5><ul><li>创建 DMI 项目</li><li>配置项目规则</li><li>生成链接 / Code</li><li>审核项目</li><li>查看用户领取与下单</li></ul></div>
+          <div class="perspective-box bad"><h5>管理</h5><ul><li>处理异常</li><li>生产派单</li><li>查看分账记录</li><li>查看操作日志</li></ul></div>
+        </div>
+        <div class="tree" style="margin-top:12px">DMI 管理后台
+├── Dashboard
+├── 商业主体管理
+├── 项目 / 模板 / Code
+├── 用户领取 / 订单与权益
+├── 作品与资产 / NFC
+├── 生产派单 / 履约
+└── 数据看板 / 分账 / 日志</div>
+      </div>
+    </div>
+    <div class="tab-content" id="tab-client">
+      <div class="perspective-card">
+        <h4><i data-lucide="bar-chart-2" style="width:18px;height:18px;"></i> 客户查看页</h4>
+        <div class="perspective-grid">
+          <div class="perspective-box good"><h5>查看</h5><ul><li>查看项目概览</li><li>获取项目链接 / 二维码</li><li>查看领取进度</li><li>查看创作进度</li></ul></div>
+          <div class="perspective-box bad"><h5>操作</h5><ul><li>审核用户作品</li><li>查看生产履约进度</li><li>查看 NFC 数据</li><li>导出数据</li></ul></div>
+        </div>
+        <div class="tree" style="margin-top:12px">客户项目查看页
+├── 项目概览
+├── 领取链接 / 二维码
+├── 领取 / 创作 / 下单进度
+├── 作品审核
+├── 生产 / 履约进度
+└── NFC 数据 / 数据导出</div>
+      </div>
+    </div>
+    <div class="tab-content" id="tab-user">
+      <div class="perspective-card">
+        <h4><i data-lucide="user" style="width:18px;height:18px;"></i> 用户领取端</h4>
+        <div class="perspective-grid">
+          <div class="perspective-box good"><h5>领取与创作</h5><ul><li>打开链接 / 扫码</li><li>登录 / 校验资格</li><li>领取 TimeTag 制作权益</li><li>选择产品</li><li>AI 创作</li><li>绑定 NFC 内容</li></ul></div>
+          <div class="perspective-box bad"><h5>下单与资产</h5><ul><li>确认作品</li><li>确认下单</li><li>选择自提 / 配送</li><li>查看生产进度</li><li>进入我的资产</li></ul></div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content" id="tab-device">
+      <div class="perspective-card">
+        <h4><i data-lucide="cpu" style="width:18px;height:18px;"></i> TimeForge 设备端 / 履约端</h4>
+        <div class="perspective-grid">
+          <div class="perspective-box good"><h5>生产流程</h5><ul><li>接收生产任务</li><li>查看任务详情</li><li>加载生产文件</li><li>确认材料和工艺</li><li>启动生产</li></ul></div>
+          <div class="perspective-box bad"><h5>质检与交付</h5><ul><li>质检</li><li>写入 NFC</li><li>完成入柜 / 打包发货</li><li>异常上报</li></ul></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="s11">
+  <div class="section-header"><h2><i data-lucide="workflow"></i> 第一版业务流程示例</h2></div>
+  <p class="section-desc">首个验证场景建议选择企业员工礼或学校毕业纪念，组织明确、SKU 可控、情绪价值强。</p>
+  <div class="flow-diagram">
+    <div class="flow-col front">
+      <h3><i data-lucide="briefcase" style="width:20px;height:20px;"></i> 项目创建与配置</h3>
+      <div class="flow-step"><span class="num">1</span>企业提出需求：300 个员工纪念 TimeTag</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">2</span>WOWNOW 商务确认报价、合同、交付周期</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">3</span>WOWNOW 运营在 Admin 创建 DMI 项目</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">4</span>设置发行方：企业；销售方：WOWNOW 自营 / 渠道</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">5</span>设置产品、领取规则、下单规则、资产规则</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">6</span>设置生产规则、补发规则、分账规则</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">7</span>生成项目链接 / 二维码，企业发给员工</div>
+    </div>
+    <div class="flow-col back">
+      <h3><i data-lucide="user" style="width:20px;height:20px;"></i> 用户闭环阶段</h3>
+      <div class="flow-step"><span class="num">8</span>员工打开链接并登录</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">9</span>领取资格</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">10</span>获得 1 次免费下单权益</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">11</span>选择 TimeTag 款式</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">12</span>上传照片 / 输入纪念语</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">13</span>TimeWeave 生成图案</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">14</span>员工确认 NFC 内容</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">15</span>系统校验下单权益</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">16</span>免费权益下单 / 升级补差价</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">17</span>生成 TimeTag Asset</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">18</span>生成生产订单</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">19</span>派单至 TimeForge</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">20</span>生产 / 质检 / 写入 NFC</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">21</span>统一配送或自提</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">22</span>员工在"我的资产"查看</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">23</span>后续可触碰 NFC、补发、加购</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">24</span>企业查看页查看数据</div><div class="flow-arrow-down">↓</div>
+      <div class="flow-step"><span class="num">25</span>平台生成结算报表</div>
+    </div>
+  </div>
+  <div class="compare-footer"><i data-lucide="info" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;"></i> 首个验证场景建议选择企业员工礼或学校毕业纪念，组织明确、SKU 可控、情绪价值强。</div>
+</section>
+
+<section class="section" id="s12">
+  <div class="section-header"><h2><i data-lucide="milestone"></i> 分期规划</h2></div>
+  <p class="section-desc">DMI 分三期推进，P0 跑通核心闭环，P1 补齐运营能力，P2 开放自助平台。</p>
+  <div class="pyramid-container">
+    <div class="pyramid-layer top"><h4>P2：开放自助平台</h4><p>企业自助后台 · IP/品牌自助 · 多级渠道 · 自动结算 · 高级 ROI</p></div>
+    <div class="pyramid-layer mid"><h4>P1：运营能力补齐</h4><p>白名单 · 作品审核 · 多履约 · NFC 权限 · 遗失补发 · 渠道受限后台 · 结算报表 · 资产转赠</p></div>
+    <div class="pyramid-layer bot"><h4>P0：核心闭环</h4><p>Admin 统一配置 · 商务代理创建 · 用户领取创作 · 基础下单 · 资产生成 · NFC 绑定 · 指定设备生产 · 分账记录</p></div>
+  </div>
+</section>
+
+<section class="section" id="s13">
+  <div class="section-header"><h2><i data-lucide="shield-alert"></i> 风险管控</h2></div>
+  <p class="section-desc">DMI 涉及多方主体、资产权利和资金流转，必须提前识别风险并制定应对策略。</p>
+  <div class="accordion">
+    <div class="accordion-item open">
+      <div class="accordion-header"><span><i data-lucide="copyright" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;color:var(--danger);"></i> 版权与 IP 风险</span><i data-lucide="chevron-down" style="width:18px;height:18px;"></i></div>
+      <div class="accordion-body"><div class="accordion-content">
+        <ul>
+          <li><strong>风险：</strong>用户上传侵权图片、使用未授权 IP、生成内容涉及版权争议</li>
+          <li><strong>应对：</strong>P0 通过项目配置限制创作范围 + 人工审核；P1 引入自动审核；P2 建立 IP 授权库</li>
+          <li><strong>底线：</strong>任何 TimeTag 资产必须标注版权归属，用户创作默认保留版权但授予平台展示和制作授权</li>
+        </ul>
+      </div></div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-header"><span><i data-lucide="landmark" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;color:var(--warning);"></i> 资产权与纠纷风险</span><i data-lucide="chevron-down" style="width:18px;height:18px;"></i></div>
+      <div class="accordion-body"><div class="accordion-content">
+        <ul>
+          <li><strong>风险：</strong>用户认为"我的资产"等于"我拥有全部权利"，实体遗失后要求赔偿或争议</li>
+          <li><strong>应对：</strong>领取和下单时明确展示资产类型和权利边界；资产详情页标注权利范围</li>
+          <li><strong>底线：</strong>实体所有权归用户，但作品版权、IP 授权、数字内容管理权按项目配置归属</li>
+        </ul>
+      </div></div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-header"><span><i data-lucide="banknote" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;color:var(--success);"></i> 分账与资金风险</span><i data-lucide="chevron-down" style="width:18px;height:18px;"></i></div>
+      <div class="accordion-body"><div class="accordion-content">
+        <ul>
+          <li><strong>风险：</strong>多主体分账计算错误、渠道收益争议、自动打款出错</li>
+          <li><strong>应对：</strong>P0 只做分账记录不做自动打款；P1 结算报表 + 人工确认打款；P2 自动分账</li>
+          <li><strong>底线：</strong>所有分账规则在项目创建时锁定，变更需记录操作日志</li>
+        </ul>
+      </div></div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-header"><span><i data-lucide="factory" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;color:var(--accent);"></i> 生产与履约风险</span><i data-lucide="chevron-down" style="width:18px;height:18px;"></i></div>
+      <div class="accordion-body"><div class="accordion-content">
+        <ul>
+          <li><strong>风险：</strong>TimeForge 设备故障导致批量延期、质检不合格、NFC 写入失败</li>
+          <li><strong>应对：</strong>指定设备 + 简单派单；预留异常上报和重做流程；生产状态实时同步</li>
+          <li><strong>底线：</strong>每个生产订单必须有质检记录，NFC 写入必须验证成功</li>
+        </ul>
+      </div></div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-header"><span><i data-lucide="user-x" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;color:var(--primary);"></i> 用户隐私与数据风险</span><i data-lucide="chevron-down" style="width:18px;height:18px;"></i></div>
+      <div class="accordion-body"><div class="accordion-content">
+        <ul>
+          <li><strong>风险：</strong>用户照片、纪念语等个人信息泄露；企业员工数据被不当使用</li>
+          <li><strong>应对：</strong>数据按项目隔离；用户内容仅项目相关方可见；NFC 内容用户可控</li>
+          <li><strong>底线：</strong>遵守数据保护法规，用户可删除自己的创作内容（删除内容不影响已生产实体）</li>
+        </ul>
+      </div></div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-header"><span><i data-lucide="alert-octagon" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;color:var(--danger);"></i> 运营与内容风险</span><i data-lucide="chevron-down" style="width:18px;height:18px;"></i></div>
+      <div class="accordion-body"><div class="accordion-content">
+        <ul>
+          <li><strong>风险：</strong>NFC 内容被篡改、违规内容通过审核、恶意领取占用名额</li>
+          <li><strong>应对：</strong>P0 人工审核 + 白名单领取；P1 自动审核 + 黑名单；P2 内容安全体系</li>
+          <li><strong>底线：</strong>NFC 内容变更需审核，恶意用户可封禁</li>
+        </ul>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="s14">
+  <div class="section-header"><h2><i data-lucide="message-circle"></i> 待讨论问题</h2></div>
+  <p class="section-desc">以下问题需要在方案确认前达成共识，建议逐项讨论并记录决策。</p>
+  <div class="accordion">
+    <div class="accordion-item open">
+      <div class="accordion-header"><span><i data-lucide="help-circle" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;color:var(--primary-light);"></i> DMI 项目是否需要审核？审核流程是什么？</span><i data-lucide="chevron-down" style="width:18px;height:18px;"></i></div>
+      <div class="accordion-body"><div class="accordion-content">
+        <ul>
+          <li>P0 阶段所有项目由 Admin 创建，是否需要额外审核？</li>
+          <li>商务代理创建的项目，是否需要运营审核后才能发布？</li>
+          <li>审核维度：项目信息完整性、规则合理性、版权风险、分账规则</li>
+        </ul>
+      </div></div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-header"><span><i data-lucide="help-circle" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;color:var(--primary-light);"></i> 用户创作的作品版权归属如何定义？</span><i data-lucide="chevron-down" style="width:18px;height:18px;"></i></div>
+      <div class="accordion-body"><div class="accordion-content">
+        <ul>
+          <li>用户使用 AI 创作的作品，版权归谁？用户 / 平台 / 共有？</li>
+          <li>使用平台模板或 IP 素材创作时，版权如何分配？</li>
+          <li>是否需要在领取 / 下单时展示版权声明？</li>
+        </ul>
+      </div></div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-header"><span><i data-lucide="help-circle" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;color:var(--primary-light);"></i> 分账规则是否在项目创建时锁定？</span><i data-lucide="chevron-down" style="width:18px;height:18px;"></i></div>
+      <div class="accordion-body"><div class="accordion-content">
+        <ul>
+          <li>项目进行中能否修改分账规则？</li>
+          <li>如果修改，已产生的订单按新规则还是旧规则？</li>
+          <li>是否需要分账规则版本管理？</li>
+        </ul>
+      </div></div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-header"><span><i data-lucide="help-circle" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;color:var(--primary-light);"></i> TimeForge 设备调度策略是什么？</span><i data-lucide="chevron-down" style="width:18px;height:18px;"></i></div>
+      <div class="accordion-body"><div class="accordion-content">
+        <ul>
+          <li>P0 指定设备生产，是否足够？</li>
+          <li>多台设备如何分配订单？按地域 / 按产能 / 按渠道？</li>
+          <li>设备故障时如何自动切换？</li>
+        </ul>
+      </div></div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-header"><span><i data-lucide="help-circle" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;color:var(--primary-light);"></i> 遗失补发的收费策略？</span><i data-lucide="chevron-down" style="width:18px;height:18px;"></i></div>
+      <div class="accordion-body"><div class="accordion-content">
+        <ul>
+          <li>补发是否收费？按什么标准？</li>
+          <li>谁承担补发成本？发行方 / 用户 / 平台？</li>
+          <li>P0 预留入口但手动处理，P1 自助补发</li>
+        </ul>
+      </div></div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-header"><span><i data-lucide="help-circle" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;color:var(--primary-light);"></i> 渠道接入的边界在哪里？</span><i data-lucide="chevron-down" style="width:18px;height:18px;"></i></div>
+      <div class="accordion-body"><div class="accordion-content">
+        <ul>
+          <li>渠道可以做什么？只能带客户，还是也能持有设备、负责履约？</li>
+          <li>渠道是否需要独立后台？P0 用 Admin 受限账号是否可行？</li>
+          <li>渠道与自营项目的利益冲突如何处理？</li>
+        </ul>
+      </div></div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-header"><span><i data-lucide="help-circle" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;color:var(--primary-light);"></i> NFC 内容运营的边界？</span><i data-lucide="chevron-down" style="width:18px;height:18px;"></i></div>
+      <div class="accordion-body"><div class="accordion-content">
+        <ul>
+          <li>NFC 内容由谁运营？用户 / 发行方 / 平台？</li>
+          <li>发行方能否在用户领取后更新 NFC 内容？</li>
+          <li>NFC 内容变更是否需要用户确认？</li>
+        </ul>
+      </div></div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-header"><span><i data-lucide="help-circle" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:8px;color:var(--primary-light);"></i> DMI 与现有 C 端定制的关系？</span><i data-lucide="chevron-down" style="width:18px;height:18px;"></i></div>
+      <div class="accordion-body"><div class="accordion-content">
+        <ul>
+          <li>DMI 项目用户是否复用现有 C 端账户体系？</li>
+          <li>DMI 产生的 TimeTag 资产与 C 端定制资产是否统一管理？</li>
+          <li>DMI 用户后续能否直接使用 C 端定制功能？</li>
+        </ul>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="final">
+  <div class="final-rec">
+    <h3>最终建议</h3>
+    <p style="color:var(--muted);font-size:16px;max-width:700px;margin:0 auto;line-height:1.8;">DMI 是 WOWNOW 从"单用户定制"升级为"组织型批量发行"的关键基础设施。第一版不做完整 B 端 SaaS，而是先跑通核心闭环，用真实项目验证模式。</p>
+    <div class="final-rec-grid">
+      <div class="final-rec-card">
+        <h4><i data-lucide="rocket" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> P0 先跑通</h4>
+        <ul><li>Admin 统一配置</li><li>商务代理创建</li><li>3 个真实项目验证</li><li>核心闭环跑通</li></ul>
+      </div>
+      <div class="final-rec-card">
+        <h4><i data-lucide="shield" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> 风控先行</h4>
+        <ul><li>版权标注必须</li><li>资产权利明确</li><li>分账记录先行</li><li>操作日志完整</li></ul>
+      </div>
+      <div class="final-rec-card">
+        <h4><i data-lucide="layers" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> 渐进开放</h4>
+        <ul><li>P0 代理创建</li><li>P1 运营支持</li><li>P2 自助平台</li><li>每期复盘调整</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer class="footer">
+  <p>WOWNOW DMI 方案讨论页 · 基于「Admin 统一配置 + 商务代理创建」模式</p>
+</footer>
+
+<script>
+/** @description 初始化 Lucide 图标 */
+lucide.createIcons();
+
+/** @description Tab 切换交互 */
+document.querySelectorAll('.tabs').forEach(tabGroup => {
+  const tabs = tabGroup.querySelectorAll('.tab');
+  const contents = tabGroup.querySelectorAll('.tab-content');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      const target = document.getElementById('tab-' + tab.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+});
+
+/** @description Accordion 折叠面板交互 */
+document.querySelectorAll('.accordion-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const item = header.parentElement;
+    item.classList.toggle('open');
+  });
+});
+
+/** @description 滚动时高亮当前导航项 */
+const navLinks = document.querySelectorAll('.nav-link');
+const sections = document.querySelectorAll('section[id], .hero[id]');
+function updateActiveNav() {
+  let current = '';
+  sections.forEach(section => {
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= 120) current = section.id;
+  });
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+}
+window.addEventListener('scroll', updateActiveNav, { passive: true });
+updateActiveNav();
+</script>
+</body>
+</html>
