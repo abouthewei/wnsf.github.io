@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WOWNOW AI音乐版权保护与生态需求</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --bg: #050910;
+      --panel: #101826;
+      --stroke: #2a3b57;
+      --text: #e6edf7;
+      --muted: #94a3b8;
+      --front: #3b82f6;
+      --back: #10b981;
+      --mid: #f59e0b;
+      --purple: #8b5cf6;
+      --cyan: #06b6d4;
+      --rose: #f43f5e;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: #020408;
+      background-image:
+        radial-gradient(at 0% 0%, rgba(59,130,246,0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(139,92,246,0.1) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(6,182,212,0.08) 0px, transparent 50%);
+      color: var(--text);
+      font-family: "PingFang SC", system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* 导航栏 */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(5,9,16,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 0 24px;
+    }
+    .navbar-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    .nav-logo {
+      font-size: 16px;
+      font-weight: 700;
+      background: linear-gradient(to right, #fff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+    }
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      white-space: nowrap;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: #fff;
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.1);
+    }
+
+    /* 容器 */
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 20px 40px;
+    }
+
+    .section {
+      margin-bottom: 64px;
+      scroll-margin-top: 72px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title i { color: var(--cyan); }
+    .section-desc {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    /* 玻璃卡片 */
+    .glass-card {
+      background: linear-gradient(180deg, rgba(30,41,59,0.6), rgba(15,23,42,0.7));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: default;
+    }
+    .glass-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -12px rgba(0,0,0,0.5);
+      border-color: rgba(255,255,255,0.2);
+      background: linear-gradient(180deg, rgba(40,53,74,0.7), rgba(15,23,42,0.8));
+    }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      min-height: calc(100vh - 80px);
+      padding: 40px 0;
+    }
+    .hero-title {
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-subtitle {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .hero-tag {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 99px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+    }
+    .hero-tag i { width: 16px; height: 16px; }
+    .hero-tag.blue { color: #60a5fa; border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.08); }
+    .hero-tag.purple { color: #a78bfa; border-color: rgba(139,92,246,0.3); background: rgba(139,92,246,0.08); }
+    .hero-tag.cyan { color: #22d3ee; border-color: rgba(6,182,212,0.3); background: rgba(6,182,212,0.08); }
+    .hero-tag.green { color: #34d399; border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.08); }
+    .hero-btns {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: #fff;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,130,246,0.3); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.1); }
+
+    /* 右侧视觉 */
+    .hero-visual {
+      position: relative;
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .viz-circle {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.08);
+      animation: pulse 4s ease-in-out infinite;
+    }
+    .viz-circle.c1 { width: 300px; height: 300px; animation-delay: 0s; }
+    .viz-circle.c2 { width: 220px; height: 220px; animation-delay: 1s; }
+    .viz-circle.c3 { width: 140px; height: 140px; animation-delay: 2s; }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.3; }
+      50% { transform: scale(1.05); opacity: 0.6; }
+    }
+    .viz-center {
+      position: relative;
+      z-index: 2;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 60px rgba(59,130,246,0.3);
+    }
+    .viz-nodes {
+      position: absolute;
+      width: 100%; height: 100%;
+    }
+    .viz-node {
+      position: absolute;
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: rgba(30,41,59,0.8);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: float 3s ease-in-out infinite;
+    }
+    .viz-node:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+    .viz-node:nth-child(2) { top: 20%; right: 15%; animation-delay: 0.5s; }
+    .viz-node:nth-child(3) { bottom: 20%; left: 15%; animation-delay: 1s; }
+    .viz-node:nth-child(4) { bottom: 10%; right: 20%; animation-delay: 1.5s; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* 核心结论卡片 */
+    .conclusion-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .conclusion-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .conclusion-card .card-num {
+      font-size: 36px;
+      font-weight: 800;
+      color: rgba(255,255,255,0.06);
+      position: absolute;
+      top: 8px; right: 12px;
+    }
+    .conclusion-card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    .conclusion-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .conclusion-card .highlight {
+      margin-top: 12px;
+      padding: 8px 12px;
+      background: rgba(59,130,246,0.1);
+      border-radius: 8px;
+      font-size: 12px;
+      color: #60a5fa;
+      border-left: 3px solid #3b82f6;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 0.3s;
+    }
+    .conclusion-card:hover .highlight {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .conclusion-card.accent-1 { border-top: 3px solid #3b82f6; }
+    .conclusion-card.accent-2 { border-top: 3px solid #8b5cf6; }
+    .conclusion-card.accent-3 { border-top: 3px solid #06b6d4; }
+    .conclusion-card.accent-4 { border-top: 3px solid #10b981; }
+
+    /* 筛选器 */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-size: 13px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover { border-color: rgba(255,255,255,0.2); color: #fff; }
+    .filter-btn.active {
+      background: rgba(59,130,246,0.15);
+      border-color: rgba(59,130,246,0.4);
+      color: #60a5fa;
+    }
+
+    /* 能力卡片矩阵 */
+    .capability-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .capability-card {
+      cursor: pointer;
+      position: relative;
+    }
+    .capability-card .cap-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+    .capability-card h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .capability-card .cap-phase {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 99px;
+      background: rgba(255,255,255,0.06);
+      color: var(--muted);
+    }
+    .capability-card .cap-phase.p1 { background: rgba(59,130,246,0.12); color: #60a5fa; }
+    .capability-card .cap-phase.p2 { background: rgba(139,92,246,0.12); color: #a78bfa; }
+    .capability-card .cap-phase.p3 { background: rgba(6,182,212,0.12); color: #22d3ee; }
+    .capability-card .cap-phase.p4 { background: rgba(100,116,139,0.12); color: #94a3b8; }
+    .capability-card .cap-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .capability-card .cap-detail {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s, opacity 0.3s, margin 0.3s;
+      opacity: 0;
+      margin-top: 0;
+    }
+    .capability-card.expanded .cap-detail {
+      max-height: 200px;
+      opacity: 1;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .capability-card .cap-conclusion {
+      font-size: 12px;
+      color: #34d399;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    /* Tab 切换 */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .tab-btn:hover { color: #fff; }
+    .tab-btn.active {
+      background: rgba(59,130,246,0.15);
+      color: #60a5fa;
+      box-shadow: 0 2px 8px rgba(59,130,246,0.1);
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.3s; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* 角色需求 */
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .role-col h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .role-item {
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 10px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .role-item.highlight {
+      background: rgba(59,130,246,0.08);
+      border-color: rgba(59,130,246,0.15);
+      color: #bfdbfe;
+    }
+
+    /* 生态场景 */
+    .scene-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .scene-card {
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .scene-card .scene-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      background: rgba(59,130,246,0.1);
+      color: #60a5fa;
+    }
+    .scene-card h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .scene-card p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .scene-card .scene-hover {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 16px;
+      background: linear-gradient(to top, rgba(15,23,42,0.95), transparent);
+      transform: translateY(100%);
+      transition: transform 0.3s;
+    }
+    .scene-card:hover .scene-hover {
+      transform: translateY(0);
+    }
+    .scene-card .scene-hover .tag {
+      display: inline-block;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 99px;
+      background: rgba(16,185,129,0.15);
+      color: #34d399;
+      margin-bottom: 4px;
+    }
+
+    /* 弹窗 */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: linear-gradient(180deg, #1e293b, #0f172a);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 32px;
+      max-width: 520px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      animation: modalIn 0.3s;
+    }
+    @keyframes modalIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .modal-header h3 { font-size: 18px; }
+    .modal-close {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      color: var(--muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-close:hover { color: #fff; background: rgba(255,255,255,0.1); }
+    .modal-body { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .modal-body .modal-row {
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .modal-body .modal-row:last-child { border-bottom: none; }
+    .modal-body .modal-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* 水印分级 */
+    .watermark-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .watermark-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 20px;
+      align-items: start;
+      cursor: pointer;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+      transition: all 0.2s;
+    }
+    .watermark-item:hover, .watermark-item.active {
+      border-color: rgba(139,92,246,0.3);
+      background: rgba(139,92,246,0.05);
+    }
+    .watermark-item .wm-left h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .watermark-item .wm-left .priority {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 99px;
+      background: rgba(244,63,94,0.12);
+      color: #fb7185;
+      display: inline-block;
+    }
+    .watermark-item .wm-right {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .watermark-detail {
+      grid-column: 1 / -1;
+      display: none;
+      padding-top: 12px;
+      margin-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .watermark-item.active .watermark-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* 区块链流程 */
+    .chain-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+      padding: 20px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 16px;
+      border: 1px dashed rgba(255,255,255,0.08);
+    }
+    .chain-node {
+      padding: 10px 16px;
+      border-radius: 10px;
+      background: rgba(6,182,212,0.08);
+      border: 1px solid rgba(6,182,212,0.2);
+      color: #22d3ee;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .chain-node:hover, .chain-node.active {
+      background: rgba(6,182,212,0.15);
+      box-shadow: 0 0 20px rgba(6,182,212,0.15);
+    }
+    .chain-arrow { color: var(--muted); }
+    .chain-table { width: 100%; border-collapse: collapse; }
+    .chain-table th, .chain-table td {
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .chain-table th {
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+    .chain-table td { color: var(--text); }
+    .chain-table tr.highlight { background: rgba(6,182,212,0.05); }
+    .chain-table .priority-tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 99px;
+      background: rgba(244,63,94,0.1);
+      color: #fb7185;
+    }
+
+    /* 私有格式 */
+    .format-card {
+      text-align: center;
+      padding: 40px;
+    }
+    .format-card .format-icon {
+      width: 80px; height: 80px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(139,92,246,0.2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .format-card h3 { font-size: 20px; margin-bottom: 12px; }
+    .format-card > p { color: var(--muted); font-size: 14px; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .format-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      text-align: left;
+    }
+    .format-item {
+      padding: 16px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .format-item h5 { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+    .format-item p { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 8px; }
+    .format-item .tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 99px;
+      background: rgba(100,116,139,0.15);
+      color: #94a3b8;
+      display: inline-block;
+    }
+
+    /* 商业模式 */
+    .biz-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .biz-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .biz-card p { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 10px; }
+    .biz-card .benefit {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .biz-card .benefit-tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 99px;
+      background: rgba(255,255,255,0.06);
+      color: var(--muted);
+    }
+
+    /* 时间轴 */
+    .timeline {
+      display: flex;
+      gap: 16px;
+      position: relative;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 24px;
+      left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, #3b82f6, #8b5cf6, #06b6d4, #10b981, #f59e0b);
+      opacity: 0.3;
+    }
+    .timeline-item {
+      flex: 1;
+      position: relative;
+      padding-top: 48px;
+      cursor: pointer;
+    }
+    .timeline-dot {
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--panel);
+      border: 2px solid var(--stroke);
+      transition: all 0.3s;
+      z-index: 2;
+    }
+    .timeline-item:hover .timeline-dot,
+    .timeline-item.active .timeline-dot {
+      border-color: #3b82f6;
+      background: #3b82f6;
+      box-shadow: 0 0 16px rgba(59,130,246,0.4);
+    }
+    .timeline-item.first .timeline-dot {
+      border-color: #f59e0b;
+      background: #f59e0b;
+      box-shadow: 0 0 16px rgba(245,158,11,0.4);
+    }
+    .timeline-card {
+      padding: 16px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: all 0.3s;
+    }
+    .timeline-item:hover .timeline-card,
+    .timeline-item.active .timeline-card {
+      border-color: rgba(59,130,246,0.2);
+      background: rgba(59,130,246,0.04);
+    }
+    .timeline-card .phase-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .timeline-card h4 {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    .timeline-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .timeline-card li {
+      font-size: 12px;
+      color: var(--muted);
+      padding: 3px 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .timeline-card li::before {
+      content: '';
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--stroke);
+      flex-shrink: 0;
+    }
+    .timeline-detail {
+      margin-top: 24px;
+      padding: 24px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      display: none;
+    }
+    .timeline-detail.active { display: block; animation: fadeIn 0.3s; }
+
+    /* 讨论问题 */
+    .question-progress {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .progress-bar {
+      flex: 1;
+      height: 6px;
+      border-radius: 99px;
+      background: rgba(255,255,255,0.06);
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(to right, #3b82f6, #8b5cf6);
+      transition: width 0.3s;
+    }
+    .question-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .question-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .question-item:hover { border-color: rgba(255,255,255,0.12); }
+    .question-item.done { opacity: 0.5; }
+    .question-item.done .q-text { text-decoration: line-through; }
+    .q-check {
+      width: 20px; height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--stroke);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .question-item.done .q-check {
+      background: #10b981;
+      border-color: #10b981;
+      color: #fff;
+    }
+    .q-text { font-size: 14px; color: var(--text); flex: 1; }
+    .q-num { font-size: 12px; color: var(--muted); }
+
+    /* 底部总结 */
+    .footer-summary {
+      text-align: center;
+      padding: 60px 40px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(30,41,59,0.4), rgba(15,23,42,0.5));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-summary p {
+      font-size: 18px;
+      line-height: 1.8;
+      color: var(--text);
+      max-width: 800px;
+      margin: 0 auto 32px;
+    }
+    .footer-keywords {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-keyword {
+      padding: 10px 24px;
+      border-radius: 99px;
+      font-size: 15px;
+      font-weight: 700;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .footer-keyword.k1 { color: #60a5fa; background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.2); }
+    .footer-keyword.k2 { color: #a78bfa; background: rgba(139,92,246,0.08); border-color: rgba(139,92,246,0.2); }
+    .footer-keyword.k3 { color: #22d3ee; background: rgba(6,182,212,0.08); border-color: rgba(6,182,212,0.2); }
+    .footer-keyword.k4 { color: #34d399; background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.2); }
+
+    /* 页脚 */
+    .page-footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      margin-top: 40px;
+    }
+
+    /* 响应式 */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .conclusion-grid { grid-template-columns: repeat(2, 1fr); }
+      .scene-grid { grid-template-columns: repeat(2, 1fr); }
+      .biz-grid { grid-template-columns: repeat(2, 1fr); }
+      .format-grid { grid-template-columns: repeat(3, 1fr); }
+      .timeline { flex-direction: column; }
+      .timeline::before { display: none; }
+      .timeline-item { padding-top: 0; padding-left: 32px; }
+      .timeline-dot { left: 0; top: 0; transform: none; }
+      .watermark-item { grid-template-columns: 1fr; }
+      .watermark-item.active .watermark-detail { grid-template-columns: 1fr; }
+      .role-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .hero-title { font-size: 28px; }
+      .conclusion-grid { grid-template-columns: 1fr; }
+      .scene-grid { grid-template-columns: 1fr; }
+      .biz-grid { grid-template-columns: 1fr; }
+      .format-grid { grid-template-columns: 1fr; }
+      .capability-grid { grid-template-columns: 1fr; }
+      .nav-logo { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="nav-logo">WOWNOW AI音乐</div>
+    <div class="nav-links">
+      <a href="#hero" class="nav-link active">总览</a>
+      <a href="#conclusion" class="nav-link">核心结论</a>
+      <a href="#capability" class="nav-link">版权保护</a>
+      <a href="#roles" class="nav-link">角色需求</a>
+      <a href="#scenes" class="nav-link">生态场景</a>
+      <a href="#watermark" class="nav-link">水印</a>
+      <a href="#blockchain" class="nav-link">区块链</a>
+      <a href="#format" class="nav-link">私有格式</a>
+      <a href="#business" class="nav-link">商业模式</a>
+      <a href="#timeline" class="nav-link">落地阶段</a>
+      <a href="#questions" class="nav-link">讨论问题</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- Hero -->
+  <section id="hero" class="section hero">
+    <div class="hero-left">
+      <h1 class="hero-title">WOWNOW AI音乐<br>版权保护与生态需求</h1>
+      <p class="hero-subtitle">以受控播放保护源文件，以不可听见音频水印追踪泄露，以区块链记录作品和权益，以 TimeTag 承载实体化音乐内容。</p>
+      <div class="hero-tags">
+        <span class="hero-tag blue"><i data-lucide="shield"></i>受控播放</span>
+        <span class="hero-tag purple"><i data-lucide="fingerprint"></i>音频水印</span>
+        <span class="hero-tag cyan"><i data-lucide="link"></i>区块链存证</span>
+        <span class="hero-tag green"><i data-lucide="disc"></i>TimeTag实体化</span>
+      </div>
+      <div class="hero-btns">
+        <a href="#conclusion" class="btn btn-primary"><i data-lucide="layout-dashboard"></i>查看方案总览</a>
+        <a href="#roles" class="btn btn-secondary"><i data-lucide="users"></i>查看角色需求</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="viz-circle c1"></div>
+      <div class="viz-circle c2"></div>
+      <div class="viz-circle c3"></div>
+      <div class="viz-center">
+        <i data-lucide="music" style="width:40px;height:40px;color:#fff;"></i>
+      </div>
+      <div class="viz-nodes">
+        <div class="viz-node"><i data-lucide="shield" style="width:20px;height:20px;color:#60a5fa;"></i></div>
+        <div class="viz-node"><i data-lucide="fingerprint" style="width:20px;height:20px;color:#a78bfa;"></i></div>
+        <div class="viz-node"><i data-lucide="link" style="width:20px;height:20px;color:#22d3ee;"></i></div>
+        <div class="viz-node"><i data-lucide="disc" style="width:20px;height:20px;color:#34d399;"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 核心结论 -->
+  <section id="conclusion" class="section">
+    <h2 class="section-title"><i data-lucide="lightbulb"></i>核心结论</h2>
+    <p class="section-desc">基于内部讨论形成的四项关键判断</p>
+    <div class="conclusion-grid">
+      <div class="glass-card conclusion-card accent-1">
+        <span class="card-num">01</span>
+        <h3>首版重点不是私有格式或区块链</h3>
+        <p>它们是增强能力，不是基础保护能力。首版应聚焦核心体验。</p>
+        <div class="highlight">讨论重点：优先级排序与资源分配</div>
+      </div>
+      <div class="glass-card conclusion-card accent-2">
+        <span class="card-num">02</span>
+        <h3>首版必须先做受控播放</h3>
+        <p>先确保用户分享出去的是播放页，不是源文件。这是版权保护的第一道防线。</p>
+        <div class="highlight">讨论重点：技术实现方案与用户体验平衡</div>
+      </div>
+      <div class="glass-card conclusion-card accent-3">
+        <span class="card-num">03</span>
+        <h3>音频水印适合早期规划</h3>
+        <p>它能解决泄露后的追踪问题，版权方更容易理解和接受。</p>
+        <div class="highlight">讨论重点：水印方案选型与实施阶段</div>
+      </div>
+      <div class="glass-card conclusion-card accent-4">
+        <span class="card-num">04</span>
+        <h3>WOWNOW核心差异化是TimeTag</h3>
+        <p>音乐可以变成可赠送、可收藏、可播放、可追踪权益的实体内容。</p>
+        <div class="highlight">讨论重点：TimeTag产品形态与权益设计</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 版权保护能力组合 -->
+  <section id="capability" class="section">
+    <h2 class="section-title"><i data-lucide="shield-check"></i>版权保护能力组合</h2>
+    <p class="section-desc">按阶段划分的版权保护能力矩阵，点击卡片展开详情</p>
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">全部</button>
+      <button class="filter-btn" data-filter="p1">第一阶段</button>
+      <button class="filter-btn" data-filter="p2">第二阶段</button>
+      <button class="filter-btn" data-filter="p3">第三阶段</button>
+      <button class="filter-btn" data-filter="p4">后续阶段</button>
+    </div>
+    <div class="capability-grid" id="capabilityGrid">
+      <!-- 动态生成 -->
+    </div>
+  </section>
+
+  <!-- 角色需求 -->
+  <section id="roles" class="section">
+    <h2 class="section-title"><i data-lucide="users"></i>不同角色需求与价值</h2>
+    <p class="section-desc">切换 Tab 查看不同角色在生态中的定位与价值</p>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="company"><i data-lucide="building-2"></i>音乐公司</button>
+      <button class="tab-btn" data-tab="musician"><i data-lucide="mic"></i>独立音乐人</button>
+      <button class="tab-btn" data-tab="consumer"><i data-lucide="heart"></i>消费者</button>
+      <button class="tab-btn" data-tab="wownow"><i data-lucide="zap"></i>WOWNOW</button>
+    </div>
+    <div id="roleContents">
+      <!-- 动态生成 -->
+    </div>
+  </section>
+
+  <!-- 生态场景 -->
+  <section id="scenes" class="section">
+    <h2 class="section-title"><i data-lucide="sparkles"></i>WOWNOW AI音乐生态想象</h2>
+    <p class="section-desc">8个核心场景，点击卡片查看详情</p>
+    <div class="scene-grid" id="sceneGrid">
+      <!-- 动态生成 -->
+    </div>
+  </section>
+
+  <!-- 音频水印 -->
+  <section id="watermark" class="section">
+    <h2 class="section-title"><i data-lucide="fingerprint"></i>不可听见音频水印</h2>
+    <p class="section-desc">分级水印策略 — 点击展开查看解决的问题与适合场景</p>
+    <div class="watermark-list" id="watermarkList">
+      <!-- 动态生成 -->
+    </div>
+  </section>
+
+  <!-- 区块链 -->
+  <section id="blockchain" class="section">
+    <h2 class="section-title"><i data-lucide="link"></i>区块链需求</h2>
+    <p class="section-desc">不存音乐文件，只记录作品、授权和 TimeTag 绑定关系</p>
+    <div class="chain-flow" id="chainFlow">
+      <!-- 动态生成 -->
+    </div>
+    <table class="chain-table" id="chainTable">
+      <!-- 动态生成 -->
+    </table>
+  </section>
+
+  <!-- 私有格式 -->
+  <section id="format" class="section">
+    <h2 class="section-title"><i data-lucide="file-lock"></i>私有音乐格式</h2>
+    <p class="section-desc">WOWNOW 私有音乐格式的概念与能力</p>
+    <div class="glass-card format-card">
+      <div class="format-icon">
+        <i data-lucide="package" style="width:36px;height:36px;color:#60a5fa;"></i>
+      </div>
+      <h3>WOWNOW 私有音乐格式</h3>
+      <p>将音乐封装为 WOWNOW 自有格式，普通播放器无法直接播放，适合 TimeEcho、App、高版权内容，不建议作为首版核心。</p>
+      <div class="format-grid" id="formatGrid">
+        <!-- 动态生成 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 商业模式 -->
+  <section id="business" class="section">
+    <h2 class="section-title"><i data-lucide="coins"></i>商业模式</h2>
+    <p class="section-desc">按受益方筛选查看不同商业模式</p>
+    <div class="filter-bar">
+      <button class="filter-btn active" data-biz="all">全部</button>
+      <button class="filter-btn" data-biz="wownow">WOWNOW</button>
+      <button class="filter-btn" data-biz="company">音乐公司</button>
+      <button class="filter-btn" data-biz="musician">音乐人</button>
+    </div>
+    <div class="biz-grid" id="bizGrid">
+      <!-- 动态生成 -->
+    </div>
+  </section>
+
+  <!-- 落地阶段 -->
+  <section id="timeline-section" class="section">
+    <h2 class="section-title"><i data-lucide="route"></i>推荐落地阶段</h2>
+    <p class="section-desc">五阶段实施路线图，点击阶段查看详细能力</p>
+    <div class="timeline" id="timeline">
+      <!-- 动态生成 -->
+    </div>
+    <div id="timelineDetail">
+      <!-- 动态生成 -->
+    </div>
+  </section>
+
+  <!-- 讨论问题 -->
+  <section id="questions" class="section">
+    <h2 class="section-title"><i data-lucide="message-circle-question"></i>讨论问题</h2>
+    <p class="section-desc">点击问题标记为"已讨论"，追踪讨论进度</p>
+    <div class="tabs">
+      <button class="tab-btn active" data-qtab="product"><i data-lucide="box"></i>产品讨论</button>
+      <button class="tab-btn" data-qtab="tech"><i data-lucide="code"></i>技术讨论</button>
+    </div>
+    <div class="question-progress">
+      <span style="font-size:13px;color:var(--muted);white-space:nowrap;">讨论进度</span>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      <span style="font-size:13px;color:var(--muted);white-space:nowrap;" id="progressText">0/20</span>
+    </div>
+    <div id="questionContents">
+      <!-- 动态生成 -->
+    </div>
+  </section>
+
+  <!-- 底部总结 -->
+  <section class="section">
+    <div class="footer-summary">
+      <p>WOWNOW AI 音乐生态应以"受控播放"保护源文件，以"不可听见音频水印"追踪泄露，以"区块链"记录作品和权益，以"TimeTag"承载实体化音乐内容，最终形成面向消费者、音乐人和版权方的 AI 音乐实体化生态。</p>
+      <div class="footer-keywords">
+        <span class="footer-keyword k1">可控</span>
+        <span class="footer-keyword k2">可追踪</span>
+        <span class="footer-keyword k3">可存证</span>
+        <span class="footer-keyword k4">可实体化</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="page-footer">
+    WOWNOW AI 音乐版权保护与生态需求讨论页 · 内部资料
+  </footer>
+
+</div>
+
+<!-- 弹窗 -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">标题</h3>
+      <button class="modal-close" onclick="closeModal()"><i data-lucide="x"></i></button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- 动态生成 -->
+    </div>
+  </div>
+</div>
+
+<script>
+// ==========================================
+// 数据定义
+// ==========================================
+
+const capabilities = [
+  { name: '受控播放', desc: '限制用户只能在平台页面内收听', phase: '第一阶段', phaseCode: 'p1', conclusion: '必须做，是版权保护基础', detail: '通过前端加密播放、流式传输等技术手段，确保音乐只能在 WOWNOW 平台内播放，无法直接获取音频文件。' },
+  { name: '有限收听', desc: '控制次数、时长、有效期', phase: '第一阶段', phaseCode: 'p1', conclusion: '必须做，适合分享场景', detail: '支持设置播放次数限制（如3次）、有效期限制（如7天）、单次播放时长限制等灵活策略。' },
+  { name: '不提供下载', desc: '降低普通用户拿到源文件的风险', phase: '第一阶段', phaseCode: 'p1', conclusion: '必须做，用户端最直观', detail: '明确不提供下载按钮和下载功能，从源头减少源文件泄露的可能性。' },
+  { name: '播放日志', desc: '记录收听和传播行为', phase: '第一阶段', phaseCode: 'p1', conclusion: '必须做，是追踪基础', detail: '记录每次播放的时间、设备、IP、用户等信息，为后续追踪和审计提供数据基础。' },
+  { name: '版权声明', desc: '明确用户使用边界', phase: '第一阶段', phaseCode: 'p1', conclusion: '必须做，降低争议', detail: '在播放页面和分享页面明确展示版权声明，告知用户作品的使用边界和限制。' },
+  { name: '不可听见音频水印', desc: '音频外流后可追踪来源', phase: '第二阶段', phaseCode: 'p2', conclusion: '建议尽快规划，版权方感知强', detail: '在音频中嵌入人耳不可听见的水印信息，当音频被录屏或外泄后，可提取水印追踪泄露来源。' },
+  { name: '区块链存证', desc: '证明作品生成时间、权益和绑定关系', phase: '第三阶段', phaseCode: 'p3', conclusion: '适合 WOWNOW + TimeTag 权益体系', detail: '将作品生成时间、版权信息、授权规则、TimeTag 绑定关系等关键信息上链存证。' },
+  { name: '私有音乐格式', desc: '提高文件被拿走后的播放门槛', phase: '后续阶段', phaseCode: 'p4', conclusion: '适合 TimeEcho、App、高版权内容，不建议首版核心', detail: '开发 WOWNOW 私有音频格式，只有授权播放器才能解码播放，提高盗版门槛。' }
+];
+
+const roles = {
+  company: {
+    concerns: ['版权安全', '授权边界', '收益分成', 'IP保护'],
+    offers: ['受控播放', '不可听见音频水印', '区块链存证', '分账能力', 'TimeTag实体发行'],
+    value: '让版权音乐从流媒体变成可控、可销售、可收藏的实体化内容。'
+  },
+  musician: {
+    concerns: ['曝光', '收益', '原创保护', '粉丝关系'],
+    offers: ['音乐人主页', '作品授权', 'AI共创', 'TimeTag售卖', '收益分成'],
+    value: '让音乐人把原创作品和个人风格变成实体商品与收入来源。'
+  },
+  consumer: {
+    concerns: ['情绪表达', '送礼', '纪念', '分享', '私密'],
+    offers: ['AI音乐生成', 'TimeTag绑定', '受控分享', 'TimeEcho播放', '情绪封面与动态背景'],
+    value: '让用户把故事和情绪变成一首专属音乐礼物。'
+  },
+  wownow: {
+    concerns: ['内容生态', '差异化', '商业闭环', '版权安全'],
+    offers: ['AI创作', '实体制造', '版权保护', '播放设备', '权益体系'],
+    value: '从 AI 定制礼品平台升级为情绪内容生态平台。'
+  }
+};
+
+const scenes = [
+  { name: '音乐 TimeTag', desc: '用户将 AI 音乐或版权音乐绑定到实体 TimeTag。', value: '音乐从数字内容变成实体礼物。', target: '消费者、礼品市场', biz: 'TimeTag销售、音乐绑定服务费', stage: '第一阶段', icon: 'disc' },
+  { name: '宠物纪念音乐卡', desc: '用宠物故事、照片、名字生成纪念音乐。', value: '强情绪、强纪念、适合付费。', target: '宠物主人', biz: '高客单定制服务', stage: '第一阶段', icon: 'heart' },
+  { name: '告白/生日音乐卡', desc: '为特定对象生成专属歌曲并赠送。', value: '适合社交传播和礼品场景。', target: '年轻用户、情侣', biz: '礼品销售、社交裂变', stage: '第一阶段', icon: 'gift' },
+  { name: '婚礼/纪念日音乐卡', desc: '生成感谢、祝福、纪念歌曲。', value: '适合批量礼品和高客单场景。', target: '婚礼市场、企业客户', biz: '批量定制、B端合作', stage: '第二阶段', icon: 'cake' },
+  { name: '独立音乐人 TimeTag', desc: '音乐人将作品做成实体音乐卡销售。', value: '帮助音乐人变现。', target: '独立音乐人、粉丝', biz: '销售分成、平台服务费', stage: '第二阶段', icon: 'mic' },
+  { name: '版权方联名音乐卡', desc: '音乐公司/艺人/IP 发行限定 TimeTag。', value: '版权内容实体化、粉丝经济。', target: '版权方、粉丝群体', biz: '授权费、联名销售分成', stage: '第三阶段', icon: 'crown' },
+  { name: '音乐盲卡', desc: '用户购买后才知道音乐内容或情绪主题。', value: '增加趣味性和收藏性。', target: '收藏爱好者、年轻用户', biz: '盲盒销售、复购提升', stage: '第三阶段', icon: 'package' },
+  { name: 'TimeEcho 播放', desc: 'TimeTag 靠近或吸附 TimeEcho 后播放音乐。', value: '增强硬件生态和家庭场景。', target: 'TimeEcho用户', biz: '硬件销售、生态绑定', stage: '第四阶段', icon: 'speaker' }
+];
+
+const watermarks = [
+  { name: '作品级水印', priority: 'P1', desc: '每首 AI 音乐生成时加入唯一水印，证明来源于 WOWNOW。', problem: '证明作品来源，区分正版与盗版', scene: '版权争议、法律举证' },
+  { name: '分享级水印', priority: 'P2', desc: '每次分享生成不同水印，便于追踪具体传播链路。', problem: '追踪泄露路径，定位分享环节', scene: '社交分享、链接传播' },
+  { name: '接收方级水印', priority: 'P3', desc: '不同收听人获得不同水印版本，追踪到具体对象。', problem: '精确定位泄露者身份', scene: '高价值内容、限量发行' },
+  { name: '水印检测能力', priority: 'P2', desc: '外部发现疑似盗传音频时，可检测是否来自 WOWNOW。', problem: '发现盗版内容，验证来源', scene: '市场监控、维权取证' }
+];
+
+const chainNodes = ['AI音乐生成', '作品存证', '生成过程存证', '授权规则存证', 'TimeTag绑定存证', '权益流转记录'];
+const chainData = [
+  { name: '作品存证', desc: '记录 AI 音乐作品生成时间和作品摘要', priority: 'P1' },
+  { name: '生成过程存证', desc: '对歌词、风格、模型、生成参数等关键信息做摘要记录', priority: 'P1' },
+  { name: '授权规则存证', desc: '记录作品是否可分享、商用、转赠、绑定 TimeTag 等规则', priority: 'P1' },
+  { name: 'TimeTag绑定存证', desc: '记录某个 TimeTag/NFC 与某首音乐的绑定关系', priority: 'P1' },
+  { name: '权益流转记录', desc: '记录转赠、授权变化、权益变更', priority: 'P2' }
+];
+
+const formats = [
+  { name: 'WOWNOW 私有音乐格式', desc: '普通播放器无法直接播放', priority: 'P2', tag: '后续增强' },
+  { name: '权益信息封装', desc: '包含作品ID、版权状态、授权规则、TimeTag绑定状态', priority: 'P2', tag: '后续增强' },
+  { name: '平台播放器识别', desc: '只能由 WOWNOW 授权播放器识别和播放', priority: 'P2', tag: '后续增强' },
+  { name: '防篡改校验', desc: '防止作品ID、版权状态、授权规则被伪造或修改', priority: 'P2', tag: '后续增强' },
+  { name: 'TimeEcho 支持', desc: '私有格式优先用于 TimeEcho、App、高版权内容', priority: 'P2', tag: '后续增强' }
+];
+
+const bizModels = [
+  { name: 'AI音乐生成付费', desc: '用户生成专属音乐时付费', benefits: ['WOWNOW'], code: 'wownow' },
+  { name: 'TimeTag制作销售', desc: '用户将音乐绑定到实体 TimeTag', benefits: ['WOWNOW'], code: 'wownow' },
+  { name: '版权模板使用费', desc: '用户使用版权方音乐、风格、伴奏时付费', benefits: ['音乐公司', 'WOWNOW'], code: 'company' },
+  { name: '音乐人风格包', desc: '用户使用独立音乐人的风格生成音乐', benefits: ['音乐人', 'WOWNOW'], code: 'musician' },
+  { name: '限定音乐卡', desc: '发行艺人、IP、音乐人限定 TimeTag', benefits: ['版权方', '音乐人', 'WOWNOW'], code: 'company' },
+  { name: '商用授权升级', desc: '用户购买更高等级音乐使用权', benefits: ['版权方', '音乐人', 'WOWNOW'], code: 'company' },
+  { name: 'TimeEcho硬件销售', desc: '用户购买音乐播放设备', benefits: ['WOWNOW'], code: 'wownow' },
+  { name: '企业礼品定制', desc: '企业批量定制音乐 TimeTag', benefits: ['WOWNOW', '版权方'], code: 'company' }
+];
+
+const timelineData = [
+  { phase: '第一阶段', label: '首版重点', goal: '先保证音乐分享可控，不暴露源文件', items: ['受控播放', '有限收听', '不提供下载', '版权声明', '播放日志'], detail: '首版核心目标是建立基础版权保护能力，确保用户在平台内安全地收听和分享音乐，不暴露原始音频文件。' },
+  { phase: '第二阶段', label: '', goal: '增强版权方信任和泄露追踪能力', items: ['不可听见音频水印', '水印检测', '异常传播追踪'], detail: '在基础保护之上，引入音频水印技术，让版权方看到 WOWNOW 对泄露追踪的重视和能力。' },
+  { phase: '第三阶段', label: '', goal: '建立 WOWNOW 音乐权益体系', items: ['区块链存证', 'TimeTag绑定存证', '授权规则存证'], detail: '通过区块链技术建立不可篡改的权益记录体系，为 TimeTag 和版权交易提供信任基础。' },
+  { phase: '第四阶段', label: '', goal: '形成音乐实体化生态', items: ['音乐 TimeTag', '音乐人入驻', '版权模板市场', '联名音乐卡'], detail: '拓展音乐实体化场景，引入音乐人和版权方，形成完整的内容生态。' },
+  { phase: '第五阶段', label: '', goal: '扩展硬件和高版权内容能力', items: ['私有音乐格式', 'TimeEcho播放', '离线受控播放'], detail: '通过私有格式和硬件生态，为高价值版权内容提供更高级别的保护。' }
+];
+
+const productQuestions = [
+  '用户分享后，对方能听几次？',
+  '分享链接多久失效？',
+  '浏览器打开能否完整播放？',
+  '是否允许用户设置私密播放？',
+  '版权声明是否强制展示？',
+  '被投诉作品如何处理？',
+  'TimeTag绑定音乐后是否拥有特殊权益？',
+  '音乐能否转赠？',
+  '版权方内容是否需要更高保护等级？',
+  '用户是否能购买更高权益版本？'
+];
+
+const techQuestions = [
+  '如何保证用户不能直接拿到源文件？',
+  '小程序和H5的保护等级是否不同？',
+  '不可听见水印是否影响音质？',
+  '水印是作品级、分享级还是用户级？',
+  '区块链存证放哪些信息？',
+  'TimeTag绑定信息是否需要上链？',
+  '私有格式是否有必要？',
+  'TimeEcho 是否需要优先支持私有格式？',
+  '版权投诉后如何快速限制播放？',
+  '如何给版权方提供审计证明？'
+];
+
+// ==========================================
+// 渲染函数
+// ==========================================
+
+function renderCapabilities(filter) {
+  const grid = document.getElementById('capabilityGrid');
+  const filtered = filter === 'all' ? capabilities : capabilities.filter(c => c.phaseCode === filter);
+  grid.innerHTML = filtered.map((c, i) => `
+    <div class="glass-card capability-card" data-phase="${c.phaseCode}" onclick="toggleCap(this)">
+      <div class="cap-header">
+        <h4>${c.name}</h4>
+        <span class="cap-phase ${c.phaseCode}">${c.phase}</span>
+      </div>
+      <p class="cap-desc">${c.desc}</p>
+      <div class="cap-conclusion"><i data-lucide="check-circle-2" style="width:14px;height:14px;"></i>${c.conclusion}</div>
+      <div class="cap-detail">
+        <p>${c.detail}</p>
+      </div>
+    </div>
+  `).join('');
+  lucide.createIcons();
+}
+
+function toggleCap(el) {
+  el.classList.toggle('expanded');
+}
+
+function renderRoles(tab) {
+  const container = document.getElementById('roleContents');
+  const data = roles[tab];
+  container.innerHTML = `
+    <div class="tab-content active">
+      <div class="role-grid">
+        <div class="role-col">
+          <h4>他们关心什么</h4>
+          ${data.concerns.map(c => `<div class="role-item">${c}</div>`).join('')}
+        </div>
+        <div class="role-col">
+          <h4>WOWNOW 可以提供什么</h4>
+          ${data.offers.map(o => `<div class="role-item highlight">${o}</div>`).join('')}
+        </div>
+        <div class="role-col">
+          <h4>生态价值</h4>
+          <div class="role-item" style="background:rgba(16,185,129,0.06);border-color:rgba(16,185,129,0.12);color:#6ee7b7;">${data.value}</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderScenes() {
+  const grid = document.getElementById('sceneGrid');
+  grid.innerHTML = scenes.map((s, i) => `
+    <div class="glass-card scene-card" onclick="openSceneModal(${i})">
+      <div class="scene-icon"><i data-lucide="${s.icon}" style="width:20px;height:20px;"></i></div>
+      <h4>${s.name}</h4>
+      <p>${s.desc}</p>
+      <div class="scene-hover">
+        <span class="tag">${s.target}</span>
+        <p style="color:#94a3b8;margin-top:4px;font-size:11px;">${s.biz}</p>
+      </div>
+    </div>
+  `).join('');
+  lucide.createIcons();
+}
+
+function openSceneModal(index) {
+  const s = scenes[index];
+  document.getElementById('modalTitle').textContent = s.name;
+  document.getElementById('modalBody').innerHTML = `
+    <div class="modal-row">
+      <div class="modal-label">场景说明</div>
+      <div>${s.desc}</div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-label">用户价值</div>
+      <div>${s.value}</div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-label">平台价值</div>
+      <div>${s.biz}</div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-label">适合阶段</div>
+      <div><span class="cap-phase ${s.stage === '第一阶段' ? 'p1' : s.stage === '第二阶段' ? 'p2' : s.stage === '第三阶段' ? 'p3' : 'p4'}">${s.stage}</span></div>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('active');
+  lucide.createIcons();
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+}
+
+function renderWatermarks() {
+  const list = document.getElementById('watermarkList');
+  list.innerHTML = watermarks.map((w, i) => `
+    <div class="watermark-item" onclick="toggleWm(this)">
+      <div class="wm-left">
+        <h4><i data-lucide="fingerprint" style="width:16px;height:16px;color:#a78bfa;"></i>${w.name}</h4>
+        <span class="priority">${w.priority}</span>
+      </div>
+      <div class="wm-right">${w.desc}</div>
+      <div class="watermark-detail">
+        <div>
+          <div class="modal-label">解决的问题</div>
+          <div style="color:var(--muted);font-size:13px;">${w.problem}</div>
+        </div>
+        <div>
+          <div class="modal-label">适合场景</div>
+          <div style="color:var(--muted);font-size:13px;">${w.scene}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  lucide.createIcons();
+}
+
+function toggleWm(el) {
+  document.querySelectorAll('.watermark-item').forEach(item => {
+    if (item !== el) item.classList.remove('active');
+  });
+  el.classList.toggle('active');
+}
+
+function renderChain() {
+  const flow = document.getElementById('chainFlow');
+  flow.innerHTML = chainNodes.map((n, i) => `
+    ${i > 0 ? '<span class="chain-arrow"><i data-lucide="chevron-right" style="width:16px;height:16px;"></i></span>' : ''}
+    <span class="chain-node" data-index="${i}" onclick="highlightChain(${i})">${n}</span>
+  `).join('');
+
+  const table = document.getElementById('chainTable');
+  table.innerHTML = `
+    <thead><tr><th>存证类型</th><th>说明</th><th>优先级</th></tr></thead>
+    <tbody>
+      ${chainData.map((d, i) => `
+        <tr data-index="${i+1}">
+          <td style="font-weight:600;">${d.name}</td>
+          <td>${d.desc}</td>
+          <td><span class="priority-tag">${d.priority}</span></td>
+        </tr>
+      `).join('')}
+    </tbody>
+  `;
+  lucide.createIcons();
+}
+
+function highlightChain(index) {
+  document.querySelectorAll('.chain-node').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.chain-node')[index].classList.add('active');
+  document.querySelectorAll('.chain-table tr').forEach(tr => tr.classList.remove('highlight'));
+  if (index > 0) {
+    const tr = document.querySelector(`.chain-table tr[data-index="${index}"]`);
+    if (tr) tr.classList.add('highlight');
+  }
+}
+
+function renderFormat() {
+  const grid = document.getElementById('formatGrid');
+  grid.innerHTML = formats.map(f => `
+    <div class="format-item">
+      <h5>${f.name}</h5>
+      <p>${f.desc}</p>
+      <span class="tag">${f.tag}</span>
+    </div>
+  `).join('');
+}
+
+function renderBiz(filter) {
+  const grid = document.getElementById('bizGrid');
+  const filtered = filter === 'all' ? bizModels : bizModels.filter(b => b.benefits.some(be => {
+    const map = { wownow: 'WOWNOW', company: '音乐公司', musician: '音乐人' };
+    return be === map[filter];
+  }));
+  grid.innerHTML = filtered.map(b => `
+    <div class="glass-card biz-card">
+      <h4>${b.name}</h4>
+      <p>${b.desc}</p>
+      <div class="benefit">
+        ${b.benefits.map(be => `<span class="benefit-tag">${be}</span>`).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderTimeline() {
+  const tl = document.getElementById('timeline');
+  tl.innerHTML = timelineData.map((t, i) => `
+    <div class="timeline-item ${i === 0 ? 'first active' : ''}" data-index="${i}" onclick="showTimelineDetail(${i})">
+      <div class="timeline-dot"></div>
+      <div class="timeline-card">
+        <div class="phase-label">${t.phase} ${t.label ? '· ' + t.label : ''}</div>
+        <h4>${t.goal}</h4>
+        <ul>${t.items.map(item => `<li>${item}</li>`).join('')}</ul>
+      </div>
+    </div>
+  `).join('');
+
+  showTimelineDetail(0);
+}
+
+function showTimelineDetail(index) {
+  document.querySelectorAll('.timeline-item').forEach((el, i) => {
+    el.classList.toggle('active', i === index);
+  });
+  const detail = document.getElementById('timelineDetail');
+  if (!detail) return;
+  const t = timelineData[index];
+  detail.innerHTML = `
+    <div class="timeline-detail active">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <span class="cap-phase ${index === 0 ? 'p1' : index === 1 ? 'p2' : index === 2 ? 'p3' : 'p4'}">${t.phase}</span>
+        <span style="font-size:16px;font-weight:700;">${t.goal}</span>
+      </div>
+      <p style="color:var(--muted);line-height:1.7;margin-bottom:16px;">${t.detail}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        ${t.items.map(item => `<span class="hero-tag blue" style="font-size:12px;">${item}</span>`).join('')}
+      </div>
+    </div>
+  `;
+}
+
+let discussedCount = 0;
+const totalQuestions = productQuestions.length + techQuestions.length;
+
+function renderQuestions(tab) {
+  const container = document.getElementById('questionContents');
+  const questions = tab === 'product' ? productQuestions : techQuestions;
+  const prefix = tab === 'product' ? 'P' : 'T';
+  container.innerHTML = `
+    <div class="tab-content active">
+      <div class="question-list">
+        ${questions.map((q, i) => `
+          <div class="question-item" onclick="toggleQuestion(this)" data-id="${prefix}-${i}">
+            <div class="q-check"><i data-lucide="check" style="width:12px;height:12px;"></i></div>
+            <span class="q-text">${q}</span>
+            <span class="q-num">${prefix}${i+1}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  lucide.createIcons();
+}
+
+function toggleQuestion(el) {
+  el.classList.toggle('done');
+  const done = document.querySelectorAll('.question-item.done').length;
+  document.getElementById('progressFill').style.width = (done / totalQuestions * 100) + '%';
+  document.getElementById('progressText').textContent = `${done}/${totalQuestions}`;
+}
+
+// ==========================================
+// 事件绑定
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderCapabilities('all');
+  renderRoles('company');
+  renderScenes();
+  renderWatermarks();
+  renderChain();
+  renderFormat();
+  renderBiz('all');
+  renderTimeline();
+  renderQuestions('product');
+  lucide.createIcons();
+
+  // 能力筛选
+  document.querySelectorAll('[data-filter]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderCapabilities(btn.dataset.filter);
+    });
+  });
+
+  // 角色 Tab
+  document.querySelectorAll('[data-tab]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-tab]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderRoles(btn.dataset.tab);
+    });
+  });
+
+  // 商业模式筛选
+  document.querySelectorAll('[data-biz]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-biz]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderBiz(btn.dataset.biz);
+    });
+  });
+
+  // 问题 Tab
+  document.querySelectorAll('[data-qtab]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-qtab]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderQuestions(btn.dataset.qtab);
+    });
+  });
+
+  // 导航高亮
+  const sections = document.querySelectorAll('.section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => {
+      const rect = sec.getBoundingClientRect();
+      if (rect.top <= 100) current = sec.id;
+    });
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    });
+  });
+
+  // 弹窗关闭
+  document.getElementById('modalOverlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  });
+});
+</script>
+</body>
+</html>
