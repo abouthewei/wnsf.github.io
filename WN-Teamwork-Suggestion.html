@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>产品上线协作流程改进建议</title>
+  <style>
+    :root{--bg:#f6f7f9;--paper:#fff;--paper2:#fafbfc;--text:#17191c;--muted:#68707c;--line:#e4e7eb;--shadow:0 14px 36px rgba(18,24,40,.07);--blue:#1677ff;--blue-soft:#eaf3ff;--orange:#f07b22;--orange-soft:#fff1e7;--green:#16a36a;--green-soft:#e8f8f1;--purple:#7c5ce7;--purple-soft:#f0edff;--red:#e5484d;--yellow:#c98500;--yellow-soft:#fff5d6;--gray:#7b8491;--radius:22px;--max:1180px}
+    @media(prefers-color-scheme:dark){:root{--bg:#0e1013;--paper:#16191e;--paper2:#12151a;--text:#f4f6f8;--muted:#9ca4b0;--line:#292e36;--shadow:0 18px 44px rgba(0,0,0,.24);--blue-soft:#122744;--orange-soft:#3b2416;--green-soft:#113126;--purple-soft:#28203f;--yellow-soft:#382f15}}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Microsoft YaHei",Inter,Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}button{font:inherit}a{color:inherit}.wrap{width:min(var(--max),calc(100% - 40px));margin:auto}.hero{padding:88px 0 56px}.hero h1{max-width:920px;margin:0;font-size:clamp(38px,6vw,72px);line-height:1.08;letter-spacing:-.045em}.hero p{max-width:750px;margin:24px 0 0;color:var(--muted);font-size:clamp(17px,2vw,21px)}.hero-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}.tag{padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--muted);font-size:13px;font-weight:650}.theme-toggle{position:fixed;z-index:20;right:22px;top:20px;width:42px;height:42px;border:1px solid var(--line);border-radius:50%;background:color-mix(in srgb,var(--paper) 88%,transparent);color:var(--text);box-shadow:var(--shadow);cursor:pointer;backdrop-filter:blur(14px)}main{padding-bottom:96px}section{padding:64px 0}.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:28px}.section-no{font-size:13px;color:var(--muted);font-weight:750;letter-spacing:.08em}.section-head h2{margin:4px 0 0;font-size:clamp(28px,4vw,42px);line-height:1.2;letter-spacing:-.035em}.section-head p{max-width:460px;margin:0;color:var(--muted)}.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 1px 2px rgba(0,0,0,.025);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}.card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--line) 60%,var(--muted))}.reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}.reveal.show{opacity:1;transform:none}
+    .flow-card{padding:34px;overflow:hidden}.flow{display:flex;align-items:center;gap:8px;min-width:1040px}.step{flex:1;min-width:82px;text-align:center;padding:13px 8px;border-radius:13px;background:var(--paper2);border:1px solid var(--line);font-size:14px;font-weight:700}.step.gate{background:var(--blue-soft);border-color:color-mix(in srgb,var(--blue) 35%,var(--line));color:var(--blue)}.arrow{color:var(--muted);opacity:.65}.flow-scroll{overflow-x:auto;padding:4px 2px 12px}.prep-detail{margin-top:22px;padding:22px;border-radius:17px;background:linear-gradient(135deg,var(--blue-soft),color-mix(in srgb,var(--purple-soft) 60%,var(--paper)));border:1px solid color-mix(in srgb,var(--blue) 22%,var(--line))}.prep-detail strong{display:block;margin-bottom:10px;font-size:18px}.prep-mini{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.prep-mini span{padding:10px;border-radius:10px;background:color-mix(in srgb,var(--paper) 72%,transparent);font-size:13px;text-align:center}
+    .dept-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.dept{padding:24px;position:relative;overflow:hidden}.dept:before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--accent)}.dept h3{margin:0 0 4px;font-size:21px}.dept .goal{margin:0 0 18px;color:var(--accent);font-weight:700;font-size:14px}.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{padding:6px 9px;border-radius:8px;background:var(--soft);font-size:13px}.product{--accent:var(--blue);--soft:var(--blue-soft)}.marketing{--accent:var(--orange);--soft:var(--orange-soft)}.service{--accent:var(--green);--soft:var(--green-soft)}.ceo{--accent:var(--purple);--soft:var(--purple-soft)}
+    .matrix-card{overflow:hidden}.matrix-wrap{overflow:auto}.matrix{width:100%;border-collapse:separate;border-spacing:0;min-width:820px}.matrix th,.matrix td{padding:12px 16px;border-bottom:1px solid var(--line);text-align:center}.matrix th{position:sticky;top:0;background:var(--paper2);font-size:13px;color:var(--muted);z-index:1}.matrix th:first-child,.matrix td:first-child{text-align:left;position:sticky;left:0;background:var(--paper);z-index:2}.matrix th:first-child{background:var(--paper2);z-index:3}.matrix tr:last-child td{border-bottom:0}.matrix tbody tr:hover td{background:color-mix(in srgb,var(--blue-soft) 30%,var(--paper))}.matrix tbody tr:hover td:first-child{background:color-mix(in srgb,var(--blue-soft) 30%,var(--paper))}.raci{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;color:#fff;font-size:12px;font-weight:800}.r{background:var(--blue)}.a{background:var(--red)}.c{background:var(--yellow);color:#302000}.i{background:var(--gray)}.legend{display:flex;gap:18px;flex-wrap:wrap;padding:18px 22px;border-bottom:1px solid var(--line);background:var(--paper2);color:var(--muted);font-size:13px}.legend span{display:flex;gap:8px;align-items:center}.legend .raci{width:24px;height:24px;border-radius:7px}
+    .boundary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.boundary{padding:26px}.boundary .mark{width:42px;height:42px;border-radius:12px;background:var(--soft);color:var(--accent);display:grid;place-items:center;margin-bottom:32px;font-weight:850}.boundary h3{margin:0;font-size:21px}.boundary .sentence{min-height:52px;margin:8px 0 18px;color:var(--muted)}
+    .risk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.risk{padding:22px}.risk b{display:block;margin-bottom:8px;color:var(--red);font-size:12px;letter-spacing:.06em}.risk p{margin:0;font-weight:650}.manifesto{margin-top:18px;padding:34px;border-radius:var(--radius);background:#17191c;color:#fff;font-size:clamp(22px,3.5vw,36px);font-weight:750;line-height:1.35;letter-spacing:-.025em}.manifesto em{color:#8ebcff;font-style:normal}
+    .timeline{display:grid;grid-template-columns:repeat(5,1fr);position:relative;gap:18px;padding:34px 20px}.timeline:before{content:"";position:absolute;left:8%;right:8%;top:57px;height:2px;background:linear-gradient(90deg,var(--blue),var(--purple));transform-origin:left;animation:grow 1.5s ease both}.milestone{position:relative;text-align:center}.dot{width:16px;height:16px;margin:16px auto 22px;border-radius:50%;background:var(--paper);border:4px solid var(--blue);box-shadow:0 0 0 5px var(--bg)}.milestone:nth-child(n+4) .dot{border-color:var(--purple)}.milestone b{font-size:14px;color:var(--blue)}.milestone:nth-child(n+4) b{color:var(--purple)}.milestone p{margin:6px auto 0;max-width:170px;font-weight:650;line-height:1.45}
+    .gate-card{padding:clamp(28px,5vw,56px);background:linear-gradient(145deg,var(--paper),var(--blue-soft));border-color:color-mix(in srgb,var(--blue) 28%,var(--line))}.gate-title{display:flex;justify-content:space-between;align-items:center;gap:20px}.gate-title h3{margin:0;font-size:clamp(26px,4vw,44px);letter-spacing:-.035em}.lock{width:64px;height:64px;color:var(--blue)}.conditions{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;align-items:stretch;gap:12px;margin-top:34px}.condition{padding:20px 16px;border-radius:15px;background:color-mix(in srgb,var(--paper) 82%,transparent);border:1px solid var(--line);font-weight:700}.check{color:var(--green);margin-right:7px}.and{align-self:center;color:var(--muted);font-size:12px;font-weight:850;letter-spacing:.08em}.go{margin-top:22px;padding:18px;border-radius:14px;background:var(--blue);color:#fff;text-align:center;font-size:20px;font-weight:800}
+    @keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+    @media(max-width:900px){.dept-grid,.boundary-grid{grid-template-columns:repeat(2,1fr)}.risk-grid{grid-template-columns:repeat(2,1fr)}.timeline{grid-template-columns:1fr;padding-left:44px}.timeline:before{left:31px;right:auto;top:48px;bottom:48px;width:2px;height:auto;transform-origin:top;animation-name:growY}.milestone{text-align:left;display:grid;grid-template-columns:24px 1fr;column-gap:20px}.dot{grid-row:1/3;margin:8px 0 0}.milestone p{margin:3px 0 22px;max-width:none}.conditions{grid-template-columns:1fr}.and{text-align:center}.prep-mini{grid-template-columns:repeat(2,1fr)}}
+    @keyframes growY{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+    @media(max-width:600px){.wrap{width:min(100% - 24px,var(--max))}.hero{padding:72px 0 28px}.hero h1{font-size:39px}.section-head{display:block}.section-head p{margin-top:10px}.dept-grid,.boundary-grid,.risk-grid{grid-template-columns:1fr}.flow-card{padding:20px}.dept,.boundary{padding:22px}.theme-toggle{right:12px;top:12px}.prep-mini{grid-template-columns:1fr}.manifesto{padding:26px}.legend{gap:10px}.gate-title{align-items:flex-start}.lock{width:50px;height:50px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.timeline:before{animation:none}.card{transition:none}}
+    @media print{*{print-color-adjust:exact;-webkit-print-color-adjust:exact}body{background:#fff;color:#111}.theme-toggle{display:none}.hero{padding:28px 0}.hero h1{font-size:42px}.wrap{width:94%}section{padding:28px 0;break-inside:avoid}.card{box-shadow:none}.reveal{opacity:1;transform:none}.flow-scroll,.matrix-wrap{overflow:visible}.flow{min-width:0;gap:3px}.step{font-size:10px;padding:8px 2px;min-width:0}.arrow{font-size:10px}.matrix{min-width:0;font-size:10px}.matrix th,.matrix td{padding:5px}.dept,.boundary,.risk{break-inside:avoid}.theme-toggle{display:none}}
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="切换深浅色" title="切换深浅色">◐</button>
+  <header class="hero wrap">
+    <h1>产品上线协作流程<br>改进建议</h1>
+    <p>减少部门之间的信息不对等及传递损失。</p>
+  </header>
+  <main>
+    <section class="wrap reveal">
+      <div class="section-head"><div><span class="section-no">01 / GO LIVE SOP</span><h2>产品上线协作流程</h2></div><p>从立项到复盘，以 Go Live 评审作为跨部门协作的正式门禁。</p></div>
+      <div class="card flow-card">
+        <div class="flow-scroll"><div class="flow">
+          <div class="step">需求立项</div><span class="arrow">→</span><div class="step">产品方案</div><span class="arrow">→</span><div class="step">需求评审</div><span class="arrow">→</span><div class="step">开发</div><span class="arrow">→</span><div class="step">测试</div><span class="arrow">→</span><div class="step">产品验收</div><span class="arrow">→</span><div class="step gate">上线准备</div><span class="arrow">→</span><div class="step gate">Go Live 评审</div><span class="arrow">→</span><div class="step">正式上线</div><span class="arrow">→</span><div class="step">版本复盘</div>
+        </div></div>
+        <div class="prep-detail"><strong>上线准备阶段 · 基于交付工作台，跨部门并行交付</strong><div class="prep-mini"><span>交付工作台<br>功能 / 进度 / 发版时间</span><span>产品研发中心<br>产品可上线</span><span>市场与客服<br>推广及服务就绪</span><span>周会同步<br>风险 / 依赖 / 决策</span></div></div>
+      </div>
+    </section>
+
+    <section class="wrap reveal">
+      <div class="section-head"><div><span class="section-no">02 / CHECKLIST</span><h2>产品上线准备</h2></div><p>目前产品上线前已按节点发送进度通知，提供相关功能培训和 SOP，并通知市场相关人员提前体验、反馈问题。</p></div>
+      <div class="dept-grid">
+        <article class="card dept product"><h3>产品研发中心</h3><p class="goal">保证产品可以上线</p><div class="chips"><span class="chip">PRD</span><span class="chip">UI</span><span class="chip">开发</span><span class="chip">测试</span><span class="chip">产品 FAQ</span><span class="chip">SOP</span><span class="chip">产品培训</span><span class="chip">提前体验</span><span class="chip">Release Note</span><span class="chip">进度及上线通知</span></div></article>
+        <article class="card dept marketing"><h3>市场部</h3><p class="goal">保证产品可以推广</p><div class="chips"><span class="chip">推广方案</span><span class="chip">推广 Q&A</span><span class="chip">Banner</span><span class="chip">宣传素材</span><span class="chip">推文</span><span class="chip">渠道计划</span><span class="chip">发布时间</span></div></article>
+        <article class="card dept service"><h3>客服部</h3><p class="goal">保证产品可以承接用户咨询</p><div class="chips"><span class="chip">客服 FAQ</span><span class="chip">功能培训</span><span class="chip">提前体验</span><span class="chip">服务话术</span><span class="chip">问题反馈</span><span class="chip">异常升级</span><span class="chip">上线值守</span></div></article>
+        <article class="card dept ceo"><h3>CEO</h3><p class="goal">保证方向与资源一致</p><div class="chips"><span class="chip">产品方向</span><span class="chip">Go Live 审批</span><span class="chip">资源协调</span></div></article>
+      </div>
+    </section>
+
+    <section class="wrap reveal">
+      <div class="section-head"><div><span class="section-no">03 / RACI</span><h2>RACI 矩阵</h2></div><p>为每项工作只设置一个最终责任。</p></div>
+      <div class="card matrix-card"><div class="legend"><span><i class="raci r">R</i>Responsible · 执行</span><span><i class="raci a">A</i>Accountable · 最终负责</span><span><i class="raci c">C</i>Consulted · 协商</span><span><i class="raci i">I</i>Informed · 知会</span></div><div class="matrix-wrap"><table class="matrix" aria-label="产品上线协作 RACI 矩阵">
+        <thead><tr><th>工作项</th><th>产品研发中心</th><th>市场部</th><th>客服部</th><th>CEO</th></tr></thead>
+        <tbody>
+          <tr><td>产品规划</td><td><span class="raci r">R</span></td><td><span class="raci c">C</span></td><td><span class="raci c">C</span></td><td><span class="raci a">A</span></td></tr>
+          <tr><td>PRD</td><td><span class="raci a">A</span></td><td><span class="raci c">C</span></td><td><span class="raci c">C</span></td><td><span class="raci i">I</span></td></tr>
+          <tr><td>UI</td><td><span class="raci a">A</span></td><td><span class="raci c">C</span></td><td><span class="raci i">I</span></td><td><span class="raci i">I</span></td></tr>
+          <tr><td>开发</td><td><span class="raci a">A</span></td><td><span class="raci i">I</span></td><td><span class="raci i">I</span></td><td><span class="raci i">I</span></td></tr>
+          <tr><td>测试</td><td><span class="raci a">A</span></td><td><span class="raci i">I</span></td><td><span class="raci c">C</span></td><td><span class="raci i">I</span></td></tr>
+          <tr><td>产品验收</td><td><span class="raci a">A</span></td><td><span class="raci c">C</span></td><td><span class="raci c">C</span></td><td><span class="raci i">I</span></td></tr>
+          <tr><td>产品 FAQ</td><td><span class="raci a">A</span></td><td><span class="raci c">C</span></td><td><span class="raci c">C</span></td><td><span class="raci i">I</span></td></tr>
+          <tr><td>SOP</td><td><span class="raci a">A</span></td><td><span class="raci i">I</span></td><td><span class="raci c">C</span></td><td><span class="raci i">I</span></td></tr>
+          <tr><td>培训</td><td><span class="raci r">R</span></td><td><span class="raci c">C</span></td><td><span class="raci a">A</span></td><td><span class="raci i">I</span></td></tr>
+          <tr><td>Release Note</td><td><span class="raci a">A</span></td><td><span class="raci c">C</span></td><td><span class="raci i">I</span></td><td><span class="raci i">I</span></td></tr>
+          <tr><td>上线通知</td><td><span class="raci a">A</span></td><td><span class="raci i">I</span></td><td><span class="raci r">R</span></td><td><span class="raci i">I</span></td></tr>
+          <tr><td>推广方案</td><td><span class="raci c">C</span></td><td><span class="raci a">A</span></td><td><span class="raci c">C</span></td><td><span class="raci i">I</span></td></tr>
+          <tr><td>推广 Q&amp;A</td><td><span class="raci c">C</span></td><td><span class="raci a">A</span></td><td><span class="raci c">C</span></td><td><span class="raci i">I</span></td></tr>
+          <tr><td>宣传素材</td><td><span class="raci c">C</span></td><td><span class="raci a">A</span></td><td><span class="raci i">I</span></td><td><span class="raci i">I</span></td></tr>
+          <tr><td>Banner</td><td><span class="raci c">C</span></td><td><span class="raci a">A</span></td><td><span class="raci i">I</span></td><td><span class="raci i">I</span></td></tr>
+          <tr><td>用户公告</td><td><span class="raci c">C</span></td><td><span class="raci i">I</span></td><td><span class="raci a">A</span></td><td><span class="raci i">I</span></td></tr>
+          <tr><td>客服 FAQ</td><td><span class="raci c">C</span></td><td><span class="raci i">I</span></td><td><span class="raci a">A</span></td><td><span class="raci i">I</span></td></tr>
+          <tr><td>活动配置</td><td><span class="raci i">I</span></td><td><span class="raci a">A</span></td><td><span class="raci c">C</span></td><td><span class="raci i">I</span></td></tr>
+          <tr><td>Go Live</td><td><span class="raci r">R</span></td><td><span class="raci c">C</span></td><td><span class="raci c">C</span></td><td><span class="raci a">A</span></td></tr>
+          <tr><td>上线复盘</td><td><span class="raci a">A</span></td><td><span class="raci r">R</span></td><td><span class="raci r">R</span></td><td><span class="raci i">I</span></td></tr>
+        </tbody></table></div>
+      </div>
+    </section>
+
+    <section class="wrap reveal">
+      <div class="section-head"><div><span class="section-no">04 / RISKS</span><h2>建议进一步明确的事项</h2></div><p>现有工作台和周会已经解决进度同步问题，以下建议重点解决上线前的跨部门确认。</p></div>
+      <div class="risk-grid">
+        <article class="card risk"><b>建议 01</b><p>在工作台中增加各部门的上线准备清单。</p></article><article class="card risk"><b>建议 02</b><p>明确什么情况下产品才算“可以上线”。</p></article><article class="card risk"><b>建议 03</b><p>正式上线前，由各部门共同按checklist再确认一次。</p></article><article class="card risk"><b>建议 04</b><p>上线时间、风险和最终结论统一记录在工作台。</p></article>
+      </div>
+      <div class="manifesto">我们不缺进度信息，<br>需要补齐的是跨部门对<em>“是否可以上线”</em>的共同结论。</div>
+    </section>
+
+    <section class="wrap reveal">
+      <div class="section-head"><div><span class="section-no">05 / ROADMAP</span><h2>改进目标</h2></div><p>改进当前协作流程，补全所有上线信息。</p></div>
+      <div class="timeline">
+        <div class="milestone"><div class="dot"></div><div><b>1.0</b><p>建立 RACI</p></div></div><div class="milestone"><div class="dot"></div><div><b>2.0</b><p>建立 Go Live Checklist</p></div></div><div class="milestone"><div class="dot"></div><div><b>3.0</b><p>所有部门都有自己的上线交付物</p></div></div><div class="milestone"><div class="dot"></div><div><b>4.0</b><p>项目经理组织 Go Live</p></div></div><div class="milestone"><div class="dot"></div><div><b>5.0</b><p>形成标准产品上线体系</p></div></div>
+      </div>
+    </section>
+
+    <section class="wrap reveal">
+      <div class="section-head"><div><span class="section-no">06 / GO LIVE GATE</span><h2>上线门禁</h2></div><p>所有必要条件同时满足，才能进入正式上线。</p></div>
+      <div class="card gate-card">
+        <div class="gate-title"><h3>只有当所有交付完成</h3><svg class="lock" viewBox="0 0 64 64" fill="none" aria-hidden="true"><rect x="10" y="27" width="44" height="30" rx="10" stroke="currentColor" stroke-width="4"/><path d="M20 27v-7c0-8 5-13 12-13s12 5 12 13v7" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><circle cx="32" cy="42" r="4" fill="currentColor"/></svg></div>
+        <div class="conditions"><div class="condition"><span class="check">✓</span>产品研发中心完成交付</div><span class="and">AND</span><div class="condition"><span class="check">✓</span>市场完成交付</div><span class="and">AND</span><div class="condition"><span class="check">✓</span>客服完成交付</div><span class="and">AND</span><div class="condition"><span class="check">✓</span>CEO 批准</div></div>
+        <div class="go">才能正式上线 →</div>
+      </div>
+    </section>
+
+  </main>
+  <script>
+    const root=document.documentElement,toggle=document.getElementById('themeToggle');
+    const saved=localStorage.getItem('theme');if(saved)root.dataset.theme=saved;
+    function apply(){const dark=root.dataset.theme==='dark';if(root.dataset.theme)root.style.colorScheme=dark?'dark':'light';toggle.textContent=dark?'☀':'◐'}apply();
+    toggle.addEventListener('click',()=>{const system=matchMedia('(prefers-color-scheme: dark)').matches;const current=root.dataset.theme?root.dataset.theme==='dark':system;root.dataset.theme=current?'light':'dark';localStorage.setItem('theme',root.dataset.theme);apply()});
+    const style=document.createElement('style');style.textContent=':root[data-theme="dark"]{--bg:#0e1013;--paper:#16191e;--paper2:#12151a;--text:#f4f6f8;--muted:#9ca4b0;--line:#292e36;--shadow:0 18px 44px rgba(0,0,0,.24);--blue-soft:#122744;--orange-soft:#3b2416;--green-soft:#113126;--purple-soft:#28203f;--yellow-soft:#382f15}:root[data-theme="light"]{--bg:#f6f7f9;--paper:#fff;--paper2:#fafbfc;--text:#17191c;--muted:#68707c;--line:#e4e7eb;--shadow:0 14px 36px rgba(18,24,40,.07);--blue-soft:#eaf3ff;--orange-soft:#fff1e7;--green-soft:#e8f8f1;--purple-soft:#f0edff;--yellow-soft:#fff5d6}';document.head.appendChild(style);
+    if('IntersectionObserver'in window){const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');observer.unobserve(e.target)}}),{threshold:.08});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el))}else document.querySelectorAll('.reveal').forEach(el=>el.classList.add('show'));
+  </script>
+</body>
+</html>
