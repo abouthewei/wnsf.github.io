@@ -39,6 +39,8 @@
     @media(max-width:680px){.slide,.slide .inner,.lifecycle,.life-strands{min-width:0;max-width:100%}.cover{overflow:hidden}.lifecycle{width:100%;overflow:hidden}.life-flow{width:calc(100% + 40px);max-width:none}.quote,.subtitle{max-width:100%;min-width:0}body{overflow-x:hidden}}
     .case-grid:has(.case:nth-child(3):last-child){grid-template-columns:repeat(3,1fr)}
     @media(max-width:680px){.case-grid:has(.case:nth-child(3):last-child){grid-template-columns:1fr}}
+    .narrative-path{display:grid;grid-template-columns:repeat(7,auto);align-items:center;justify-content:start;gap:13px;margin-top:68px;color:var(--muted)}.narrative-path span{padding:10px 14px;border:1px solid var(--line);background:rgba(255,255,255,.8);font-size:13px;font-weight:750}.narrative-path i{font-style:normal;color:var(--blue)}.cover .narrative-path+.meta{margin-top:28px}.phase-conclusion{color:var(--blue-deep)}
+    @media(max-width:680px){.narrative-path{grid-template-columns:1fr 16px 1fr;gap:8px;margin-top:45px}.narrative-path span{padding:9px 7px;text-align:center;font-size:11px}.narrative-path i{text-align:center}.narrative-path i:nth-of-type(2){display:none}.narrative-path span:nth-of-type(3){grid-column:1}.cover .narrative-path+.meta{margin-top:28px}}
   </style>
 </head>
 <body>
@@ -83,6 +85,46 @@
     const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode(node){return node.parentElement?.closest('script,style')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT}});
     const textNodes=[];while(walker.nextNode())textNodes.push(walker.currentNode);textNodes.forEach(node=>{node.nodeValue=node.nodeValue.replace(glossaryPattern,term=>`${term} · ${termGlossary[term]}`)});
     document.querySelectorAll('.role,.case,.dialog p').forEach(element=>{if(element.textContent.includes('外包'))element.remove()});
+
+    const originalSlides=[...document.querySelectorAll('main > .slide')];
+    const narrativeOrder=[0,1,9,3,4,10,2,5,6,7,8,11,12,13];
+    const orderedSlides=narrativeOrder.map(index=>originalSlides[index]);
+    const main=document.querySelector('main');orderedSlides.forEach(slide=>main.append(slide));
+    const setText=(slide,selector,text)=>{const element=slide.querySelector(selector);if(element)element.textContent=text};
+    const setEyebrow=(slide,text)=>setText(slide,'.eyebrow',text);
+
+    setText(originalSlides[1],'.title','为什么协作问题在现在集中出现');
+    setText(originalSlides[1],'.subtitle','项目复杂度已经改变，但协作方式仍主要依赖个人沟通与临时协调。');
+    setText(originalSlides[9],'.title','先看事实：不同场景反复出现同类协作失效');
+    setText(originalSlides[9],'.subtitle','外部渠道、设备状态和海外交接表面不同，却反复出现信息不完整、责任不清和缺少签收。');
+    setText(originalSlides[3],'.title','从案例中归纳出的六类共同症状');
+    setText(originalSlides[3],'.quote','这些是反复出现的共同症状，还不是问题的根因。');
+    setText(originalSlides[4],'.title','一个需求如何演变为返工和责任争议');
+    setText(originalSlides[10],'.title','问题正在从交付成本扩散到团队预期');
+    setText(originalSlides[10],'.subtitle','当规则长期不稳定，团队会开始降低主动性、风险承担意愿和跨部门信任。');
+    setText(originalSlides[2],'.title','根因不是沟通意愿，而是治理范围没有跟上复杂度');
+    const continuityHeads=originalSlides[2].querySelectorAll('.governance-box h3');
+    if(continuityHeads[0])continuityHeads[0].textContent='现有机制覆盖：如何一起上线';
+    if(continuityHeads[1])continuityHeads[1].textContent='实际问题覆盖：如何一起完成整个项目';
+    const continuityBoxes=originalSlides[2].querySelectorAll('.governance-box');
+    const expandedStages=['需求提出与确认','排期与范围','需求变更','产品验收','业务验收','活动上线','运营与问题归因','海外交接','项目复盘'];
+    continuityBoxes[1]?.querySelectorAll('li').forEach((item,index)=>{if(expandedStages[index])item.textContent=expandedStages[index]});
+    const continuityBottoms=originalSlides[2].querySelectorAll('.governance-box .bottom');
+    if(continuityBottoms[0])continuityBottoms[0].innerHTML='现有机制解决的是：<strong>产品完成以后，各部门如何共同完成上线。</strong>';
+    if(continuityBottoms[1])continuityBottoms[1].innerHTML='实际问题已经延伸到：<strong>从需求产生开始，到上线、交接和复盘，大家如何共同工作。</strong>';
+    originalSlides[2].querySelector('.growth').innerHTML='<span>复杂度扩大</span><b>→</b><span>覆盖不足</span>';
+    setText(originalSlides[2],'.scope-line','分析结论：原有方向有效，但治理边界只覆盖上线，尚未覆盖项目全生命周期。');
+    setText(originalSlides[5],'.title','用一套全生命周期机制连接关键节点');
+    setText(originalSlides[5],'.subtitle','针对已经识别出的六类症状，在需求、变更、验收、上线、交接和复盘设置最少必要规则。');
+    setText(originalSlides[6],'.title','解决方案一：建立统一的跨部门信息同步');
+    setText(originalSlides[7],'.title','解决方案二：把关键承诺变成四个 Gate · 门禁');
+    setText(originalSlides[8],'.title','解决方案三：明确 Ownership · 职责归属与责任边界');
+    setText(originalSlides[11],'.title','解决方案原则：少规则，高确定性');
+    setText(originalSlides[12],'.title','需要管理层确认的四项规则');
+
+    const eyebrowLabels=['','第一部分 · 发现问题 / 01','第一部分 · 发现问题 / 02','第一部分 · 发现问题 / 03','第二部分 · 分析问题 / 04','第二部分 · 分析问题 / 05','第二部分 · 分析问题 / 06','第三部分 · 解决问题 / 07','第三部分 · 解决问题 / 08','第三部分 · 解决问题 / 09','第三部分 · 解决问题 / 10','第三部分 · 解决问题 / 11','第四部分 · 管理决策 / 12',''];
+    orderedSlides.forEach((slide,index)=>{if(eyebrowLabels[index])setEyebrow(slide,eyebrowLabels[index]);slide.dataset.title=(slide.querySelector('.title')?.textContent||slide.dataset.title).trim()});
+    const narrativePath=document.createElement('div');narrativePath.className='narrative-path reveal';narrativePath.innerHTML='<span>发现问题</span><i>→</i><span>分析问题</span><i>→</i><span>解决问题</span><i>→</i><span>管理决策</span>';originalSlides[0].querySelector('.meta').before(narrativePath);
   </script>
   <script>
     const slides=[...document.querySelectorAll('.slide')],rail=document.querySelector('.rail'),current=document.querySelector('#current'),dialog=document.querySelector('#dialog');
