@@ -84,7 +84,7 @@
     const glossaryPattern=new RegExp(Object.keys(termGlossary).sort((a,b)=>b.length-a.length).map(term=>term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|'),'g');
     const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode(node){return node.parentElement?.closest('script,style')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT}});
     const textNodes=[];while(walker.nextNode())textNodes.push(walker.currentNode);textNodes.forEach(node=>{node.nodeValue=node.nodeValue.replace(glossaryPattern,term=>`${term} · ${termGlossary[term]}`)});
-    document.querySelectorAll('.role,.case,.dialog p').forEach(element=>{if(element.textContent.includes('外包'))element.remove()});
+    document.querySelectorAll('.role,.dialog p').forEach(element=>{if(element.textContent.includes('外包'))element.remove()});
 
     const originalSlides=[...document.querySelectorAll('main > .slide')];
     const narrativeOrder=[0,1,9,3,4,10,2,5,6,7,8,11,12,13];
