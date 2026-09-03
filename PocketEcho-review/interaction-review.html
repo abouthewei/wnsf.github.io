@@ -192,6 +192,23 @@
     .logic-row strong { font-weight: 700; }
     .wake-callout { margin-top: 18px; padding: 19px 22px; border-left: 2px solid var(--gold); background: #fff; color: #5d5d56; font-size: 14px; }
     .wake-callout strong { color: var(--ink); }
+    .bt-review { margin-top: 18px; padding: 31px; border: 1px solid #decf9c; border-radius: var(--radius); background: var(--gold-soft); }
+    .bt-review h3 { max-width: 700px; margin: 8px 0 10px; font-size: clamp(24px, 3vw, 36px); line-height: 1.1; letter-spacing: -.05em; }
+    .bt-review > p { max-width: 780px; margin-bottom: 25px; color: #6f6138; font-size: 14px; line-height: 1.8; }
+    .bt-review .review-kicker { color: #8a7123; font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    .bt-state-board { overflow: hidden; border: 1px solid #decf9c; border-radius: 9px; background: rgba(255,255,255,.62); }
+    .bt-state-row { display: grid; grid-template-columns: 29px 112px 1fr 1fr; gap: 12px; align-items: center; padding: 15px 17px; border-top: 1px solid #e4d7ad; font-size: 13px; }
+    .bt-state-row:first-child { border-top: 0; }
+    .bt-state-row strong { color: var(--ink); }
+    .bt-state-row span:not(.bt-light) { color: #75673e; }
+    .bt-light { width: 10px; height: 10px; border-radius: 50%; background: #d4d3cc; box-shadow: inset 0 0 0 1px #bbb9b0; }
+    .bt-light.slow { background: var(--gold); animation: blink 1.8s infinite; box-shadow: 0 0 9px rgba(198,166,79,.5); }
+    .bt-light.fast { background: var(--gold); animation: blink .55s infinite; box-shadow: 0 0 9px rgba(198,166,79,.55); }
+    .bt-light.solid { background: var(--gold); box-shadow: 0 0 10px rgba(198,166,79,.65); }
+    .bt-assessment { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 13px; }
+    .bt-assessment div { padding: 14px 15px; border-top: 1px solid #d6c584; color: #75673e; font-size: 12px; line-height: 1.65; }
+    .bt-assessment strong { display: block; margin-bottom: 4px; color: #584919; font-size: 13px; }
+    .bt-score { color: #7b621d; font-size: 12px; font-weight: 750; }
 
     .state-layout { display: grid; grid-template-columns: .9fr 1.1fr; gap: 18px; }
     .state-card { padding: 31px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); }
@@ -289,7 +306,7 @@
       .device-map { transform: scale(.78); transform-origin: center; width: 128%; margin-left: -14%; }
       .hotspot { font-size: 9px; }
       .hotspot b { font-size: 10px; }
-      .split-eval, .power-bluetooth, .tap-hold, .principle-list { grid-template-columns: 1fr; }
+      .split-eval, .power-bluetooth, .tap-hold, .principle-list, .bt-assessment { grid-template-columns: 1fr; }
       .eval-panel, .insight-box, .reset-flow, .lever-board, .lever-principle, .logic-card, .state-card, .principle-lead, .conclusion-card { padding: 24px; }
       .flow-row { grid-template-columns: 1fr; }
       .flow-arrow { width: 1px; height: 24px; justify-self: center; }
@@ -364,7 +381,7 @@
         <div class="section-heading" data-reveal><div><div class="section-no">02 / Overall Evaluation</div><h2>方向正确，<br>但语义还没有完全统一</h2></div><p>当前方案整体合理，实体交互也形成了产品辨识度。风险集中在长按过多、隐藏功能不易发现，以及无屏状态下的反馈不完整。</p></div>
         <div class="split-eval" data-reveal>
           <article class="eval-panel dark"><h3>合理之处</h3><ul><li><span class="tick">01</span><span>高频操作都有独立实体入口</span></li><li><span class="tick">02</span><span>音量使用旋钮自然；按压播放 / 暂停符合成熟播放器认知</span></li><li><span class="tick">03</span><span>拨杆带来机械感和产品辨识度</span></li><li><span class="tick">04</span><span>滑动开关可以形成“位置即状态”</span></li><li><span class="tick">05</span><span>Tag 取出键、电量 LED 都具备清晰的实体语义</span></li></ul><div class="eval-footer"><span>当前方案综合评价</span><strong>7 / 10</strong></div></article>
-          <article class="eval-panel"><h3>需要继续优化</h3><ul><li><span class="cross">01</span><span>控件与功能之间的语义映射还没有完全统一</span></li><li><span class="cross">02</span><span>长按操作偏多，低频功能容易被隐藏</span></li><li><span class="cross">03</span><span>蓝牙需要理解“开启”和“配对”两个状态</span></li><li><span class="cross">04</span><span>快进 / 快退尚未很好地融入现有硬件</span></li><li><span class="cross">05</span><span>Reset 是 PocketEcho 的特殊逻辑，需要额外反馈与文案</span></li></ul><div class="eval-footer"><span>优先级最高</span><strong>Reset / 蓝牙</strong></div></article>
+          <article class="eval-panel"><h3>需要继续优化</h3><ul><li><span class="cross">01</span><span>控件与功能之间的语义映射还没有完全统一</span></li><li><span class="cross">02</span><span>长按操作偏多，低频功能容易被隐藏</span></li><li><span class="cross">03</span><span>蓝牙状态机需要覆盖“已连接”后的关闭与换机路径</span></li><li><span class="cross">04</span><span>快进 / 快退尚未很好地融入现有硬件</span></li><li><span class="cross">05</span><span>Reset 是 PocketEcho 的特殊逻辑，需要额外反馈与文案</span></li></ul><div class="eval-footer"><span>优先级最高</span><strong>Reset / 蓝牙</strong></div></article>
         </div>
       </div>
     </section>
@@ -381,7 +398,7 @@
               <tr><td>Tag 取出键</td><td>按压释放 Tag</td><td>★★★★★</td><td>基本无明显问题</td><td>保留</td></tr>
               <tr><td>曲目拨杆</td><td>上一曲 / 下一曲</td><td>★★★★☆</td><td>快进 / 快退尚未利用拨杆</td><td><span class="recommend-line">短拨换曲，保持实现快进 / 快退</span></td></tr>
               <tr><td>电源键</td><td>按压 1 秒开关机</td><td>★★★★☆</td><td>开机需要等待，可能导致用户误判没电</td><td><span class="recommend-line">短按开机，长按 2 秒关机</span></td></tr>
-              <tr><td>蓝牙键</td><td>按压 1 秒开关蓝牙；3 秒配对</td><td>★★★☆☆</td><td>需要理解“蓝牙开启”和“蓝牙配对”两个状态</td><td><span class="recommend-line">短按连接最近设备，长按进入配对</span></td></tr>
+              <tr><td>蓝牙键</td><td>开机默认熄灯；单击 / 长按进入不同连接路径</td><td>★★★★☆</td><td>已连接后的单击关闭、长按换机，需要被明确反馈并防止误触</td><td><span class="recommend-line">单击连接已配对耳机；长按新设备配对；成功常亮</span></td></tr>
               <tr><td>音量旋钮</td><td>旋转音量；短按播放 / 暂停；长按 3 秒 Reset</td><td>★★★★☆</td><td>长按 Reset 学习成本较高</td><td><span class="recommend-line">保留核心播放控制，优化 Reset 文案与反馈</span></td></tr>
             </tbody>
           </table>
@@ -408,7 +425,20 @@
         </div>
         <div class="power-bluetooth" data-reveal>
           <article class="logic-card"><h3>电源 <span>HIGH FREQUENCY</span></h3><div class="logic-row"><b>短按</b><strong>开机</strong></div><div class="logic-row"><b>长按 2 秒</b><strong>关机</strong></div><div class="wake-callout"><strong>可评估：</strong>插入 TimeTag → 自动唤醒 → 自动识别 → 自动播放。理想路径是“放入 Tag，音乐直接开始”。</div></article>
-          <article class="logic-card"><h3>蓝牙 <span>LOWER THE CONCEPT</span></h3><div class="logic-row"><b>短按</b><strong>连接最近一次设备</strong></div><div class="logic-row"><b>长按 3 秒</b><strong>进入新设备配对</strong></div><div class="wake-callout"><strong>状态反馈：</strong>蓝灯慢闪 = 未连接；快闪 = 配对中；常亮 = 已连接。用户只需要理解“我要连接耳机”。</div></article>
+          <article class="logic-card"><h3>蓝牙 <span>CONNECTION INTENT</span></h3><div class="logic-row"><b>开机</b><strong>进入音乐播放；蓝灯熄灭</strong></div><div class="logic-row"><b>单击</b><strong>连接已经配对的蓝牙耳机</strong></div><div class="logic-row"><b>长按</b><strong>进入配对模式，配对新蓝牙耳机</strong></div><div class="wake-callout"><strong>已连接时：</strong>单击关闭蓝牙、指示灯熄灭；长按断开当前耳机，蓝灯快闪并直接进入新设备配对。</div></article>
+        </div>
+        <div class="bt-review" data-reveal>
+          <div class="review-kicker">Bluetooth Evaluation / State Language</div>
+          <h3>蓝牙不再是“开关”，而是“我要连接耳机”</h3>
+          <p>截图中的状态机比原来的“1 秒开关蓝牙 / 3 秒搜索新设备”更完整：它把已配对耳机连接、新设备配对、已连接关闭和换机路径放进同一套可解释的灯语义中。</p>
+          <div class="bt-state-board" aria-label="蓝牙状态机评估">
+            <div class="bt-state-row"><i class="bt-light" aria-hidden="true"></i><strong>开机</strong><span>进入音乐播放</span><span>蓝牙指示灯熄灭</span></div>
+            <div class="bt-state-row"><i class="bt-light slow" aria-hidden="true"></i><strong>单击 / 未连接</strong><span>开始连接已配对耳机</span><span>连接成功后蓝灯常亮</span></div>
+            <div class="bt-state-row"><i class="bt-light fast" aria-hidden="true"></i><strong>长按 / 配对</strong><span>进入配对模式，配对新耳机</span><span>配对成功后蓝灯常亮</span></div>
+            <div class="bt-state-row"><i class="bt-light" aria-hidden="true"></i><strong>已连接 + 单击</strong><span>蓝牙关闭</span><span>蓝灯熄灭</span></div>
+            <div class="bt-state-row"><i class="bt-light fast" aria-hidden="true"></i><strong>已连接 + 长按</strong><span>断开当前耳机，进入新设备配对</span><span>蓝灯快闪 → 成功常亮</span></div>
+          </div>
+          <div class="bt-assessment"><div><strong>评估：★★★★☆</strong><span class="bt-score">逻辑已闭环</span><br>短按连接熟悉设备，长按解决换机，符合用户意图。</div><div><strong>正向价值</strong>不要求用户理解 Bluetooth Radio，只需理解“连接耳机 / 换一个耳机”。</div><div><strong>继续确认</strong>长按 3 秒阈值、误触保护，以及配对失败 / 超时后的 LED 反馈。</div></div>
         </div>
       </div>
     </section>
@@ -420,7 +450,7 @@
           <article class="state-card"><h3>播放模式：位置即状态</h3><div class="mode-switch" role="group" aria-label="播放模式演示"><button type="button" data-mode="顺序播放"><strong>I</strong>顺序播放</button><button type="button" data-mode="单曲循环"><strong>II</strong>单曲循环</button><button type="button" data-mode="随机播放"><strong>III</strong>随机播放</button></div><div class="state-readout"><span>当前物理档位</span><strong id="modeReadout">I · 顺序播放</strong></div><p class="muted" style="margin: 20px 0 0; font-size: 12px;">用户不用点亮任何 LED，只需要看或摸到滑块位置，就能知道当前播放模式。</p></article>
           <article class="state-card"><h3>LED：PocketEcho 的无屏状态语言</h3><div class="led-grid"><div class="led-row"><div class="leds"><i class="led on"></i><i class="led on"></i><i class="led on"></i><i class="led on"></i></div><span>75–100% 电量</span></div><div class="led-row"><div class="leds"><i class="led on"></i><i class="led on"></i><i class="led on"></i><i class="led"></i></div><span>50–75% 电量</span></div><div class="led-row"><div class="leds"><i class="led on"></i><i class="led on"></i><i class="led"></i><i class="led"></i></div><span>25–50% 电量</span></div><div class="led-row"><div class="leds"><i class="led on blink"></i><i class="led"></i><i class="led"></i><i class="led"></i></div><span>低于 10%：第一颗 LED 闪烁</span></div><div class="led-row"><div class="leds"><i class="led on"></i><i class="led on"></i><i class="led on"></i><i class="led on"></i></div><span>其他状态：开机 / Reset / Tag 识别使用固定动效</span></div></div></article>
         </div>
-        <div class="proposal" data-reveal style="margin-top: 64px;"><div class="proposal-top"><h3>最终建议方案</h3><div class="toggle" role="group" aria-label="查看当前方案或推荐方案"><button class="is-active" type="button" data-view="before">当前方案</button><button type="button" data-view="after">推荐方案</button></div></div><div class="table-wrap"><table class="proposal-table"><thead><tr><th>控件</th><th>操作维度</th><th>当前方案</th><th>推荐方案</th></tr></thead><tbody><tr class="recommended"><td>电源键</td><td>短按 / 长按 2 秒</td><td class="before">按压约 1 秒开关机</td><td class="after">短按开机；长按 2 秒关机</td></tr><tr class="recommended"><td>播放旋钮</td><td>旋转 / 短按 / 长按 2 秒</td><td class="before">音量；播放 / 暂停；长按 3 秒 Reset</td><td class="after">音量；播放 / 暂停；长按 2 秒重置当前歌曲播放状态</td></tr><tr class="recommended"><td>曲目拨杆</td><td>Tap / Hold / 松手回弹</td><td class="before">上一曲 / 下一曲</td><td class="after">上拨 / 下拨换曲；保持上拨 / 下拨快退 / 快进</td></tr><tr class="recommended"><td>播放模式滑块</td><td>固定物理档位</td><td class="before">滑动切换播放模式</td><td class="after">I 顺序；II 单曲循环；III 随机</td></tr><tr class="recommended"><td>蓝牙键</td><td>短按 / 长按 3 秒</td><td class="before">1 秒开关蓝牙；3 秒搜索设备</td><td class="after">短按连接最近设备；长按搜索 / 配对新设备</td></tr><tr><td>Tag 取出键</td><td>按压</td><td class="before">释放锁紧机构，取出 TimeTag</td><td class="after">保留</td></tr><tr><td>LED</td><td>常态 / 反馈动效</td><td class="before">普通操作显示电量</td><td class="after">电量 + 低电量闪烁 + 统一状态动效</td></tr></tbody></table></div></div>
+        <div class="proposal" data-reveal style="margin-top: 64px;"><div class="proposal-top"><h3>最终建议方案</h3><div class="toggle" role="group" aria-label="查看当前方案或推荐方案"><button class="is-active" type="button" data-view="before">当前方案</button><button type="button" data-view="after">推荐方案</button></div></div><div class="table-wrap"><table class="proposal-table"><thead><tr><th>控件</th><th>操作维度</th><th>当前方案</th><th>推荐方案</th></tr></thead><tbody><tr class="recommended"><td>电源键</td><td>短按 / 长按 2 秒</td><td class="before">按压约 1 秒开关机</td><td class="after">短按开机；长按 2 秒关机</td></tr><tr class="recommended"><td>播放旋钮</td><td>旋转 / 短按 / 长按 2 秒</td><td class="before">音量；播放 / 暂停；长按 3 秒 Reset</td><td class="after">音量；播放 / 暂停；长按 2 秒重置当前歌曲播放状态</td></tr><tr class="recommended"><td>曲目拨杆</td><td>Tap / Hold / 松手回弹</td><td class="before">上一曲 / 下一曲</td><td class="after">上拨 / 下拨换曲；保持上拨 / 下拨快退 / 快进</td></tr><tr class="recommended"><td>播放模式滑块</td><td>固定物理档位</td><td class="before">滑动切换播放模式</td><td class="after">I 顺序；II 单曲循环；III 随机</td></tr><tr class="recommended"><td>蓝牙键</td><td>单击 / 长按 3 秒 / 已连接态</td><td class="before">1 秒开关蓝牙；3 秒搜索设备</td><td class="after">单击连接已配对耳机；长按新设备配对；已连接时单击关闭、长按换机</td></tr><tr><td>Tag 取出键</td><td>按压</td><td class="before">释放锁紧机构，取出 TimeTag</td><td class="after">保留</td></tr><tr><td>LED</td><td>常态 / 反馈动效</td><td class="before">普通操作显示电量</td><td class="after">电量 + 低电量闪烁 + 统一状态动效</td></tr></tbody></table></div></div>
       </div>
     </section>
 
@@ -433,7 +463,7 @@
     </section>
 
     <section class="section conclusion">
-      <div class="wrap"><div class="conclusion-card" data-reveal><div class="conclusion-score"><div><div class="section-no">08 / Conclusion</div><strong>7</strong></div><span>当前方案综合评价 / 10</span></div><div><h3>不建议继续增加新的实体按键</h3><ul class="conclusion-list"><li>优先解决 Reset 的语义与反馈</li><li>简化蓝牙概念，直接连接耳机</li><li>用拨杆承接快进 / 快退</li><li>建立一致的 LED 状态语言</li><li>把“音量旋钮”重新定义为“播放旋钮”</li><li>评估插入 TimeTag 自动播放体验</li></ul><p class="final-line">最终目标：减少按钮数量，减少隐藏逻辑，减少用户记忆，强化实体反馈，建立 PocketEcho 自己的操作语言。</p></div></div></div>
+      <div class="wrap"><div class="conclusion-card" data-reveal><div class="conclusion-score"><div><div class="section-no">08 / Conclusion</div><strong>7</strong></div><span>当前方案综合评价 / 10</span></div><div><h3>不建议继续增加新的实体按键</h3><ul class="conclusion-list"><li>优先解决 Reset 的语义与反馈</li><li>按连接意图组织蓝牙状态，补齐已连接态操作</li><li>用拨杆承接快进 / 快退</li><li>建立一致的 LED 状态语言</li><li>把“音量旋钮”重新定义为“播放旋钮”</li><li>评估插入 TimeTag 自动播放体验</li></ul><p class="final-line">最终目标：减少按钮数量，减少隐藏逻辑，减少用户记忆，强化实体反馈，建立 PocketEcho 自己的操作语言。</p></div></div></div>
     </section>
   </main>
 
