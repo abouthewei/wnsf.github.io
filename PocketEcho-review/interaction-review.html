@@ -275,6 +275,55 @@
     .conclusion-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 25px; padding: 0; margin: 0; list-style: none; color: var(--muted); font-size: 13px; }
     .conclusion-list li::before { content: ""; display: inline-block; width: 6px; height: 6px; margin: 0 9px 1px 0; border-radius: 50%; background: var(--gold); }
     .final-line { margin: 27px 0 0; padding-top: 20px; border-top: 1px solid var(--line); color: #6b571c; font-size: 14px; font-weight: 700; }
+    .simulator { padding-top: 108px; background: #efeee9; }
+    .sim-shell { display: grid; grid-template-columns: 1.05fr .95fr; gap: 18px; }
+    .sim-device-panel, .sim-console { padding: 32px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); }
+    .sim-device-head, .sim-log-head { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
+    .sim-device-head { margin-bottom: 23px; }
+    .sim-device-head h3, .sim-console h3 { margin: 0; font-size: 20px; letter-spacing: -.04em; }
+    .sim-device-head span { color: var(--gold); font-size: 10px; font-weight: 750; letter-spacing: .14em; }
+    .sim-device { padding: 25px; border: 1px solid #aaa9a1; border-radius: 25px; background: linear-gradient(145deg, #dedbd2, #f4f1e8 58%, #cbc5b6); box-shadow: 12px 18px 25px rgba(29,28,24,.13); }
+    .sim-screen { min-height: 103px; display: flex; flex-direction: column; justify-content: center; gap: 7px; padding: 21px; border: 5px solid #d8d4ca; border-radius: 11px; background: #29302c; color: #ece9c9; box-shadow: inset 0 0 0 1px #727458; }
+    .sim-screen small { color: #d3bd57; font-size: 10px; letter-spacing: .14em; }
+    .sim-screen strong { font-size: 24px; letter-spacing: -.04em; }
+    .sim-screen span { color: #aeb5a7; font-size: 12px; }
+    .sim-device-controls, .sim-track-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px; }
+    .sim-track-actions { grid-template-columns: 1fr 1fr; }
+    .sim-control-btn, .sim-mode-btn, .sim-clear { border: 1px solid #aaa9a1; border-radius: 5px; color: var(--ink); background: rgba(255,255,255,.63); cursor: pointer; }
+    .sim-control-btn { min-height: 48px; padding: 9px 10px; font-size: 12px; }
+    .sim-control-btn:hover, .sim-control-btn:focus-visible, .sim-mode-btn:hover, .sim-mode-btn:focus-visible { border-color: var(--gold); background: #fff8dc; outline: none; }
+    .sim-control-btn:active { transform: translateY(1px); }
+    .sim-control-btn small { color: var(--muted); font-size: 10px; }
+    .sim-mini-led { display: inline-block; width: 8px; height: 8px; margin-right: 4px; border-radius: 50%; background: #b9b8b0; vertical-align: 1px; }
+    .sim-mini-led.slow, .sim-mini-led.fast, .sim-mini-led.solid { background: var(--gold); box-shadow: 0 0 8px rgba(198,166,79,.6); }
+    .sim-mini-led.slow { animation: blink 1.8s infinite; }
+    .sim-mini-led.fast { animation: blink .55s infinite; }
+    .sim-knob-line { display: grid; grid-template-columns: 48px 1fr 34px; align-items: center; gap: 13px; margin-top: 21px; }
+    .sim-knob { width: 48px; height: 48px; border: 1px solid #8d814e; border-radius: 50%; background: #d0b63f; box-shadow: 3px 5px 7px rgba(0,0,0,.17); cursor: pointer; }
+    .sim-knob::after { content: "—"; color: #6b5c23; font-size: 21px; }
+    .sim-volume { width: 100%; accent-color: var(--gold); cursor: pointer; }
+    .sim-volume-value { color: #6b5c23; font-size: 12px; font-weight: 750; text-align: right; }
+    .sim-mode-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-top: 20px; }
+    .sim-mode-btn { padding: 9px 4px; color: var(--muted); font-size: 11px; }
+    .sim-mode-btn.is-selected { border-color: var(--gold); color: #775d14; background: var(--gold-soft); }
+    .sim-device-note { margin: 18px 0 0; color: var(--muted); font-size: 12px; line-height: 1.7; }
+    .sim-console { background: var(--ink); color: var(--white); border-color: var(--ink); }
+    .sim-console-lead { margin: 17px 0 23px; color: #bdbdb6; font-size: 13px; line-height: 1.75; }
+    .sim-readout { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; }
+    .sim-readout-item { padding: 14px; border: 1px solid #3d3d39; border-radius: 6px; background: #292925; }
+    .sim-readout-item span { display: block; margin-bottom: 7px; color: #999991; font-size: 10px; letter-spacing: .13em; }
+    .sim-readout-item strong { color: var(--gold); font-size: 14px; }
+    .sim-guide { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 17px; }
+    .sim-guide-card { padding: 14px; border-top: 1px solid #4a4941; }
+    .sim-guide-card strong { display: block; margin-bottom: 7px; color: #f4f1e8; font-size: 12px; }
+    .sim-guide-card span { color: #aaa9a1; font-size: 11px; line-height: 1.8; }
+    .sim-log-head { margin-top: 23px; padding-top: 19px; border-top: 1px solid #3d3d39; font-size: 12px; }
+    .sim-log-head span { color: #999991; font-size: 11px; }
+    .sim-log { display: grid; gap: 7px; max-height: 156px; overflow: auto; padding: 13px 0 0; margin: 0; list-style: none; color: #c8c8c0; font-size: 12px; line-height: 1.55; }
+    .sim-log li { padding-left: 13px; border-left: 2px solid #5b5434; }
+    .sim-log-empty { color: #77776f; }
+    .sim-clear { margin-top: 15px; padding: 8px 11px; color: #aaa9a1; background: transparent; border-color: #4a4941; font-size: 11px; }
+    .sim-clear:hover { color: var(--white); border-color: var(--gold); }
     footer { padding: 23px 0 33px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
     footer .wrap { display: flex; justify-content: space-between; gap: 20px; }
 
@@ -286,7 +335,7 @@
       .wrap { width: min(var(--max), calc(100% - 40px)); }
       .nav-links { display: none; }
       .hero { padding-top: 66px; }
-      .hero-grid, .control-map, .reset-layout, .lever-layout, .state-layout, .principles, .conclusion-card { grid-template-columns: 1fr; }
+      .hero-grid, .control-map, .reset-layout, .lever-layout, .state-layout, .principles, .conclusion-card, .sim-shell { grid-template-columns: 1fr; }
       .score-block { right: 18px; bottom: -28px; }
       .hero-bottom { margin-top: 60px; }
       .section-heading { grid-template-columns: 1fr; gap: 17px; }
@@ -307,7 +356,7 @@
       .hotspot { font-size: 9px; }
       .hotspot b { font-size: 10px; }
       .split-eval, .power-bluetooth, .tap-hold, .principle-list, .bt-assessment { grid-template-columns: 1fr; }
-      .eval-panel, .insight-box, .reset-flow, .lever-board, .lever-principle, .logic-card, .state-card, .principle-lead, .conclusion-card { padding: 24px; }
+      .eval-panel, .insight-box, .reset-flow, .lever-board, .lever-principle, .logic-card, .state-card, .principle-lead, .conclusion-card, .sim-device-panel, .sim-console { padding: 24px; }
       .flow-row { grid-template-columns: 1fr; }
       .flow-arrow { width: 1px; height: 24px; justify-self: center; }
       .flow-arrow::after { right: -3px; top: auto; bottom: -1px; transform: rotate(135deg); }
@@ -326,7 +375,7 @@
     <div class="wrap nav-bar">
       <a class="brand" href="#overview"><span class="brand-mark" aria-hidden="true"></span>POCKETECHO / REVIEW</a>
       <nav class="nav-links" aria-label="页面导航">
-        <a href="#overview">Overview</a><a href="#current">Current Logic</a><a href="#issues">Issues</a><a href="#proposal">Proposal</a><a href="#principles">Principles</a>
+        <a href="#overview">Overview</a><a href="#current">Current Logic</a><a href="#issues">Issues</a><a href="#proposal">Proposal</a><a href="#principles">Principles</a><a href="#simulator">Simulator</a>
       </nav>
     </div>
   </header>
@@ -465,6 +514,59 @@
     <section class="section conclusion">
       <div class="wrap"><div class="conclusion-card" data-reveal><div class="conclusion-score"><div><div class="section-no">08 / Conclusion</div><strong>7</strong></div><span>当前方案综合评价 / 10</span></div><div><h3>不建议继续增加新的实体按键</h3><ul class="conclusion-list"><li>优先解决 Reset 的语义与反馈</li><li>按连接意图组织蓝牙状态，补齐已连接态操作</li><li>用拨杆承接快进 / 快退</li><li>建立一致的 LED 状态语言</li><li>把“音量旋钮”重新定义为“播放旋钮”</li><li>评估插入 TimeTag 自动播放体验</li></ul><p class="final-line">最终目标：减少按钮数量，减少隐藏逻辑，减少用户记忆，强化实体反馈，建立 PocketEcho 自己的操作语言。</p></div></div></div>
     </section>
+    <section class="section simulator" id="simulator">
+      <div class="wrap">
+        <div class="section-heading" data-reveal>
+          <div><div class="section-no">09 / HMI Simulator</div><h2>把左右操作<br>按一次、长按一次</h2></div>
+          <p>这是一个基于当前推荐逻辑的可操作模拟器。左 / 右键模拟曲目拨杆，播放旋钮模拟音量与播放控制，蓝牙键模拟连接、配对、关闭和换机。</p>
+        </div>
+        <div class="sim-shell" data-reveal>
+          <div class="sim-device-panel">
+            <div class="sim-device-head"><h3>PocketEcho / Live Logic</h3><span>SIMULATION ONLY</span></div>
+            <div class="sim-device" aria-label="PocketEcho 操作模拟器">
+              <div class="sim-screen" aria-live="polite"><small id="simPowerState">OFFLINE</small><strong id="simTrackName">设备未开机</strong><span id="simTrackDetail">短按电源键开机</span></div>
+              <div class="sim-device-controls">
+                <button class="sim-control-btn" id="simPower" type="button">短按开机</button>
+                <button class="sim-control-btn" id="simBluetooth" type="button"><i class="sim-mini-led" id="simBlueLed"></i>蓝牙连接</button>
+                <button class="sim-control-btn" id="simPlay" type="button">播放 / 暂停</button>
+              </div>
+              <div class="sim-track-actions">
+                <button class="sim-control-btn" id="simPrev" type="button">← 上一曲<br><small>短按 / 长按快退</small></button>
+                <button class="sim-control-btn" id="simNext" type="button">下一曲 →<br><small>短按 / 长按快进</small></button>
+              </div>
+              <div class="sim-knob-line">
+                <button class="sim-knob" id="simResetKnob" type="button" aria-label="播放旋钮，短按播放暂停，长按两秒重置播放"></button>
+                <input class="sim-volume" id="simVolume" type="range" min="0" max="100" value="42" aria-label="音量旋钮模拟">
+                <span class="sim-volume-value" id="simVolumeValue">42</span>
+              </div>
+              <div class="sim-mode-bar" role="group" aria-label="播放模式">
+                <button class="sim-mode-btn is-selected" data-sim-mode="顺序播放" type="button">I 顺序</button>
+                <button class="sim-mode-btn" data-sim-mode="单曲循环" type="button">II 单曲</button>
+                <button class="sim-mode-btn" data-sim-mode="随机播放" type="button">III 随机</button>
+              </div>
+            </div>
+            <p class="sim-device-note">操作提示：短按执行高频动作；长按达到阈值后进入低频功能。蓝牙按钮：短按连接已配对设备，长按 3 秒进入新设备配对。</p>
+          </div>
+          <div class="sim-console">
+            <h3>实时状态</h3>
+            <p class="sim-console-lead">按下左 / 右控制，观察“曲目”与“播放时间轴”的区别；按住蓝牙按钮，观察慢闪、快闪与常亮的状态切换。</p>
+            <div class="sim-readout">
+              <div class="sim-readout-item"><span>POWER</span><strong id="simReadoutPower">关机</strong></div>
+              <div class="sim-readout-item"><span>PLAYBACK</span><strong id="simReadoutPlayback">未播放</strong></div>
+              <div class="sim-readout-item"><span>BLUETOOTH</span><strong id="simReadoutBluetooth">关闭</strong></div>
+              <div class="sim-readout-item"><span>MODE</span><strong id="simReadoutMode">顺序播放</strong></div>
+            </div>
+            <div class="sim-guide">
+              <div class="sim-guide-card"><strong>短按 / Tap</strong><span>左：上一曲　右：下一曲<br>旋钮：播放 / 暂停<br>蓝牙：连接已配对耳机</span></div>
+              <div class="sim-guide-card"><strong>长按 / Hold</strong><span>左：快退　右：快进<br>旋钮 2 秒：重置播放<br>蓝牙 3 秒：新设备配对</span></div>
+            </div>
+            <div class="sim-log-head"><strong>操作日志</strong><span>反馈应该让用户知道系统已听见</span></div>
+            <ul class="sim-log" id="simLog" aria-live="polite"><li class="sim-log-empty">等待第一次操作…</li></ul>
+            <button class="sim-clear" id="simClear" type="button">清空日志</button>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer><div class="wrap"><span>PocketEcho / 实体按键与操作逻辑评审</span><span>Internal Product Design Review · 2026</span></div></footer>
@@ -494,6 +596,56 @@
     resetButton.addEventListener('pointerdown', startReset); ['pointerup', 'pointerleave', 'pointercancel'].forEach((eventName) => resetButton.addEventListener(eventName, () => { if (Date.now() - resetStarted < 2000) { stopReset(); resetStatus.textContent = '未触发 · 建议长按约 2 秒'; } }));
 
     document.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', () => { document.querySelectorAll('[data-view]').forEach((item) => item.classList.toggle('is-active', item === button)); document.querySelectorAll('.proposal-table .before, .proposal-table .after').forEach((cell) => cell.style.opacity = button.dataset.view === 'before' ? (cell.classList.contains('before') ? '1' : '.44') : (cell.classList.contains('after') ? '1' : '.44')); }));
+
+    const simTracks = ['Midnight Walk', 'Signal Bloom', 'Soft Machines', 'Afterglow'];
+    const simState = { powered: false, playing: false, track: 0, volume: 42, bluetooth: 'off', mode: '顺序播放', seeking: '', log: [] };
+    const simEls = {
+      power: document.querySelector('#simPower'), bluetooth: document.querySelector('#simBluetooth'), blueLed: document.querySelector('#simBlueLed'), play: document.querySelector('#simPlay'), prev: document.querySelector('#simPrev'), next: document.querySelector('#simNext'), knob: document.querySelector('#simResetKnob'), volume: document.querySelector('#simVolume'), volumeValue: document.querySelector('#simVolumeValue'), powerState: document.querySelector('#simPowerState'), trackName: document.querySelector('#simTrackName'), trackDetail: document.querySelector('#simTrackDetail'), readoutPower: document.querySelector('#simReadoutPower'), readoutPlayback: document.querySelector('#simReadoutPlayback'), readoutBluetooth: document.querySelector('#simReadoutBluetooth'), readoutMode: document.querySelector('#simReadoutMode'), log: document.querySelector('#simLog')
+    };
+    let simBluetoothTimer;
+    const simBluetoothLabel = () => ({ off: '关闭', slow: '连接中', fast: '配对中', solid: '已连接' }[simState.bluetooth]);
+    const simLog = (message) => { simState.log.unshift(message); simState.log = simState.log.slice(0, 12); simRender(); };
+    function simRender() {
+      const playDetail = simState.seeking === 'left' ? '快退中 · 松手停止' : simState.seeking === 'right' ? '快进中 · 松手停止' : simState.playing ? '播放中' : '已暂停';
+      simEls.powerState.textContent = simState.powered ? 'ONLINE' : 'OFFLINE';
+      simEls.trackName.textContent = simState.powered ? simTracks[simState.track] : '设备未开机';
+      simEls.trackDetail.textContent = simState.powered ? `${playDetail} · 音量 ${simState.volume}` : '短按电源键开机';
+      simEls.readoutPower.textContent = simState.powered ? '已开机' : '关机';
+      simEls.readoutPlayback.textContent = simState.powered ? playDetail : '未播放';
+      simEls.readoutBluetooth.textContent = simBluetoothLabel();
+      simEls.readoutMode.textContent = simState.mode;
+      simEls.volume.value = simState.volume;
+      simEls.volumeValue.textContent = simState.volume;
+      simEls.blueLed.className = 'sim-mini-led ' + simState.bluetooth;
+      simEls.bluetooth.replaceChildren(simEls.blueLed, document.createTextNode(' ' + (simState.bluetooth === 'solid' ? '蓝牙已连接' : '蓝牙连接')));
+      simEls.power.textContent = simState.powered ? '电源已开机 / 长按关机' : '短按开机';
+      simEls.play.textContent = simState.playing ? '暂停播放' : '播放 / 暂停';
+      simEls.log.replaceChildren(...(simState.log.length ? simState.log.map((item) => { const li = document.createElement('li'); li.textContent = item; return li; }) : [Object.assign(document.createElement('li'), { className: 'sim-log-empty', textContent: '等待第一次操作…' })]));
+    }
+    const simNeedPower = () => { if (!simState.powered) { simLog('系统提示 → 请先短按电源键开机'); return true; } return false; };
+    const simTurnOn = () => { if (simState.powered) { simLog('短按电源 → 设备已开机，保持当前播放状态'); return; } simState.powered = true; simState.playing = true; simLog('短按电源 → 开机并开始播放'); };
+    const simTurnOff = () => { if (!simState.powered) return; simState.powered = false; simState.playing = false; simState.bluetooth = 'off'; clearTimeout(simBluetoothTimer); simLog('长按电源 2 秒 → 关机'); };
+    const simTogglePlay = () => { if (simNeedPower()) return; simState.playing = !simState.playing; simLog(simState.playing ? '短按播放旋钮 → 播放' : '短按播放旋钮 → 暂停'); };
+    const simChangeTrack = (direction) => { if (simNeedPower()) return; simState.track = (simState.track + direction + simTracks.length) % simTracks.length; simState.playing = true; simLog((direction < 0 ? '左' : '右') + '短按 → ' + (direction < 0 ? '上一曲' : '下一曲') + ' · ' + simTracks[simState.track]); };
+    const simSeekStart = (direction) => { if (simNeedPower()) return; simState.seeking = direction < 0 ? 'left' : 'right'; simLog((direction < 0 ? '左' : '右') + '长按 → ' + (direction < 0 ? '快退' : '快进') + '进行中'); };
+    const simSeekEnd = () => { if (!simState.seeking) return; simState.seeking = ''; simLog('松手 → 时间轴停止'); };
+    const simPair = () => { if (simNeedPower()) return; clearTimeout(simBluetoothTimer); simState.bluetooth = 'fast'; simLog('长按蓝牙 3 秒 → 进入新设备配对'); simBluetoothTimer = setTimeout(() => { simState.bluetooth = 'solid'; simLog('蓝牙配对成功 → 指示灯常亮'); }, 1400); };
+    const simConnect = () => { if (simNeedPower() || simState.bluetooth === 'slow' || simState.bluetooth === 'fast') return; if (simState.bluetooth === 'solid') { simState.bluetooth = 'off'; simLog('已连接时单击蓝牙 → 关闭蓝牙'); return; } simState.bluetooth = 'slow'; simLog('单击蓝牙 → 连接已配对耳机'); clearTimeout(simBluetoothTimer); simBluetoothTimer = setTimeout(() => { simState.bluetooth = 'solid'; simLog('蓝牙连接成功 → 指示灯常亮'); }, 1100); };
+    function simBindHold(button, duration, onTap, onHold, onStart, onEnd) {
+      let active = false; let held = false; let timer;
+      const finish = () => { if (!active) return; active = false; clearTimeout(timer); if (onEnd) onEnd(held); if (!held) onTap(); };
+      button.addEventListener('pointerdown', (event) => { event.preventDefault(); active = true; held = false; if (onStart) onStart(); timer = setTimeout(() => { if (active) { held = true; onHold(); } }, duration); });
+      ['pointerup', 'pointercancel', 'pointerleave'].forEach((name) => button.addEventListener(name, finish));
+    }
+    simBindHold(simEls.power, 2000, simTurnOn, simTurnOff, () => { simEls.power.textContent = '保持按住…'; }, () => simRender());
+    simBindHold(simEls.bluetooth, 3000, simConnect, simPair, () => { if (simState.powered) simEls.bluetooth.lastChild.textContent = ' 继续按住…'; }, () => simRender());
+    simBindHold(simEls.prev, 850, () => simChangeTrack(-1), () => simSeekStart(-1), null, (held) => { if (held) simSeekEnd(); });
+    simBindHold(simEls.next, 850, () => simChangeTrack(1), () => simSeekStart(1), null, (held) => { if (held) simSeekEnd(); });
+    simBindHold(simEls.knob, 2000, simTogglePlay, () => { if (simNeedPower()) return; simState.playing = false; simState.seeking = ''; simLog('长按播放旋钮 2 秒 → 重置当前歌曲播放状态'); }, null, () => simRender());
+    simEls.volume.addEventListener('input', () => { if (simNeedPower()) { simEls.volume.value = simState.volume; return; } simState.volume = Number(simEls.volume.value); simRender(); });
+    document.querySelectorAll('[data-sim-mode]').forEach((button) => button.addEventListener('click', () => { simState.mode = button.dataset.simMode; document.querySelectorAll('[data-sim-mode]').forEach((item) => item.classList.toggle('is-selected', item === button)); simLog('切换播放模式 → ' + simState.mode); }));
+    document.querySelector('#simClear').addEventListener('click', () => { simState.log = []; simRender(); });
+    simRender();
   </script>
 </body>
 </html>
