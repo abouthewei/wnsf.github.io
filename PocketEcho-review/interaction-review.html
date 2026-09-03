@@ -298,9 +298,13 @@
     .sim-mini-led.slow, .sim-mini-led.fast, .sim-mini-led.solid { background: var(--gold); box-shadow: 0 0 8px rgba(198,166,79,.6); }
     .sim-mini-led.slow { animation: blink 1.8s infinite; }
     .sim-mini-led.fast { animation: blink .55s infinite; }
-    .sim-knob-line { display: grid; grid-template-columns: 48px 1fr 34px; align-items: center; gap: 13px; margin-top: 21px; }
-    .sim-knob { width: 48px; height: 48px; border: 1px solid #8d814e; border-radius: 50%; background: #d0b63f; box-shadow: 3px 5px 7px rgba(0,0,0,.17); cursor: pointer; }
-    .sim-knob::after { content: "—"; color: #6b5c23; font-size: 21px; }
+    .sim-knob-line { display: grid; grid-template-columns: 72px 1fr 34px; align-items: center; gap: 13px; margin-top: 21px; }
+    .sim-knob-wrap { position: relative; width: 72px; height: 72px; display: grid; place-items: center; touch-action: none; }
+    .sim-knob-ticks { position: absolute; inset: 1px; border-radius: 50%; background: repeating-conic-gradient(from -130deg, rgba(107,92,35,.7) 0 1.5deg, transparent 1.5deg 13deg); -webkit-mask: radial-gradient(circle, transparent 0 28px, #000 29px 35px, transparent 36px); mask: radial-gradient(circle, transparent 0 28px, #000 29px 35px, transparent 36px); opacity: .72; }
+    .sim-knob { position: relative; z-index: 1; width: 57px; height: 57px; padding: 0; border: 1px solid #8d814e; border-radius: 50%; background: radial-gradient(circle at 34% 27%, #f4df72 0 7%, #d7bd48 28%, #b99b27 73%, #8d7625 100%); box-shadow: inset 2px 2px 3px rgba(255,255,255,.42), inset -4px -5px 7px rgba(77,58,12,.32), 3px 6px 8px rgba(0,0,0,.2); cursor: pointer; transition: transform .1s ease, box-shadow .1s ease; }
+    .sim-knob::before { content: ""; position: absolute; inset: 8px; border: 1px solid rgba(103,82,17,.35); border-radius: 50%; }
+    .sim-knob::after { content: ""; position: absolute; left: 50%; top: 6px; width: 3px; height: 13px; border-radius: 3px; background: #61501a; transform-origin: 50% 22px; transform: translateX(-50%) rotate(var(--knob-angle, -21deg)); box-shadow: 0 0 0 1px rgba(255,240,157,.32); }
+    .sim-knob:active { transform: scale(.96); box-shadow: inset 2px 2px 3px rgba(255,255,255,.3), inset -4px -5px 7px rgba(77,58,12,.38), 1px 2px 4px rgba(0,0,0,.2); }
     .sim-volume { width: 100%; accent-color: var(--gold); cursor: pointer; }
     .sim-volume-value { color: #6b5c23; font-size: 12px; font-weight: 750; text-align: right; }
     .sim-mode-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-top: 20px; }
@@ -535,7 +539,10 @@
                 <button class="sim-control-btn" id="simNext" type="button">下一曲 →<br><small>短按 / 长按快进</small></button>
               </div>
               <div class="sim-knob-line">
-                <button class="sim-knob" id="simResetKnob" type="button" aria-label="播放旋钮，短按播放暂停，长按两秒重置播放"></button>
+                <div class="sim-knob-wrap" aria-label="音量 / 播放旋钮">
+                  <span class="sim-knob-ticks" aria-hidden="true"></span>
+                  <button class="sim-knob" id="simResetKnob" type="button" aria-label="播放旋钮，短按播放暂停，长按两秒重置播放"></button>
+                </div>
                 <input class="sim-volume" id="simVolume" type="range" min="0" max="100" value="42" aria-label="音量旋钮模拟">
                 <span class="sim-volume-value" id="simVolumeValue">42</span>
               </div>
@@ -616,6 +623,7 @@
       simEls.readoutMode.textContent = simState.mode;
       simEls.volume.value = simState.volume;
       simEls.volumeValue.textContent = simState.volume;
+      simEls.knob.style.setProperty('--knob-angle', `${-130 + simState.volume * 260 / 100}deg`);
       simEls.blueLed.className = 'sim-mini-led ' + simState.bluetooth;
       simEls.bluetooth.replaceChildren(simEls.blueLed, document.createTextNode(' ' + (simState.bluetooth === 'solid' ? '蓝牙已连接' : '蓝牙连接')));
       simEls.power.textContent = simState.powered ? '电源已开机 / 长按关机' : '短按开机';
@@ -641,7 +649,12 @@
     simBindHold(simEls.bluetooth, 3000, simConnect, simPair, () => { if (simState.powered) simEls.bluetooth.lastChild.textContent = ' 继续按住…'; }, () => simRender());
     simBindHold(simEls.prev, 850, () => simChangeTrack(-1), () => simSeekStart(-1), null, (held) => { if (held) simSeekEnd(); });
     simBindHold(simEls.next, 850, () => simChangeTrack(1), () => simSeekStart(1), null, (held) => { if (held) simSeekEnd(); });
-    simBindHold(simEls.knob, 2000, simTogglePlay, () => { if (simNeedPower()) return; simState.playing = false; simState.seeking = ''; simLog('长按播放旋钮 2 秒 → 重置当前歌曲播放状态'); }, null, () => simRender());
+    let simKnobMoved = false;
+    let simKnobPointer;
+    simBindHold(simEls.knob, 2000, () => { if (simKnobMoved) { simKnobMoved = false; return; } simTogglePlay(); }, () => { if (simKnobMoved || simNeedPower()) return; simState.playing = false; simState.seeking = ''; simLog('长按播放旋钮 2 秒 → 重置当前歌曲播放状态'); }, null, () => simRender());
+    simEls.knob.addEventListener('pointerdown', (event) => { simKnobMoved = false; simKnobPointer = { id: event.pointerId, startY: event.clientY, startVolume: simState.volume }; event.currentTarget.setPointerCapture?.(event.pointerId); });
+    simEls.knob.addEventListener('pointermove', (event) => { if (!simKnobPointer || !simState.powered) return; const delta = simKnobPointer.startY - event.clientY; if (Math.abs(delta) > 5) simKnobMoved = true; if (simKnobMoved) { simState.volume = Math.max(0, Math.min(100, Math.round(simKnobPointer.startVolume + delta * .8))); simRender(); } });
+    ['pointerup', 'pointercancel'].forEach((name) => simEls.knob.addEventListener(name, (event) => { if (simKnobPointer?.id === event.pointerId) { simEls.knob.releasePointerCapture?.(event.pointerId); simKnobPointer = null; } }));
     simEls.volume.addEventListener('input', () => { if (simNeedPower()) { simEls.volume.value = simState.volume; return; } simState.volume = Number(simEls.volume.value); simRender(); });
     document.querySelectorAll('[data-sim-mode]').forEach((button) => button.addEventListener('click', () => { simState.mode = button.dataset.simMode; document.querySelectorAll('[data-sim-mode]').forEach((item) => item.classList.toggle('is-selected', item === button)); simLog('切换播放模式 → ' + simState.mode); }));
     document.querySelector('#simClear').addEventListener('click', () => { simState.log = []; simRender(); });
