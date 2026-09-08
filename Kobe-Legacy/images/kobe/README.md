@@ -14,14 +14,14 @@
 
 hero 是基于 Keith Allison 原图的 AI 背景移除版本（内置 Image Gen）；人物构图来自原照片。修改版继续按 CC BY-SA 2.0 提供，保留本署名、来源、授权链接与修改说明。其他 CC BY-SA 图片的派生展示同样遵守该授权。不得暗示作者或球员为本网站背书。
 
-## 官方视频及封面
+## 比赛视频入口
 
-- [81 分全部进球](https://www.youtube.com/watch?v=FeXZY4eVLlo) — NBA
-- [告别战 60 分](https://www.youtube.com/watch?v=BdGeXcJ-hfo) — NBA
-- [对阵太阳加时绝杀](https://www.youtube.com/watch?v=mWw9MCdHqbQ) — NBA
-- [三节 62 分](https://www.youtube.com/watch?v=7zjOegOAboc) — NBA
+- [81 分集锦](https://www.bilibili.com/video/BV1R6uF67E4s/) — 哔哩哔哩
+- [生涯告别战集锦](https://www.bilibili.com/video/BV1sUNW6xEVS/) — 哔哩哔哩
+- [对阵太阳的加时绝杀](https://www.bilibili.com/list/522787970?bvid=BV1AdokBNEbT&oid=116477147552264) — 哔哩哔哩播放列表
+- [三节 62 分回顾](https://www.bilibili.com/video/BV1LgfoYzEej/) — 哔哩哔哩
 
-同名 WebP 封面由各官方 YouTube 视频的公开缩略图转码而来，仅用于指向原始播放器；视频内容与封面版权归原权利人，不属于上述 Creative Commons 图片授权。视频采用 youtube-nocookie 标准 iframe，用户点击后加载，不自动播放；外部观看链接与返回封面入口始终可用。
+页面使用本地资料图作为视频入口封面，点击后打开对应哔哩哔哩页面播放；视频内容与封面版权归原权利人，不属于上述 Creative Commons 图片授权。旧的 YouTube 缩略图文件仍保留在目录中，便于历史版本追溯，但当前页面不再引用它们。
 
 ## 后续替换
 
