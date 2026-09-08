@@ -18,7 +18,7 @@ hero 是基于 Keith Allison 原图的 AI 背景移除版本（内置 Image Gen�
 
 - [81 分集锦](https://www.bilibili.com/video/BV1R6uF67E4s/) — 哔哩哔哩
 - [生涯告别战集锦](https://www.bilibili.com/video/BV1sUNW6xEVS/) — 哔哩哔哩
-- [对阵太阳的加时绝杀](https://www.bilibili.com/list/522787970?bvid=BV1AdokBNEbT&oid=116477147552264) — 哔哩哔哩播放列表
+- [对阵太阳的双绝杀全记录](https://www.bilibili.com/video/BV1t5Nr6kEih/) — 哔哩哔哩 NBA 官方账号
 - [三节 62 分回顾](https://www.bilibili.com/video/BV1LgfoYzEej/) — 哔哩哔哩
 
 页面使用本地资料图作为视频入口封面，点击后在当前页面加载对应的哔哩哔哩播放器；视频内容与封面版权归原权利人，不属于上述 Creative Commons 图片授权。卡片下方仍保留哔哩哔哩来源页作为备用入口。旧的 YouTube 缩略图文件仍保留在目录中，便于历史版本追溯，但当前页面不再引用它们。
