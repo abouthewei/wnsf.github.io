@@ -16,10 +16,6 @@ WowNow 的产品、系统方案、协作机制与专题展示集合。仓库以�
 - [经营数据统计分析系统](https://abouthewei.github.io/wnsf.github.io/operational-statistics-0716.html)
 - [安全合规与经营合规完善清单](https://abouthewei.github.io/wnsf.github.io/wownow-compliance-single.html)
 - [AI 音乐版权保护与生态需求](https://abouthewei.github.io/wnsf.github.io/WN-AI-Music-Discuss.html)
-- [PocketEcho 实体按键与操作逻辑评审](https://abouthewei.github.io/wnsf.github.io/PocketEcho-review/interaction-review.html)
-- [巴布艺术专题](https://abouthewei.github.io/wnsf.github.io/Babu-Art/)
-- [UK Sketches 视觉原型](https://abouthewei.github.io/wnsf.github.io/UK-Sketches/)
-- [Kobe Bryant — The Black Mamba](https://abouthewei.github.io/wnsf.github.io/Kobe-Legacy/)
 
 > 仓库根路径目前不提供统一首页，建议从上面的项目入口进入各个页面。
 
@@ -49,21 +45,9 @@ WowNow 的产品、系统方案、协作机制与专题展示集合。仓库以�
 | 项目 | 说明 | 源码入口 |
 | --- | --- | --- |
 | AI 音乐版权保护与生态需求 | 讨论 WOWNOW AI 音乐的首版重点、受控播放、音频水印、TimeTag 和私有音乐格式等产品方向。 | [`WN-AI-Music-Discuss.html`](./WN-AI-Music-Discuss.html) |
-| PocketEcho 交互评审 | 评审实体按键、旋钮和高频操作的逻辑，记录当前方案、合理之处及需要继续优化的反馈。 | [`PocketEcho-review/`](./PocketEcho-review/) |
-
-### 视觉专题与静态展示
-
-| 项目 | 说明 | 源码入口 |
-| --- | --- | --- |
-| 巴布艺术 | “修复的，不只是房子”主题的艺术与建筑修复专题页面，包含本地化图片资产和中英文页面内容。 | [`Babu-Art/`](./Babu-Art/) |
-| UK Sketches | 英国主题的图片与视觉叙事原型，包含页面脚本、样式和图片资源。 | [`UK-Sketches/`](./UK-Sketches/) |
-| Kobe Legacy | Kobe Bryant 生涯专题页面，以响应式体育纪录片式视觉呈现人物信息、时间线和生涯时刻。 | [`Kobe-Legacy/`](./Kobe-Legacy/) |
-
 ## 仓库结构
 
 - `*.html`：可独立打开的方案、评审和决策页面。
-- `Babu-Art/`、`UK-Sketches/`、`Kobe-Legacy/`：包含页面与静态资源的专题项目。
-- `PocketEcho-review/`：交互评审页面及配套图片。
 - `wownow-o2m-p2m/`、`wownow-strategy/`：已构建的前端静态页面及资源。
 
 大多数页面无需额外安装依赖，直接通过对应演示入口访问即可；需要修改时，请保持页面与其同目录静态资源的相对路径关系。
