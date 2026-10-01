@@ -16,6 +16,7 @@ WowNow 的产品、系统方案、协作机制与专题展示集合。仓库以�
 - [经营数据统计分析系统](https://abouthewei.github.io/wnsf.github.io/operational-statistics-0716.html)
 - [安全合规与经营合规完善清单](https://abouthewei.github.io/wnsf.github.io/wownow-compliance-single.html)
 - [AI 音乐版权保护与生态需求](https://abouthewei.github.io/wnsf.github.io/WN-AI-Music-Discuss.html)
+- [10月1日 南风古灶 TimeTag 现场活动综合复盘](https://abouthewei.github.io/wnsf.github.io/TimeTag-10-1/)
 
 > 仓库根路径目前不提供统一首页，建议从上面的项目入口进入各个页面。
 
@@ -45,9 +46,11 @@ WowNow 的产品、系统方案、协作机制与专题展示集合。仓库以�
 | 项目 | 说明 | 源码入口 |
 | --- | --- | --- |
 | AI 音乐版权保护与生态需求 | 讨论 WOWNOW AI 音乐的首版重点、受控播放、音频水印、TimeTag 和私有音乐格式等产品方向。 | [`WN-AI-Music-Discuss.html`](./WN-AI-Music-Discuss.html) |
+| TimeTag 现场活动综合复盘 | 汇总 10 月 1 日南风古灶现场执行、用户反馈、成交情况及后续验证事项的内部产品 / 运营调研页面。 | [`TimeTag-10-1/`](./TimeTag-10-1/) |
+
 ## 仓库结构
 
 - `*.html`：可独立打开的方案、评审和决策页面。
-- `wownow-o2m-p2m/`、`wownow-strategy/`：已构建的前端静态页面及资源。
+- `TimeTag-10-1/`、`wownow-o2m-p2m/`、`wownow-strategy/`：已构建的前端静态页面及资源。
 
 大多数页面无需额外安装依赖，直接通过对应演示入口访问即可；需要修改时，请保持页面与其同目录静态资源的相对路径关系。
