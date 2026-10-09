@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PocketEcho &#26041;&#26696;&#35780;&#23457;</title>
+<style>
+:root{--navy:#0a1b2a;--blue:#102d3e;--paper:#f2f6f6;--ink:#183341;--muted:#647a86;--line:#d6e1e4;--lime:#b9f46b;--pale:#e5f3dd;--white:#fff}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",Arial,sans-serif}.wrap{max-width:1160px;margin:auto;padding:0 28px}a{color:inherit;text-decoration:none}.hero{color:#eef6f8;background:radial-gradient(circle at 80% 20%,#245363,transparent 31%),linear-gradient(135deg,#06121e,#0b2637);min-height:565px;overflow:hidden;position:relative}.hero:before{content:"";inset:0;position:absolute;opacity:.16;background-image:linear-gradient(#a4c6d144 1px,transparent 1px),linear-gradient(90deg,#a4c6d144 1px,transparent 1px);background-size:54px 54px}.top{height:72px;border-bottom:1px solid #ffffff24;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}.brand{font-weight:800;letter-spacing:.12em;font-size:14px}.brand i{font-style:normal;color:var(--lime)}nav{display:flex;gap:22px;font-size:13px;color:#c4d3d9}nav a:hover{color:var(--lime)}.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.18fr .82fr;gap:40px;align-items:center;padding:72px 0}.hero h1{font-size:clamp(43px,6vw,70px);letter-spacing:-.055em;line-height:1.02;margin:0 0 18px}.hero h1 small{display:block;color:var(--lime);font-size:.25em;letter-spacing:.05em;margin-bottom:12px}.hero p{color:#c5d5dc;font-size:18px;max-width:580px;margin:0}.summary{border-left:3px solid var(--lime);margin-top:32px;padding:12px 15px;color:#eaf3ef;font-size:14px}.summary b{color:var(--lime)}.device-wrap{height:300px;display:grid;place-items:center}.device{height:306px;width:172px;border-radius:28px;background:linear-gradient(120deg,#334754,#121f29 58%,#304551);border:1px solid #b4c9d055;box-shadow:20px 30px 45px #0008;transform:rotate(7deg);position:relative}.device:before{content:"POLPO  &middot;  PE";position:absolute;top:29px;width:100%;text-align:center;color:#e5f1f2;font-size:10px;font-weight:800;letter-spacing:.18em}.wheel{position:absolute;left:29px;top:95px;width:112px;height:112px;border:1px solid #b9ccd277;border-radius:50%;box-shadow:inset 0 0 16px #0008}.wheel:before{content:"&#9654;";position:absolute;inset:38px;text-align:center;line-height:35px;border:1px solid #bdd1d577;border-radius:50%;font-size:12px}.shape-note{font-size:11px;color:#a8bec8;text-align:center;margin-top:19px}.hero-foot{position:absolute;bottom:0;left:0;right:0;border-top:1px solid #ffffff1c;color:#aac0c9;font-size:12px}.hero-foot .wrap{padding-top:14px;padding-bottom:14px}.hero-foot b{color:var(--lime);margin-right:7px}main{padding:66px 0 92px}.section{margin-bottom:66px}.head{display:flex;justify-content:space-between;gap:28px;align-items:end;margin-bottom:24px}.head h2{font-size:30px;line-height:1.2;letter-spacing:-.04em;margin:0}.head p{max-width:475px;margin:0;color:var(--muted);font-size:14px}.index{font-size:12px;color:#3e7753;font-weight:800;letter-spacing:.08em;margin-bottom:8px}.callout{border-left:4px solid #70b35b;background:var(--pale);padding:17px 20px;border-radius:0 12px 12px 0;font-size:15px}.callout b{color:#337544}.flow{margin-top:24px;display:grid;grid-template-columns:1fr 42px 1fr 42px 1fr;align-items:center}.node{background:var(--white);border:1px solid var(--line);border-radius:13px;padding:21px}.node strong{font-size:20px;display:block}.node span{font-size:13px;color:var(--muted)}.node:last-child{background:var(--blue);color:white}.node:last-child span{color:#c0d3d9}.arrow{height:2px;background:#96c56f;position:relative}.arrow:after{content:"";position:absolute;right:0;top:-4px;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:8px solid #96c56f}.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:17px}.panel{border:1px solid var(--line);border-radius:14px;background:var(--white);padding:22px}.panel.dark{background:var(--blue);border-color:var(--blue);color:white}.panel h3{font-size:19px;line-height:1.25;margin:0 0 8px}.panel p{font-size:13px;margin:0;color:var(--muted)}.panel.dark p{color:#bfd2d9}.panel ul{font-size:13px;margin:14px 0 0;padding-left:17px}.panel li{margin:7px 0}.yes{color:#b9f46b}.no{color:#c65258}.badge{display:inline-flex;align-items:center;gap:10px;border:1.5px solid var(--lime);padding:12px 16px;border-radius:4px;color:#eff8eb;font-size:17px;margin:16px 0}.badge:before{content:"";width:10px;height:10px;border-radius:50%;background:var(--lime)}.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.mini{padding:16px;border:1px solid var(--line);border-radius:12px;background:#fff}.mini b{display:block;font-size:13px;margin-bottom:4px}.mini span{display:block;color:var(--muted);font-size:12px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:13px;background:#fff}.table{border-collapse:collapse;width:100%;min-width:720px;font-size:13px}.table th{background:var(--blue);color:white;text-align:left;padding:13px 15px}.table td{padding:13px 15px;border-top:1px solid #e2eaec;vertical-align:top;color:#546b77}.table td:first-child{font-weight:800;color:#254455}.product-layout{display:grid;grid-template-columns:210px 1fr;gap:16px}.product-nav{background:var(--blue);color:#eaf5f6;padding:21px;border-radius:13px}.product-nav b{font-size:17px;display:block;margin-bottom:13px}.product-nav div{padding:8px 0;border-top:1px solid #ffffff1b;font-size:13px}.product-nav div:last-child{color:var(--lime)}.modules{display:grid;grid-template-columns:1fr 1fr;gap:10px}.module{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}.module b{font-size:12px;color:#3c7b53}.module span{display:block;font-size:14px;font-weight:700;margin-top:5px}.module small{display:block;font-size:12px;color:var(--muted);margin-top:4px}.service{display:grid;grid-template-columns:1fr 1fr;gap:16px}.decision-board{background:var(--blue);border-radius:18px;padding:34px;color:#f1f7f8}.board-head{display:flex;justify-content:space-between;gap:20px;align-items:start;margin-bottom:24px}.board-head h2{font-size:30px;line-height:1.2;letter-spacing:-.04em;margin:0}.board-head p{color:#bfd0d7;font-size:14px;max-width:580px;margin:7px 0 0}.count{color:var(--lime);font-size:13px;font-weight:800;white-space:nowrap}.decisions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.decision{padding:16px;background:#ffffff0c;border:1px solid #ffffff1b;border-radius:12px}.decision i{font-style:normal;font-size:11px;font-weight:900;letter-spacing:.08em;color:var(--lime)}.decision h3{font-size:15px;line-height:1.35;margin:7px 0}.decision p{font-size:12px;color:#c4d4da;margin:0}.recommend{border-top:1px solid #ffffff1c;margin-top:10px;padding-top:9px;color:#e4f4db;font-size:12px}.recommend b{color:var(--lime)}.actions{display:flex;gap:10px;margin-top:19px}.actions button{padding:10px 14px;border:0;border-radius:7px;font-weight:800;cursor:pointer}.actions button:first-child{background:var(--lime);color:#153121}.actions button:last-child{color:#e4f5df;background:transparent;border:1px solid #b9f46b88}.detail{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:0 18px}.detail summary{cursor:pointer;padding:16px 0;font-size:14px;font-weight:800}.detail p{font-size:13px;color:var(--muted)}.detail .table-wrap{margin:0 0 17px}.toast{position:fixed;right:22px;bottom:22px;background:#15384a;border-left:4px solid var(--lime);color:white;padding:13px 16px;border-radius:7px;font-size:13px;box-shadow:0 12px 30px #0003;opacity:0;transform:translateY(10px);transition:.2s}.toast.show{opacity:1;transform:none}.foot{font-size:12px;color:#728692;border-top:1px solid #d1dfe3;padding-top:20px}@media(max-width:760px){.wrap{padding:0 18px}nav{display:none}.hero{min-height:650px}.hero-grid{grid-template-columns:1fr;padding:58px 0 82px}.hero h1{font-size:50px}.device-wrap{height:205px;transform:scale(.72);margin:-10px 0 -42px}.head{display:block}.head p{margin-top:11px}.flow,.two,.mini-grid,.service{grid-template-columns:1fr}.arrow{width:2px;height:24px;justify-self:center}.arrow:after{right:-3px;top:auto;bottom:-1px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:8px solid #96c56f;border-bottom:0}.product-layout{grid-template-columns:1fr}.modules,.decisions{grid-template-columns:1fr}.board-head{display:block}.count{margin-top:9px}.section{margin-bottom:52px}.hero-foot{font-size:11px}}
+.design-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:16px}.design-image{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:0}.design-image img{width:100%;height:250px;object-fit:cover;display:block}.design-image figcaption{padding:10px 13px;color:var(--muted);font-size:12px}.design-info{display:grid;gap:12px}.design-card{padding:17px;border:1px solid var(--line);border-radius:12px;background:#fff}.design-card h3{font-size:15px;margin:0 0 6px}.design-card p{font-size:13px;color:var(--muted);margin:0}.design-card ul{margin:8px 0 0;padding-left:17px;font-size:13px}.design-card li{margin:4px 0}.design-warning{margin-top:15px;padding:15px 17px;border:1px solid #e9c7c7;background:#fff4f4;border-radius:12px;font-size:13px}.design-warning b{color:#9d3e45}.cmf{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-top:14px}.swatch{border-radius:10px;min-height:80px;padding:9px;display:flex;align-items:end;color:#fff;font-size:12px;font-weight:800;box-shadow:inset 0 0 0 1px #0002}.s-cyan{background:#91d0d5;color:#214653}.s-yellow{background:#e7c82f;color:#4b4316}.s-purple{background:#ab839f}.s-green{background:#a9c828;color:#354810}.s-blue{background:#2f3fc4}.s-orange{background:#df5e2b}.s-sand{background:#847c6a}.s-black{background:#1e2022}.s-white{background:#e7e5dd;color:#524e48}.s-gold{background:#b7a06e;color:#473b23}@media(max-width:760px){.design-grid{grid-template-columns:1fr}.design-image img{height:auto}.cmf{grid-template-columns:repeat(3,1fr)}}
+.device:before{content:"POLPO / PE"}.wheel:before{content:"▶"}
+</style>
+</head>
+<body>
+<header class="hero" id="top"><div class="wrap">
+<div class="top">
+<a class="brand" href="#top">POLPO <i>/</i> POCKETECHO</a><nav><a href="#brand">&#21697;&#29260;&#26550;&#26500;</a><a href="#design">&#24037;&#19994;&#35774;&#35745;</a><a href="#compliance">&#21512;&#35268;</a><a href="#product">&#20135;&#21697;&#39029;</a><a href="#board">&#20915;&#31574;&#26495;</a></nav>
+</div>
+<div class="hero-grid">
+<div>
+<h1>
+<small>&#20869;&#37096;&#35752;&#35770;&#33609;&#26696;</small>PocketEcho<br>&#26041;&#26696;&#35780;&#23457;</h1>
+<p>&#35753;&#21697;&#29260;&#12289;&#20135;&#21697;&#12289;&#29983;&#24577;&#21644;&#29983;&#20135;&#36131;&#20219;&#22238;&#21040;&#21508;&#33258;&#30340;&#20301;&#32622;&#65292;&#20043;&#21518;&#20877;&#35752;&#35770;&#39029;&#38754;&#12289;&#35748;&#35777;&#21644;&#37327;&#20135;&#12290;</p>
+<div class="summary">
+<b>&#24314;&#35758;&#65306;</b>POLPO PocketEcho + Works with WowNow&#12290;&#21069;&#32773;&#26159;&#20135;&#21697;&#36523;&#20221;&#65292;&#21518;&#32773;&#20165;&#26159;&#20860;&#23481;&#35748;&#35777;&#26631;&#35782;&#12290;</div>
+</div>
+<div><div class="device-wrap"><div>
+<div class="device"><div class="wheel"></div></div>
+<div class="shape-note">&#25277;&#35937;&#24418;&#24577;&#31034;&#24847;&#65292;&#19981;&#20195;&#34920;&#26368;&#32456; ID / MD</div>
+</div></div></div>
+</div>
+</div>
+<div class="hero-foot"><div class="wrap">
+<b>&#26412;&#39029;&#21482;&#22238;&#31572;&#19977;&#20214;&#20107;&#65306;</b>&#35841;&#25317;&#26377;&#20135;&#21697;&#65311;&#22914;&#20309;&#34920;&#36798;&#29983;&#24577;&#65311;&#37327;&#20135;&#21069;&#24517;&#39035;&#38145;&#23450;&#20160;&#20040;&#65311;</div></div></header>
+<main class="wrap"><section class="section" id="brand"><div class="head">
+<div>
+<div class="index">01 / &#25512;&#33616;&#26550;&#26500;</div>
+<h2>&#21697;&#29260;&#12289;&#20135;&#21697;&#12289;&#29983;&#24577;&#21508;&#24402;&#20854;&#20301;</h2>
+</div>
+<p>&#36825;&#19981;&#26159;&#32852;&#21517;&#65292;&#20063;&#19981;&#26159;&#38582;&#23646;&#12290;&#25226;&#19977;&#32773;&#25286;&#24320;&#65292;&#26159;&#36991;&#20813;&#27861;&#24459;&#35823;&#35299;&#12289;&#20445;&#30041;&#25193;&#23637;&#31354;&#38388;&#30340;&#26368;&#30701;&#36335;&#24452;&#12290;</p>
+</div>
+<div class="callout">
+<b>&#25512;&#33616;&#32467;&#35770;&#65306;</b>POLPO &#26159;&#20027;&#21697;&#29260;&#65307;PocketEcho &#26159;&#20135;&#21697;&#21517;&#31216;&#65307;WowNow &#26159;&#22806;&#37096;&#29983;&#24577;&#65307;Works with WowNow &#26159;&#20860;&#23481;&#35748;&#35777;&#26631;&#35782;&#12290;</div>
+<div class="flow">
+<div class="node">
+<strong>POLPO</strong><span>&#20027;&#21697;&#29260; &middot; &#36164;&#20135;&#12289;&#36136;&#37327;&#19982;&#23458;&#25143;&#20851;&#31995;</span>
+</div>
+<div class="arrow"></div>
+<div class="node">
+<strong>PocketEcho</strong><span>&#20135;&#21697; &middot; &#20415;&#25658;&#24335;&#31163;&#32447;&#38899;&#20048;&#25773;&#25918;&#22120;</span>
+</div>
+<div class="arrow"></div>
+<div class="node">
+<strong>Works with WowNow</strong><span>&#29983;&#24577;&#20860;&#23481; &middot; &#38750;&#20027;&#21697;&#29260;&#12289;&#38750;&#32852;&#21517;</span>
+</div>
+</div>
+<div class="two">
+<article class="panel dark"><h3>&#25512;&#33616;&#65306;POLPO PocketEcho<br>+ Works with WowNow</h3>
+<p>&#20135;&#21697;&#24402;&#23646;&#26126;&#30830;&#65292;&#29983;&#24577;&#33021;&#21147;&#21487;&#25193;&#23637;&#12290;</p>
+<ul>
+<li>
+<span class="yes">&#10003;</span> POLPO &#36164;&#20135;&#23436;&#25972;&#27785;&#28096;</li>
+<li>
+<span class="yes">&#10003;</span> &#29992;&#25143;&#30693;&#36947;&#30828;&#20214;&#36131;&#20219;&#20027;&#20307;</li>
+<li>
+<span class="yes">&#10003;</span> &#19981;&#38145;&#27515;&#21333;&#19968;&#29983;&#24577;</li>
+</ul></article><article class="panel"><h3>&#36991;&#20813;&#65306;WowNow PocketEcho<br>&#65295;POLPO &times; WowNow</h3>
+<p>&#36825;&#31867;&#34920;&#36848;&#20250;&#25226;&#20860;&#23481;&#20851;&#31995;&#35835;&#25104;&#32852;&#21517;&#12289;&#23448;&#26041;&#20986;&#21697;&#25110;&#21697;&#29260;&#38582;&#23646;&#12290;</p>
+<ul>
+<li>
+<span class="no">&times;</span> &#27169;&#31946;&#27861;&#24459;&#19982;&#21806;&#21518;&#36131;&#20219;</li>
+<li>
+<span class="no">&times;</span> &#28040;&#36153;&#32773;&#21644;&#28192;&#36947;&#23481;&#26131;&#35823;&#35299;</li>
+</ul></article>
+</div></section>
+<section class="section"><div class="head">
+<div>
+<div class="index">02 / Badge &#19982;&#20135;&#21697;&#21576;&#29616;</div>
+<h2>&#29992; Badge &#34920;&#36798;&#20860;&#23481;&#65292;&#19981;&#25250;&#20027;&#21697;&#29260;&#20301;&#32622;</h2>
+</div>
+<p>Badge &#25918;&#22312;&#21253;&#35013;&#12289;&#23448;&#32593;&#19982;&#30005;&#21830;&#30340;&#36741;&#21161;&#20301;&#32622;&#65307;&#26426;&#36523;&#27491;&#38754;&#21407;&#21017;&#19978;&#19981;&#20351;&#29992;&#12290;</p>
+</div>
+<div class="two">
+<div class="panel dark">
+<div class="badge">Works with WowNow</div>
+<p>&#20316;&#20026;&#21487;&#31649;&#29702;&#30340;&#20860;&#23481;&#35748;&#35777;&#65306;&#20808;&#36890;&#36807;&#25216;&#26415;&#27979;&#35797;&#19982;&#21697;&#29260;&#25480;&#26435;&#65292;&#20877;&#25353;&#32479;&#19968;&#35270;&#35273;&#35268;&#33539;&#20351;&#29992;&#65307;&#19981;&#31561;&#26435;&#24182;&#21015; Logo&#12290;</p>
+</div>
+<div class="panel">
+<h3>&#35774;&#22791;&#19982;&#21253;&#35013;</h3>
+<p><b>&#35774;&#22791;&#27491;&#38754;&#65306;</b>&#40664;&#35748; Only POLPO&#65307;&#33509;&#30830;&#35748; PocketEcho &#38271;&#26399;&#31995;&#21015;&#21270;&#65292;&#20877;&#37319;&#29992; POLPO + PocketEcho&#12290;</p>
+<p style="margin-top:10px"><b>&#21253;&#35013;&#27491;&#38754;&#65306;</b>POLPO &rarr; PocketEcho &rarr; &#20135;&#21697;&#31867;&#22411; &rarr; Badge&#12290;WowNow &#19981;&#19982; POLPO &#31561;&#22823;&#12290;</p>
+</div>
+</div>
+<div class="mini-grid" style="margin-top:14px">
+<div class="mini">
+<b>&#20934;&#20837;</b><span>&#20860;&#23481;&#27979;&#35797;&#12289;&#29256;&#26412;&#33539;&#22260;&#19982;&#25480;&#26435;&#23436;&#25104;&#12290;</span>
+</div>
+<div class="mini">
+<b>&#26426;&#36523;</b><span>&#40664;&#35748;&#19981;&#20351;&#29992;&#65307;&#22914;&#38656;&#20351;&#29992;&#65292;&#21333;&#29420;&#23457;&#25209;&#12290;</span>
+</div>
+<div class="mini">
+<b>&#25764;&#38144;</b><span>&#20860;&#23481;&#22833;&#25928;&#25110;&#21697;&#29260;&#36829;&#35268;&#26102;&#26242;&#20572;&#24182;&#25972;&#25913;&#12290;</span>
+</div>
+</div></section>
+<section class="section" id="design">
+  <div class="head"><div><div class="index">03 / &#24403;&#21069;&#24037;&#19994;&#35774;&#35745;&#36755;&#20837;</div><h2>&#35774;&#35745;&#26041;&#26696;&#24050;&#26126;&#30830;&#20004;&#31867;&#20135;&#21697;&#35821;&#35328;</h2></div><p>&#20197;&#19979;&#20449;&#24687;&#26469;&#33258;&#12298;PocketEcho&#26041;&#26696;&#35843;&#25972;&#12289;&#37197;&#33394;&#12299;&#35270;&#35273;&#31295;&#65292;&#29992;&#20110;&#24110;&#21161; ID&#12289;&#21697;&#29260;&#19982;&#20135;&#21697;&#20849;&#21516;&#25910;&#26463;&#65307;&#23427;&#20204;&#19981;&#26159;&#24050;&#20923;&#32467;&#30340;&#37327;&#20135;&#35268;&#26684;&#12290;</p></div>
+  <div class="design-grid"><figure class="design-image"><img src="assets/id-tag-controls.jpg" alt="&#24102;&#36719;&#33014; Tag &#24179;&#21488;&#12289;&#23454;&#20307;&#26059;&#38062;&#21644;&#20391;&#38190;&#30340; PocketEcho &#35774;&#35745;&#31034;&#24847;"><figcaption>&#26041;&#21521; A&#65306;Tag &#24179;&#21488; + &#23454;&#20307;&#25511;&#21046;&#12290;&#35270;&#35273;&#31295;&#23637;&#31034;&#32454;&#30952;&#30722;&#38451;&#26497;&#27687;&#21270;&#37329;&#23646;&#22771;&#20307;&#12289;&#21705;&#20809;&#38518;&#22303;&#25163;&#24863;&#26059;&#38062;&#19982;&#36719;&#33014; Tag &#24179;&#21488;&#12290;</figcaption></figure><div class="design-info"><article class="design-card"><h3>&#26041;&#21521; A&#65306;&#21487;&#25658;&#24102;&#30340; Tag &#38899;&#20048;&#32456;&#31471;</h3><ul><li>&#21069;&#37096; Tag &#24179;&#21488;&#65292;&#24102; Tag &#25910;&#20986;&#19982;&#38145;&#23450;&#25805;&#20316;&#36335;&#24452;&#12290;</li><li>&#20391;&#36793;&#27169;&#24335;&#28369;&#21160;&#12289;&#19978;&#19968;&#26354;/&#19979;&#19968;&#26354;&#12289;&#30005;&#28304;&#12289;&#34013;&#29273;&#31561;&#23454;&#20307;&#25511;&#21046;&#65307;&#21069;&#37096;&#29366;&#24577;&#28783;&#19982;&#26059;&#38062;&#12290;</li><li>&#24453;&#20135;&#21697;&#30830;&#35748;&#65306;Tag &#30340;&#19994;&#21153;&#36523;&#20221;&#12289;&#31163;&#32447;&#20869;&#23481;&#26426;&#21046;&#12289;&#32467;&#26500;&#21487;&#38752;&#24615;&#19982;&#35823;&#35302;&#38450;&#25252;&#12290;</li></ul></article><article class="design-card"><h3>&#26041;&#21521; B&#65306;&#25972;&#20307;&#24335;&#25552;&#25163;&#26426;&#36523;</h3><p>&#35270;&#35273;&#31295;&#21518;&#27573;&#23637;&#31034;&#20102;&#39030;&#37096;&#25552;&#25163;&#12289;&#27491;&#38754;&#19979;&#27785;&#21306;&#22495;&#12289;&#20391;&#38190;&#19982;&#32972;&#38754;&#25351;&#31034;&#28783;&#30340;&#25972;&#26426;&#26041;&#21521;&#65307;&#21487;&#24418;&#25104;&#26356;&#24378;&#30340;&#38543;&#36523;&#25658;&#24102;&#35782;&#21035;&#12290;</p></article><article class="design-card"><h3>CMF &#20505;&#36873;</h3><p>&#27963;&#21147;&#33394;&#31995;&#65306;&#22825;&#38738;&#12289;&#20142;&#40644;&#12289;&#31881;&#32043;&#12289;&#32511;&#40657;&#12289;&#38236;&#38754;&#34013;&#12289;&#38236;&#38754;&#27225;&#65307;&#20811;&#21046;&#33394;&#31995;&#65306;&#27801;&#37329;&#12289;&#30333;&#12289;&#30382;&#38761;&#40657;&#12289;&#30382;&#38761;&#37329;&#12289;&#27225;&#33394;&#12290;&#21518;&#32773;&#21516;&#26102;&#25506;&#32034;&#30952;&#30722;&#38451;&#26497;&#27687;&#21270;&#37329;&#23646;&#19982;&#30382;&#38761;/&#38518;&#22303;&#25163;&#24863;&#21253;&#35206;&#20214;&#12290;</p></article></div></div>
+  <div class="cmf"><div class="swatch s-cyan">&#22825;&#38738;</div><div class="swatch s-yellow">&#20142;&#40644;</div><div class="swatch s-purple">&#31881;&#32043;</div><div class="swatch s-green">&#32511;&#40657;</div><div class="swatch s-blue">&#38236;&#38754;&#34013;</div><div class="swatch s-orange">&#38236;&#38754;&#27225;</div><div class="swatch s-sand">&#27801;&#37329;</div><div class="swatch s-black">&#30382;&#38761;&#40657;</div><div class="swatch s-white">&#30333;&#33394;</div><div class="swatch s-gold">&#30382;&#38761;&#37329;</div></div>
+  <div class="design-warning"><b>&#24517;&#39035;&#22238;&#21040; Decision Board &#30340;&#20914;&#31361;&#65306;</b>&#35270;&#35273;&#31295;&#22312;&#26426;&#36523;&#21069;&#37096;/&#25552;&#25163;&#22788;&#20351;&#29992;&#20102; WowNow &#25991;&#23383;&#19982;&#22270;&#24418;&#20027;&#26631;&#35782;&#65307;&#36825;&#19982;&#26412;&#26041;&#26696;&ldquo;WowNow &#20165;&#20316;&#20860;&#23481; Badge&#12289;&#21407;&#21017;&#19978;&#19981;&#25918;&#35774;&#22791;&#26426;&#36523;&rdquo;&#30340;&#24314;&#35758;&#30456;&#20914;&#31361;&#12290;ID Freeze &#21069;&#38656;&#35201;&#23558;&#35813;&#21306;&#22495;&#25913;&#20026; POLPO &#20027;&#26631;&#35782;&#12289;PocketEcho &#31995;&#21015;&#26631;&#35782;&#65292;&#25110;&#30041;&#30333;&#65307;&#19981;&#33021;&#25226;&#29616;&#26377;&#35270;&#35273;&#31295;&#30452;&#25509;&#35270;&#20026;&#37327;&#20135;&#26631;&#35782;&#26041;&#26696;&#12290;</div>
+</section>
+<section class="section" id="compliance"><div class="head">
+<div>
+<div class="index">04 / &#21512;&#35268;&#19982;&#37327;&#20135;</div>
+<h2>&#29992;&#22235;&#32452;&#24037;&#20316;&#21253;&#26367;&#20195;&ldquo;&#29983;&#20135;&#35768;&#21487;&#35777;&rdquo;&#24605;&#32500;</h2>
+</div>
+<p>&#20197;&#19979;&#20026;&#20013;&#22269;&#22823;&#38470;&#19978;&#24066;&#21069;&#30340;&#31649;&#29702;&#28165;&#21333;&#65307;&#26368;&#32456;&#36866;&#29992;&#24615;&#20173;&#20197;&#26368;&#32456;&#21697;&#31867;&#12289;BOM&#12289;RF &#26041;&#26696;&#21644;&#26377;&#36164;&#36136;&#26426;&#26500;&#24847;&#35265;&#20026;&#20934;&#12290;</p>
+</div>
+<div class="table-wrap"><table class="table">
+<thead><tr>
+<th>&#24037;&#20316;&#21253;</th>
+<th>&#24517;&#39035;&#38145;&#23450;&#30340;&#20107;&#39033;</th>
+<th>&#20027;&#35201;&#36131;&#20219;</th>
+<th>&#26102;&#28857;</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>&#20027;&#20307;&#19982;&#36164;&#20135;</td>
+<td>&#32463;&#33829;&#20027;&#20307;&#12289;POLPO / PocketEcho &#21830;&#26631;&#12289;OEM/ODM &#36136;&#37327;&#21327;&#35758;</td>
+<td>POLPO + &#27861;&#21153;</td>
+<td>&#31435;&#39033; / &#23450;&#28857;&#21069;</td>
+</tr>
+<tr>
+<td>&#20135;&#21697;&#19982;&#26080;&#32447;</td>
+<td>&#30005;&#27744;&#22411;&#21495;&#19982; CCC&#12289;&#25972;&#26426; CCC &#30446;&#24405;&#36866;&#29992;&#24615;&#12289;SRRC/CMIIT ID&#12289;Bluetooth SIG</td>
+<td>&#30828;&#20214;&#30740;&#21457; + OEM + &#20379;&#24212;&#38142;</td>
+<td>RF / BOM Freeze &#21518;</td>
+</tr>
+<tr>
+<td>&#23433;&#20840;&#19982;&#29615;&#22659;</td>
+<td>&#23433;&#20840;&#12289;EMC&#12289;RoHS&#12289;&#25191;&#34892;&#26631;&#20934;&#12289;&#37197;&#20214;&#19982; AC &#36866;&#37197;&#22120;&#36866;&#29992;&#24615;</td>
+<td>OEM + &#21697;&#36136; + &#21512;&#35268;</td>
+<td>DVT&ndash;PVT</td>
+</tr>
+<tr>
+<td>&#23545;&#22806;&#36164;&#26009;</td>
+<td>&#38125;&#29260;&#12289;&#21253;&#35013;&#12289;&#35828;&#26126;&#20070;&#12289;&#23448;&#32593;&#12289;&#30005;&#21830;&#39029;&#19982;&#23459;&#31216;&#19968;&#33268;</td>
+<td>POLPO + &#21697;&#29260; + &#27861;&#21153;</td>
+<td>PVT&ndash;MP</td>
+</tr>
+</tbody>
+</table></div>
+<div class="mini-grid" style="margin-top:14px">
+<div class="mini">
+<b>01 &#22522;&#30784;&#38145;&#23450;</b><span>&#21830;&#26631;&#12289;&#29983;&#24577;&#21327;&#35758;&#12289;Badge &#35268;&#21017;&#12290;</span>
+</div>
+<div class="mini">
+<b>02 &#26041;&#26696;&#20923;&#32467;</b><span>ID / MD / EE / RF &#19982; BOM Freeze&#12290;</span>
+</div>
+<div class="mini">
+<b>03 &#39564;&#35777;</b><span>&#30005;&#27744;&#12289;SRRC&#12289;SIG&#12289;&#23433;&#20840; / EMC / RoHS&#12290;</span>
+</div>
+<div class="mini">
+<b>04 &#25918;&#34892;</b><span>&#36164;&#26009;&#23457;&#26680; &rarr; EVT / DVT / PVT &rarr; MP&#12290;</span>
+</div>
+</div></section>
+<section class="section" id="product"><div class="head">
+<div>
+<div class="index">05 / &#20135;&#21697;&#39029;&#38754;&#19982;&#21806;&#21518;</div>
+<h2>&#20135;&#21697;&#39029;&#23646;&#20110; POLPO&#65292;WowNow &#22312;&#20307;&#39564;&#38142;&#36335;&#20013;&#20986;&#29616;</h2>
+</div>
+<p>&#39318;&#23631;&#20808;&#35828;&#26126; PocketEcho &#30340;&#29420;&#31435;&#20135;&#21697;&#20215;&#20540;&#65307;&#20877;&#35299;&#37322;&#20854;&#22914;&#20309;&#19982; WowNow &#20869;&#23481;&#12289;&#21019;&#20316;&#21644;&#26381;&#21153;&#21327;&#21516;&#12290;</p>
+</div>
+<div class="product-layout">
+<aside class="product-nav"><b>POLPO</b><div>Products</div>
+<div>PocketEcho</div>
+<div>Product detail page</div>
+<div>Works with WowNow</div></aside><div class="modules">
+<div class="module">
+<b>01 / Hero</b><span>POLPO &middot; PocketEcho</span><small>&#38899;&#20048;&#65292;&#19981;&#24517;&#24635;&#20381;&#36182;&#23631;&#24149;&#12290;</small>
+</div>
+<div class="module">
+<b>02 / &#26412;&#20307;&#20307;&#39564;</b><span>&#31163;&#32447;&#12289;&#23454;&#20307;&#25353;&#38190;&#12289;&#34013;&#29273;&#12289;&#38543;&#36523;&#25658;&#24102;</span><small>&#20808;&#24314;&#31435;&#29420;&#31435;&#25773;&#25918;&#20215;&#20540;&#12290;</small>
+</div>
+<div class="module">
+<b>03 / &#29983;&#24577;&#27169;&#22359;</b><span>WowNow &#20869;&#23481; &rarr; &#31163;&#32447;&#25773;&#25918; &rarr; &#38543;&#36523;&#32838;&#21548;</span><small>&#22312;&#27492;&#35299;&#37322;&#20860;&#23481;&#20851;&#31995;&#12290;</small>
+</div>
+<div class="module">
+<b>04 / &#35268;&#26684;&#19982; FAQ</b><span>&#35268;&#26684;&#12289;&#25903;&#25345;&#33539;&#22260;&#12289;&#21806;&#21518;&#19982;&#21697;&#29260;&#38382;&#31572;</span><small>&ldquo;POLPO &#20135;&#21697;&#65292;&#25903;&#25345; WowNow &#29983;&#24577;&rdquo;&#12290;</small>
+</div>
+</div>
+</div>
+<div class="service" style="margin-top:16px">
+<div class="panel">
+<h3>POLPO&#65306;&#30828;&#20214;&#19982;&#21806;&#21518;</h3>
+<p>&#30828;&#20214;&#12289;&#30005;&#27744;&#12289;&#34013;&#29273;&#12289;&#20135;&#21697;&#36136;&#37327;&#12289;&#32500;&#20462;&#25442;&#36135;&#21644;&#29992;&#25143;&#20837;&#21475;&#30340;&#26368;&#32456;&#36127;&#36131;&#26041;&#12290;</p>
+</div>
+<div class="panel">
+<h3>WowNow&#65306;&#20869;&#23481;&#19982;&#29983;&#24577;</h3>
+<p>&#36134;&#21495;&#12289;&#20869;&#23481;&#26381;&#21153;&#12289;&#20113;&#26381;&#21153;&#12289;&#29983;&#24577;&#20860;&#23481;&#19982;&#30456;&#20851;&#26381;&#21153;&#24037;&#21333;&#30340;&#22788;&#29702;&#26041;&#12290;</p>
+</div>
+</div></section>
+<section class="section" id="board"><div class="decision-board">
+<div class="board-head">
+<div>
+<h2>&#38656;&#35201;&#31649;&#29702;&#23618;&#20915;&#31574;</h2>
+<p>&#30495;&#27491;&#20250;&#24433;&#21709;&#20135;&#21697;&#36164;&#20135;&#12289;&#21327;&#35758;&#33539;&#22260;&#12289;&#39318;&#21457;&#25104;&#26412;&#12289;&#24037;&#19994;&#35774;&#35745;&#19982;&#26410;&#26469;&#24320;&#25918;&#24615;&#30340;&#19971;&#39033;&#20915;&#23450;&#12290;</p>
+</div>
+<div class="count">7 decisions to close</div>
+</div>
+<div class="decisions">
+<article class="decision"><i>01</i><h3>&#35774;&#22791;&#27491;&#38754;&#26631;&#35782;</h3>
+<p>Only POLPO&#65292;&#25110; POLPO + PocketEcho&#65311;</p>
+<div class="recommend">
+<b>&#24314;&#35758;&#65306;</b>&#39318;&#20195;&#40664;&#35748; Only POLPO&#12290;</div></article><article class="decision"><i>02</i><h3>&#24314;&#31435; Works with WowNow</h3>
+<p>&#26159;&#21542;&#25237;&#20837;&#35748;&#35777;&#12289;&#35268;&#33539;&#12289;&#27979;&#35797;&#19982;&#25480;&#26435;&#27835;&#29702;&#65311;</p>
+<div class="recommend">
+<b>&#24314;&#35758;&#65306;</b>Yes&#12290;</div></article><article class="decision"><i>03</i><h3>Badge &#20351;&#29992;&#33539;&#22260;</h3>
+<p>&#26159;&#21542;&#20801;&#35768;&#25918;&#35774;&#22791;&#26426;&#36523;&#65311;</p>
+<div class="recommend">
+<b>&#24314;&#35758;&#65306;</b>&#21407;&#21017; No&#65307;&#20248;&#20808;&#21253;&#35013;/&#23448;&#32593;/&#30005;&#21830;&#12290;</div></article><article class="decision"><i>04</i><h3>&#39318;&#20195;&#20805;&#30005;&#22120;</h3>
+<p>&#26159;&#21542;&#38543;&#26426;&#38468;&#36192; AC Charger&#65311;</p>
+<div class="recommend">
+<b>&#24314;&#35758;&#65306;</b>&#32467;&#21512;&#25104;&#26412;&#12289;CCC &#21644;&#20307;&#39564;&#35780;&#23457;&#12290;</div></article><article class="decision"><i>05</i><h3>&#29983;&#24577;&#21512;&#20316;&#21327;&#35758;</h3>
+<p>&#26159;&#21542;&#22312;&#23545;&#22806;&#23459;&#31216;&#21069;&#31614;&#27491;&#24335;&#25480;&#26435;&#21327;&#35758;&#65311;</p>
+<div class="recommend">
+<b>&#24314;&#35758;&#65306;</b>Yes&#12290;</div></article><article class="decision"><i>06</i><h3>&#26410;&#26469;&#24320;&#25918;&#24615;</h3>
+<p>&#26159;&#21542;&#20801;&#35768;&#25509;&#20837; WowNow &#20197;&#22806;&#20869;&#23481;&#29983;&#24577;&#65311;</p>
+<div class="recommend">
+<b>&#24314;&#35758;&#65306;</b>&#20445;&#30041;&#24320;&#25918;&#36873;&#39033;&#65292;&#38145;&#23450;&#39318;&#21457;&#33539;&#22260;&#12290;</div></article><article class="decision"><i>07</i><h3>&#24037;&#19994;&#35774;&#35745;&#26041;&#21521;&#19982; Tag &#26426;&#21046;</h3>
+<p>&#36873;&#25321; Tag &#24179;&#21488;&#26041;&#21521;&#65292;&#25110;&#25552;&#25163;&#25972;&#26426;&#26041;&#21521;&#65311;Tag &#26159;&#21542;&#25104;&#20026;&#39318;&#21457;&#20135;&#21697;&#26426;&#21046;&#65311;</p>
+<div class="recommend"><b>&#24314;&#35758;&#65306;</b>&#20808;&#30830;&#35748;&#26500;&#26550;&#19982;&#26631;&#35782;&#25913;&#29256;&#65292;&#20877;&#36827;&#20837; ID / MD Freeze&#12290;</div></article>
+</div>
+<div class="actions">
+<button onclick="showToast('&#24050;&#35760;&#24405;&#65306;&#24314;&#35758;&#36827;&#20837;&#31649;&#29702;&#23618;&#20915;&#31574;&#20250;&#24182;&#25351;&#23450;&#27599;&#39033;&#20915;&#31574; owner&#12290;')">&#35760;&#24405;&#20250;&#35758;&#20915;&#31574;&#28165;&#21333;</button><button onclick="window.print()">&#25171;&#21360; / &#23548;&#20986; PDF</button>
+</div>
+</div>
+<details class="detail"><summary>&#23637;&#24320;&#65306;&#23436;&#25972;&#25191;&#34892;&#38468;&#24405;&#65288;&#38125;&#29260;&#23383;&#27573;&#12289;&#34920;&#36848;&#32418;&#32447;&#19982; RACI&#65289;</summary><p><b>&#38125;&#29260;&#65306;</b>&#20351;&#29992; POLPO PocketEcho&#12289;&#22411;&#21495;&#12289;&#36755;&#20837;&#12289;&#30005;&#27744;&#12289;CMIIT ID&#12289;&#25191;&#34892;&#26631;&#20934;&#12289;&#22996;&#25176;&#26041;&#12289;&#21046;&#36896;&#21830;&#12289;&#21046;&#36896;&#22320;&#22336;&#19982;&#20135;&#22320;&#12290;WowNow &#19981;&#36827;&#20837;&#21046;&#36896;&#21830;&#12289;&#22996;&#25176;&#26041;&#12289;&#21697;&#29260;&#25152;&#26377;&#26041;&#25110;&#20135;&#21697;&#24402;&#23646;&#23383;&#27573;&#65307;&#33509;&#34920;&#36798;&#29983;&#24577;&#65292;&#20165;&#32622;&#20110;&#29420;&#31435;&#36741;&#21161;&#21306;&#12290;</p>
+<p><b>&#21487;&#35828;&#65306;</b>POLPO PocketEcho&#12289;PocketEcho by POLPO&#12289;Works with WowNow&#12289;&#25903;&#25345; WowNow &#29983;&#24577;&#12290;<br><b>&#19981;&#24314;&#35758;&#65306;</b>WowNow PocketEcho&#12289;WowNow &#23448;&#26041;&#25773;&#25918;&#22120;&#12289;WowNow &#26071;&#19979;&#20135;&#21697;&#12289;POLPO &times; WowNow &#32852;&#21517;&#12289;WowNow &#20986;&#21697;&#12289;PRM &#26071;&#19979; POLPO&#12290;</p>
+<div class="table-wrap"><table class="table">
+<thead><tr>
+<th>&#20107;&#39033;</th>
+<th>A / &#26368;&#32456;&#36127;&#36131;</th>
+<th>R / &#25191;&#34892;</th>
+<th>C / &#21327;&#21830;</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>&#20135;&#21697;&#19982;&#30828;&#20214;&#36136;&#37327;</td>
+<td>POLPO</td>
+<td>OEM / &#30828;&#20214;&#30740;&#21457; / &#21806;&#21518;</td>
+<td>&#20135;&#21697; / &#20379;&#24212;&#38142;</td>
+</tr>
+<tr>
+<td>Badge &#19982;&#29983;&#24577; API</td>
+<td>WowNow</td>
+<td>&#36719;&#20214;&#30740;&#21457; / &#20135;&#21697;</td>
+<td>POLPO / &#27861;&#21153; / &#21697;&#29260;</td>
+</tr>
+<tr>
+<td>&#35748;&#35777;&#19982;&#21512;&#35268;</td>
+<td>POLPO</td>
+<td>OEM / &#30828;&#20214;&#30740;&#21457; / &#20379;&#24212;&#38142;</td>
+<td>&#27861;&#21153;</td>
+</tr>
+<tr>
+<td>&#21253;&#35013;&#12289;&#23448;&#32593;&#12289;&#35828;&#26126;&#20070;</td>
+<td>POLPO</td>
+<td>&#21697;&#29260; / &#20135;&#21697;</td>
+<td>WowNow / &#27861;&#21153; / OEM</td>
+</tr>
+<tr>
+<td>&#32479;&#19968;&#21806;&#21518;&#20837;&#21475;</td>
+<td>POLPO</td>
+<td>&#21806;&#21518; / WowNow &#26381;&#21153;&#22242;&#38431;</td>
+<td>&#20135;&#21697;</td>
+</tr>
+</tbody>
+</table></div></details></section><p class="foot">&#21512;&#35268;&#25552;&#31034;&#65306;&#26412;&#39029;&#29992;&#20110;&#20869;&#37096;&#26041;&#26696;&#35780;&#23457;&#65292;&#19981;&#26500;&#25104;&#27861;&#24459;&#24847;&#35265;&#25110;&#35748;&#35777;&#32467;&#35770;&#12290;&#26368;&#32456;&#20197;&#23454;&#38469;&#20135;&#21697;&#20998;&#31867;&#12289;&#30446;&#26631;&#24066;&#22330;&#12289;&#26368;&#32456; BOM/RF &#26041;&#26696;&#19982;&#26377;&#36164;&#36136;&#26426;&#26500;&#20070;&#38754;&#24847;&#35265;&#20026;&#20934;&#12290;</p></main><div class="toast" id="toast"></div>
+<script>function showToast(message){const t=document.getElementById('toast');t.textContent=message;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3400)}</script>
+</body>
+</html>
