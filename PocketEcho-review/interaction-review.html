@@ -570,35 +570,38 @@
         <div class="section-heading" data-reveal><div><div class="section-no">06 / Proposal</div><h2>统一的状态语言：<br>物理位置 + LED 反馈</h2></div><p>播放模式属于持久状态，实体滑块最适合表达它。LED 则从电量显示，发展为 PocketEcho 的无屏状态语言；关键不是更多灯效，而是固定、可识别的语义。</p></div>
         <div class="state-layout" data-reveal>
           <article class="state-card"><h3>播放模式：位置即状态</h3><div class="mode-switch" role="group" aria-label="播放模式演示"><button type="button" data-mode="顺序播放"><strong>I</strong>顺序播放</button><button type="button" data-mode="单曲循环"><strong>II</strong>单曲循环</button><button type="button" data-mode="随机播放"><strong>III</strong>随机播放</button></div><div class="state-readout"><span>当前物理档位</span><strong id="modeReadout">I · 顺序播放</strong></div><p class="muted" style="margin: 20px 0 0; font-size: 12px;">用户不用点亮任何 LED，只需要看或摸到滑块位置，就能知道当前播放模式。</p></article>
-          <article class="state-card"><h3>电量灯与状态灯分工</h3><div class="led-grid"><div class="led-row"><div class="leds"><i class="led on"></i><i class="led on"></i><i class="led on"></i><i class="led on"></i></div><span>75–100% 电量</span></div><div class="led-row"><div class="leds"><i class="led on"></i><i class="led on"></i><i class="led on"></i><i class="led"></i></div><span>50–75% 电量</span></div><div class="led-row"><div class="leds"><i class="led on"></i><i class="led on"></i><i class="led"></i><i class="led"></i></div><span>25–50% 电量</span></div><div class="led-row"><div class="leds"><i class="led on blink"></i><i class="led"></i><i class="led"></i><i class="led"></i></div><span>低于 10%：第一颗 LED 慢闪</span></div></div><p class="status-led-footnote"><strong>职责分开：</strong>4 颗电量灯只显示电量；新增的前置状态灯负责读卡、播放重置与开机反馈；蓝牙仍由独立蓝灯表示。</p></article>
+          <article class="state-card"><h3>电量灯与状态灯分工</h3><div class="led-grid"><div class="led-row"><div class="leds"><i class="led on"></i><i class="led on"></i><i class="led on"></i><i class="led on"></i></div><span>75–100% 电量</span></div><div class="led-row"><div class="leds"><i class="led on"></i><i class="led on"></i><i class="led on"></i><i class="led"></i></div><span>50–75% 电量</span></div><div class="led-row"><div class="leds"><i class="led on"></i><i class="led on"></i><i class="led"></i><i class="led"></i></div><span>25–50% 电量</span></div><div class="led-row"><div class="leds"><i class="led on blink"></i><i class="led"></i><i class="led"></i><i class="led"></i></div><span>低于 10%：第一颗 LED 慢闪</span></div></div><p class="status-led-footnote"><strong>职责分开：</strong>4 颗电量灯只显示电量；新增的前置状态灯负责卡片挂载 / 读取结果与关键操作反馈；蓝牙仍由独立蓝灯表示。当前没有独立的卡片插入检测信号，状态灯只能表达芯片 / 固件确认到的状态。</p></article>
         </div>
         <div class="status-led-plan" data-reveal>
-          <div class="status-led-plan-head"><h3>新增前置状态灯：两种候选</h3><p>颜色方案尚未冻结。两种灯都用闪烁节奏表达操作结果；蓝牙连接灯与 4 颗电量灯保持原有分工。</p></div>
+          <div class="status-led-plan-head"><h3>正面状态灯：按读卡结果表达</h3><p>按最新讨论，以“未确认可读 = 熄灭、读取成功 = 常亮、明确失败 = 错误提示”为主线。白 + 红更适合稳定地区分成功与失败；单色白灯作为备选。</p></div>
           <div class="status-led-options">
             <article class="status-led-option dual">
-              <div class="status-led-option-head"><div><small>OPTION A / 双色</small><h4>白灯 + 红灯</h4></div><div class="status-led-swatches"><span class="status-led-swatch"><i></i>白</span><span class="status-led-swatch red"><i></i>红</span></div></div>
+              <div class="status-led-option-head"><div><small>OPTION A / 优先验证</small><h4>白灯 + 红灯</h4></div><div class="status-led-swatches"><span class="status-led-swatch"><i></i>白</span><span class="status-led-swatch red"><i></i>红</span></div></div>
               <div class="status-led-rows">
-                <div class="status-led-row"><strong>TimeTag 读取中</strong><span>白灯慢呼吸</span></div>
-                <div class="status-led-row"><strong>读取成功</strong><span>白灯短闪一次</span></div>
-                <div class="status-led-row"><strong>读取失败 / 超时</strong><span>红灯快闪三次</span></div>
+                <div class="status-led-row"><strong>没有卡片</strong><span>正面灯熄灭</span></div>
+                <div class="status-led-row"><strong>插卡未接触 / 松动 / 倒插</strong><span>正面灯熄灭；与没有卡片无法区分</span></div>
+                <div class="status-led-row"><strong>卡片读取成功</strong><span>白灯常亮；表示设备确认卡片内容可用</span></div>
+                <div class="status-led-row"><strong>明确的读取失败</strong><span>红灯持续亮；仅在芯片 / 固件能报告失败时成立</span></div>
+                <div class="status-led-row"><strong>挂载 / 扫描过程</strong><span>暂不单独定义灯态；待确认芯片是否能上报处理中状态</span></div>
                 <div class="status-led-row"><strong>重置当前歌曲</strong><span>白灯闪两次</span></div>
                 <div class="status-led-row"><strong>整机强制断电</strong><span>灯熄灭；重新启动时白灯慢闪，启动完成白灯长亮一次</span></div>
                 <div class="status-led-row"><strong>启动异常</strong><span>红灯持续亮约 2 秒后熄灭</span></div>
               </div>
             </article>
             <article class="status-led-option single">
-              <div class="status-led-option-head"><div><small>OPTION B / 单色</small><h4>白灯</h4></div><div class="status-led-swatches"><span class="status-led-swatch"><i></i>白</span></div></div>
+              <div class="status-led-option-head"><div><small>OPTION B / 备选</small><h4>白灯</h4></div><div class="status-led-swatches"><span class="status-led-swatch"><i></i>白</span></div></div>
               <div class="status-led-rows">
-                <div class="status-led-row"><strong>TimeTag 读取中</strong><span>白灯慢闪</span></div>
-                <div class="status-led-row"><strong>读取成功</strong><span>白灯短闪一次</span></div>
-                <div class="status-led-row"><strong>读取失败 / 超时</strong><span>白灯快闪三次</span></div>
+                <div class="status-led-row"><strong>没有卡片 / 未确认可读</strong><span>正面灯熄灭</span></div>
+                <div class="status-led-row"><strong>卡片读取成功</strong><span>白灯常亮；表示设备确认卡片内容可用</span></div>
+                <div class="status-led-row"><strong>明确的读取失败</strong><span>白灯循环闪烁提示；节奏与可持续时长需厂家 / 样机确认</span></div>
+                <div class="status-led-row"><strong>挂载 / 扫描过程</strong><span>暂不单独定义灯态；待确认芯片是否能上报处理中状态</span></div>
                 <div class="status-led-row"><strong>重置当前歌曲</strong><span>白灯闪两次</span></div>
                 <div class="status-led-row"><strong>整机强制断电</strong><span>灯熄灭；重新启动时白灯慢闪，启动完成白灯长亮一次</span></div>
                 <div class="status-led-row"><strong>启动异常</strong><span>白灯持续亮约 3 秒后熄灭</span></div>
               </div>
             </article>
           </div>
-          <div class="status-led-footnote"><p><strong>两个 Reset 不是一件事：</strong>播放旋钮长按约 2 秒，只重置当前歌曲的播放状态；设备卡死时，电源键长按约 10 秒触发整机强制断电，灯灭后松开，等待约 3 秒，再短按电源键开机。</p><p><strong>硬件前提：</strong>强制断电需由 PMIC / 独立电源控制路径识别，不能只依赖已经卡死的主控固件。读卡超时阈值与各灯效时长需在样机上验证。</p></div>
+          <div class="status-led-footnote"><p><strong>识别边界：</strong>没有独立 Card Detect 时，“没有卡片”和“插入但未建立有效接触 / 挂载”（如松动、倒插）都会熄灯，无法区分。红灯只适用于芯片 / 固件已识别到介质并明确上报读取错误的情况；若目前只能取得“挂载成功”信号，失败原因可能无法可靠分类。</p><p><strong>成功定义待确认：</strong>“可播放”应尽量定义为挂载完成、文件扫描通过且找到支持的音频内容。如果芯片只能确认 USB 存储挂载成功，白灯就只代表“已挂载”，不代表卡内一定有可播放音乐。白灯常亮也不等于触点实时稳定；接触异常只有在后续访问时报错且芯片能上报时，才能转为错误提示。</p><p><strong>两个 Reset 不是一件事：</strong>播放旋钮长按约 2 秒，只重置当前歌曲的播放状态；设备卡死时，电源键长按约 10 秒触发整机强制断电，灯灭后松开，等待约 3 秒，再短按电源键开机。强制断电需由 PMIC / 独立电源控制路径识别，启动与读卡状态的灯效仍需样机验证。</p></div>
         </div>
         <div class="proposal" data-reveal style="margin-top: 64px;"><div class="proposal-top"><h3>最终建议方案</h3><div class="toggle" role="group" aria-label="查看当前方案或推荐方案"><button class="is-active" type="button" data-view="before">当前方案</button><button type="button" data-view="after">推荐方案</button></div></div><div class="table-wrap"><table class="proposal-table"><thead><tr><th>控件</th><th>操作维度</th><th>当前方案</th><th>推荐方案</th></tr></thead><tbody><tr class="recommended"><td>电源键</td><td>短按 / 长按 2 秒</td><td class="before">按压约 1 秒开关机</td><td class="after">短按开机；长按 2 秒关机</td></tr><tr class="recommended"><td>播放旋钮</td><td>旋转 / 短按 / 长按 2 秒</td><td class="before">音量；播放 / 暂停；长按 3 秒 Reset</td><td class="after">音量；播放 / 暂停；长按 2 秒重置当前歌曲播放状态</td></tr><tr class="recommended"><td>曲目拨杆</td><td>Tap / Hold / 松手回弹</td><td class="before">上一曲 / 下一曲</td><td class="after">上拨 / 下拨换曲；保持上拨 / 下拨快退 / 快进</td></tr><tr class="recommended"><td>播放模式滑块</td><td>固定物理档位</td><td class="before">滑动切换播放模式</td><td class="after">I 顺序；II 单曲循环；III 随机</td></tr><tr class="recommended"><td>蓝牙键</td><td>单击 / 长按 3 秒 / 已连接态</td><td class="before">1 秒开关蓝牙；3 秒搜索设备</td><td class="after">单击连接已配对耳机；长按新设备配对；已连接时单击关闭、长按换机</td></tr><tr><td>Tag 取出键</td><td>按压</td><td class="before">释放锁紧机构，取出 TimeTag</td><td class="after">保留</td></tr><tr><td>LED</td><td>常态 / 反馈动效</td><td class="before">普通操作显示电量</td><td class="after">电量 + 低电量闪烁 + 统一状态动效</td></tr></tbody></table></div></div>
       </div>
