@@ -5,8 +5,8 @@
   node:{name:'NODE',subtitle:'光的重生',src:'node/index.html',hint:'圆环逐件浏览，确认进入；四向选择工具。',note:'NODE 作品接口适配：阅读、展厅、详情与影音。',quick:[['MODE_READ','顺序阅读'],['MODE_SPACE','空间观展'],['MENU','目录'],['SCENES','场景']],voice:[['NEXT_ITEM','下一件'],['MODE_SPACE','进入空间观展'],['STORY','显示／收起故事'],['PLAY_PAUSE','播放／暂停讲解']]},
   ai:{name:'AI MUSIC',subtitle:'台灯下的温柔',src:'ai-music/index.html',hint:'圆环调节进度，确认切换沉浸模式；播放键控制歌曲。',note:'按提供的真实页面适配，保留原始歌曲、封面、背景视频和时间戳歌词。',quick:[['SEEK_BACK','回退 5 秒'],['SEEK_FORWARD','快进 5 秒'],['IMMERSIVE','沉浸模式'],['HOME','回到开头']],voice:[['PLAY_PAUSE','播放／暂停歌曲'],['SEEK_FORWARD','快进 5 秒'],['SEEK_BACK','回退 5 秒'],['IMMERSIVE','切换沉浸模式']]},
   music:{name:'MUSIC PLAYER',subtitle:'音乐播放器',src:'music/index.html',hint:'圆环选曲，确认播放；进入进度模式后环滑快进。',note:'通用音乐播放器，支持本地音频导入。预置为程序合成演示音轨。',quick:[['TRACKS','歌曲列表'],['SEEK_MODE','进度调整'],['NEXT_TRACK','下一首'],['REPEAT','循环模式']],voice:[['PLAY_PAUSE','播放／暂停音乐'],['NEXT_TRACK','下一首'],['SEEK_MODE','调整播放进度'],['TRACKS','回到歌曲列表']]},
-  web:{name:'搜狐官网',subtitle:'真实网页浏览',src:'external/index.html?kind=web',hint:'方向键选择网页控件；转盘滚动页面，焦点进入播放器后转动调节进度。请在安装扩展的 Chrome 中打开。',note:'真实搜狐官网通过 Chrome 扩展接收遥控：方向键选择控件，转盘滚动或调整已聚焦播放器的进度。',quick:[],voice:[]},
-  video:{name:'BILIBILI',subtitle:'Bilibili 整站',src:'external/index.html?kind=video',hint:'方向键选择 Bilibili 页面控件；焦点进入播放器后，转盘调节进度。请在安装扩展的 Chrome 中打开。',note:'真实 Bilibili 整站通过 Chrome 扩展接收遥控：方向键选择控件，转盘滚动或调整播放器进度。',quick:[],voice:[]}
+  web:{name:'搜狐官网',subtitle:'真实网页浏览',src:'external/index.html?kind=web',hint:'方向键选择网页控件；转盘滚动页面，焦点进入播放器后转动调节进度。请使用扩展 v1.2.0。',note:'真实搜狐官网通过 Chrome 扩展接收遥控：方向键选择控件，转盘滚动或调整已聚焦播放器的进度。请使用扩展 v1.2.0。',quick:[],voice:[]},
+  video:{name:'BILIBILI',subtitle:'Bilibili 整站',src:'external/index.html?kind=video',hint:'方向键选择 Bilibili 页面控件；焦点进入播放器后，转盘调节进度。请使用扩展 v1.2.0。',note:'真实 Bilibili 整站通过 Chrome 扩展接收遥控：方向键选择控件，转盘滚动或调整播放器进度。请使用扩展 v1.2.0。',quick:[],voice:[]}
  };
  Object.assign(labels,{TRACKS:'歌曲列表',SEEK_MODE:'进度调整',NEXT_TRACK:'下一首',REPEAT:'循环模式',PAGE_UP:'向上翻页',PAGE_DOWN:'向下翻页',FIRST_LINK:'首个控件',SEEK_BACK:'回退 5 秒',SEEK_FORWARD:'快进 5 秒',IMMERSIVE:'沉浸模式'});
  let ready=false,seq=0,current=null,lastSend=0,flashTimer,pending=new Map(),count=0,sleep=false,ring=null,actionTime=0,activeScene='node',session='',bootTimer;
@@ -61,12 +61,12 @@
  pad.addEventListener('pointermove',e=>{
   if(!ring||ring.id!==e.pointerId)return;const p=point(e);if(p.radius<.55){ring.angle=p.angle;ring.sum=0;return;}
   let d=p.angle-ring.angle;if(d>Math.PI)d-=Math.PI*2;if(d<-Math.PI)d+=Math.PI*2;ring.angle=p.angle;ring.sum+=d;pad.style.setProperty('--angle',`${p.angle*180/Math.PI+90}deg`);
-  const step=Math.PI/5;
-  if(Math.abs(ring.sum)>=step&&Date.now()-lastSend>160){if(current?.epoch!==ring.epoch){ring.sum=0;ring.epoch=current?.epoch;}else{send(rotateCommand(ring.sum>0));ring.sum=0;lastSend=Date.now();}}
+  const webRemote=['web','video'].includes(activeScene),step=webRemote?Math.PI/6:Math.PI/5,interval=webRemote?100:160;
+  if(Math.abs(ring.sum)>=step&&Date.now()-lastSend>=interval){if(current?.epoch!==ring.epoch){ring.sum=0;ring.epoch=current?.epoch;}else{const direction=Math.sign(ring.sum);send(rotateCommand(direction>0));ring.sum=webRemote?ring.sum-direction*step:0;lastSend=Date.now();}}
  });
  function endRing(e){if(ring?.id===e.pointerId){ring=null;pad.classList.remove('dragging');}}
  pad.addEventListener('pointerup',endRing);pad.addEventListener('pointercancel',endRing);
- pad.addEventListener('wheel',e=>{e.preventDefault();if(Date.now()-lastSend>190){send(rotateCommand(e.deltaY>0));lastSend=Date.now();}},{passive:false});
+ pad.addEventListener('wheel',e=>{e.preventDefault();const interval=['web','video'].includes(activeScene)?100:190;if(e.deltaY&&Date.now()-lastSend>=interval){send(rotateCommand(e.deltaY>0));lastSend=Date.now();}},{passive:false});
  addEventListener('keydown',e=>{if($('voiceDialog').open||e.target.closest('input,textarea,select'))return;const arrows=['web','video'].includes(activeScene)?{ArrowLeft:'NAV_LEFT',ArrowRight:'NAV_RIGHT'}:{ArrowLeft:'PREV_ITEM',ArrowRight:'NEXT_ITEM'};const map={...arrows,ArrowUp:'NAV_UP',ArrowDown:'NAV_DOWN',Enter:'CONFIRM',Escape:'BACK',' ':'PLAY_PAUSE',Home:'HOME',m:'MENU'};if(map[e.key]){e.preventDefault();if(!e.repeat||e.key.startsWith('Arrow'))send(map[e.key]);}});
  // Expose only the semantic dispatch for development and future physical input adapters.
  window.TimeEchoDemo={send,getState:()=>current};

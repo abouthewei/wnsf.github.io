@@ -37,13 +37,13 @@
   if(!extensionConnected){notice.textContent=connectionNotice();return notice.textContent;}
   const id=crypto.randomUUID();
   return new Promise(resolve=>{
-   const timer=setTimeout(()=>{pending.delete(id);resolve('扩展未响应；请确认扩展已启用并刷新页面。');},3000);
+   const timer=setTimeout(()=>{pending.delete(id);resolve('扩展未及时响应；请确认已重新加载 v1.2.0 并刷新页面。');},3000);
    pending.set(id,Object.assign(resolve,{timer}));
    parent.postMessage({channel,type:'COMMAND',scene,id,command:type},location.origin);
   });
  }
 
- bridge=SceneHost.mount({scene,state:()=>({
+ bridge=SceneHost.mount({scene,serial:false,state:()=>({
   epoch,mode:kind==='video'?'video':'web',
   modeLabel:`${title} · ${extensionConnected?'遥控已连接':'待连接扩展'}`,
   title:pageState.title||title,index:0,total:1,focus:pageState.focus,

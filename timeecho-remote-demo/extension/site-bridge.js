@@ -63,9 +63,9 @@
   }
   function scrollPage(forward) {
     const target = document.scrollingElement;
-    const distance = Math.max(120, Math.round(innerHeight * 0.18));
-    if (target) target.scrollBy({ top: forward ? distance : -distance, behavior: 'smooth' });
-    else window.scrollBy({ top: forward ? distance : -distance, behavior: 'smooth' });
+    const distance = Math.max(240, Math.round((target?.clientHeight || innerHeight) * 0.42));
+    if (target) target.scrollBy({ top: forward ? distance : -distance, behavior: 'instant' });
+    else window.scrollBy({ top: forward ? distance : -distance, behavior: 'instant' });
     return forward ? '页面向下滚动' : '页面向上滚动';
   }
   function seek(forward) {
@@ -78,7 +78,7 @@
   }
   function state() {
     const video = media(), active = playerActive(), root = document.scrollingElement;
-    const scrollMax = Math.max(1, (root?.scrollHeight || 0) - innerHeight);
+    const scrollMax = Math.max(1, (root?.scrollHeight || 0) - (root?.clientHeight || innerHeight));
     const progress = video?.currentTime || 0, duration = video?.duration || 0;
     return {
       title: document.title,
@@ -88,8 +88,8 @@
       progress,
       duration,
       volume: video ? Math.round(video.volume * 100) : 50,
-      scrollY: window.scrollY,
-      scrollProgress: Math.round((window.scrollY / scrollMax) * 100),
+      scrollY: root?.scrollTop || window.scrollY,
+      scrollProgress: Math.round(((root?.scrollTop || window.scrollY) / scrollMax) * 100),
       hasMedia: !!video,
       hasVideo: !!video || !!playerFrame() || host === 'player.bilibili.com'
     };

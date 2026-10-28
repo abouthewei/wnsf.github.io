@@ -2,10 +2,12 @@
 
 Chrome MV3 扩展把 TimeEcho 右侧遥控器的操作转交给当前标签页中的搜狐或 Bilibili。网页方向键用于选择控件，转盘默认滚动页面；焦点进入播放器后，转盘调整播放进度。
 
+当前版本为 1.2.0：网页转盘单步滚动约 42% 视口，并缩短连续转动输入间隔。已安装旧版的用户请下载并解压新版，在 `chrome://extensions` 中对扩展点“重新加载”，然后刷新演示页。
+
 ## 安装或更新
 
-1. 下载并解压 `timeecho-bilibili-extension.zip`。
-2. 在 Chrome 打开 `chrome://extensions`，打开“开发者模式”，选择“加载已解压的扩展程序”，选中解压后的 `extension/` 文件夹。更新已有版本时，选择新版文件夹后重新加载扩展。
+1. 下载并解压最新版 `timeecho-bilibili-extension.zip`。
+2. 在 Chrome 打开 `chrome://extensions`，打开“开发者模式”，选择“加载已解压的扩展程序”，选中解压后的 `extension/` 文件夹。更新已有版本时，把新版文件覆盖到原扩展目录，再点击扩展卡片上的“重新加载”。
 3. Chrome 会请求这些站点的访问权限：TimeEcho 演示页、`*.sohu.com`、`www.bilibili.com`、`player.bilibili.com`。搜狐使用通配子域名权限，是为了让官网跳转到搜狐视频页面后仍能接收遥控指令；扩展需要标记网页焦点、滚动页面并控制 HTML5 播放器。
 4. 在同一个 Chrome 标签页打开 [搜狐演示](https://abouthewei.github.io/wnsf.github.io/timeecho-remote-demo/?scene=web) 或 [Bilibili 演示](https://abouthewei.github.io/wnsf.github.io/timeecho-remote-demo/?scene=video)。ChatGPT 内置浏览器不支持 Chrome 扩展。请勿点“在新标签页打开”，否则遥控器和官网不在同一标签页。
 5. 等待页面显示“遥控已连接”；扩展刚加载时刷新演示页。
