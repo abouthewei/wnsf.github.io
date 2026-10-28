@@ -1,30 +1,31 @@
-# TimeEcho Bilibili 浏览器扩展
+# TimeEcho 网页遥控扩展
 
-扩展把演示页右侧遥控器的语义指令转交给同一标签页内嵌入的 Bilibili 整站。它只在 TimeEcho 演示地址、`www.bilibili.com` 和 Bilibili 播放器 `player.bilibili.com` 页面运行。
+Chrome MV3 扩展把 TimeEcho 右侧遥控器的操作转交给当前标签页中的搜狐或 Bilibili。网页方向键用于选择控件，转盘默认滚动页面；焦点进入播放器后，转盘调整播放进度。
 
-## 安装
+## 安装或更新
 
 1. 下载并解压 `timeecho-bilibili-extension.zip`。
-2. 在 Chrome 打开 `chrome://extensions`，打开“开发者模式”，选择“加载已解压的扩展程序”，选中解压后的 `extension/` 文件夹。
-3. 打开 [TimeEcho 视频演示](https://abouthewei.github.io/wnsf.github.io/timeecho-remote-demo/?scene=video)。保持演示页在当前标签页内，不要点“在新标签页打开”。
-4. 等待右侧状态显示“Bilibili · 遥控已连接”。如果扩展刚刚加载，刷新演示页即可。
+2. 在 Chrome 打开 `chrome://extensions`，打开“开发者模式”，选择“加载已解压的扩展程序”，选中解压后的 `extension/` 文件夹。更新已有版本时，选择新版文件夹后重新加载扩展。
+3. Chrome 会请求这些站点的访问权限：TimeEcho 演示页、`*.sohu.com`、`www.bilibili.com`、`player.bilibili.com`。搜狐使用通配子域名权限，是为了让官网跳转到搜狐视频页面后仍能接收遥控指令；扩展需要标记网页焦点、滚动页面并控制 HTML5 播放器。
+4. 在同一个 Chrome 标签页打开 [搜狐演示](https://abouthewei.github.io/wnsf.github.io/timeecho-remote-demo/?scene=web) 或 [Bilibili 演示](https://abouthewei.github.io/wnsf.github.io/timeecho-remote-demo/?scene=video)。ChatGPT 内置浏览器不支持 Chrome 扩展。请勿点“在新标签页打开”，否则遥控器和官网不在同一标签页。
+5. 等待页面显示“遥控已连接”；扩展刚加载时刷新演示页。
 
-扩展只申请三个站点地址的访问权限：TimeEcho 演示页用于转发遥控指令，Bilibili 主站用于页面导航，Bilibili 播放器用于视频控制。它不发送页面数据到外部服务，也不自动点赞、关注、评论或分享。
+扩展只连接上述网页与演示页，不向外部服务发送页面数据，也不会自动点赞、关注、评论或分享。搜狐适配覆盖 `sohu.com` 及其 HTTPS 子域名。
 
 ## 遥控映射
 
-- 圆环：依次选择页面链接和控件。
-- 上下：页面滚动或移动控件焦点；左右：移动控件焦点。
-- 确认：执行当前链接或按钮。
-- 返回：清除焦点，或返回上一页。
-- 首页：回到 Bilibili 首页。
-- 播放/暂停、前后 5 秒、音量：控制当前页面中已加载的 HTML5 视频。若视频尚未打开，先用圆环选择视频卡片并按确认。
+- 四向键：在页面可见的链接、按钮、输入框和播放器控件间移动焦点。
+- 确认：执行当前焦点控件。
+- 转盘：普通网页中滚动页面；焦点位于播放器后，前进或回退 5 秒。
+- 返回：退出播放器焦点、清除网页焦点，或返回上一页。
+- 首页：回到搜狐或 Bilibili 首页。
+- 播放/暂停、音量：控制当前页面中已加载的 HTML5 音视频。
 
-播放器自动播放可能受浏览器策略限制；此时先在视频上点击一次播放，再用遥控器控制。
+播放器自动播放可能受浏览器策略限制；此时先在播放器上点击一次播放，再用遥控器控制。
 
 ## 文件
 
-- `manifest.json`：MV3 配置与精确站点权限。
-- `service-worker.js`：在同一标签页内连接 TimeEcho 页面、Bilibili 主站和播放器页面。
-- `app-bridge.js`：连接演示页与扩展。
-- `bilibili-bridge.js`：将遥控操作映射到真实网页控件和视频元素。
+- `manifest.json`：MV3 配置与 TimeEcho、搜狐、Bilibili 的站点权限。
+- `service-worker.js`：按标签页和场景转发指令，并合并 Bilibili 主页面与播放器帧的状态。
+- `app-bridge.js`：连接 TimeEcho 演示页与扩展。
+- `site-bridge.js`：将方向、确认、转盘和媒体操作映射到搜狐及 Bilibili 控件。

@@ -9,7 +9,7 @@
  const visible=el=>!el.disabled&&!el.closest('[hidden],[inert],[aria-hidden="true"]')&&el.getClientRects().length&&getComputedStyle(el).visibility!=='hidden';
  const dialog=()=>[...document.querySelectorAll('dialog[open]')].at(-1);
  const scope=()=>dialog()||document;
- const items=()=>[...scope().querySelectorAll('a[href],button,input:not([type=hidden]):not([type=file]),select,textarea,summary,[tabindex]:not([tabindex="-1"])')].filter(visible);
+ const items=()=>[...scope().querySelectorAll('a[href],button,input:not([type=hidden]):not([type=file]),select,textarea,summary,video[controls],audio[controls],iframe[data-player],[tabindex]:not([tabindex="-1"])')].filter(visible);
  let lastScope=scope();
  function syncScope(){const next=scope();if(next!==lastScope){lastScope=next;epoch++;focus=null;reading=true;editing=false;}}
  function scrollTarget(){const modal=dialog();if(!modal)return document.scrollingElement;return [...modal.querySelectorAll('*')].filter(el=>/auto|scroll/.test(getComputedStyle(el).overflowY)&&el.scrollHeight>el.clientHeight+2&&el.clientHeight>80).sort((a,b)=>b.clientWidth*b.clientHeight-a.clientWidth*a.clientHeight)[0]||modal;}
@@ -19,11 +19,21 @@
  function label(el){return el?(el.getAttribute('aria-label')||el.getAttribute('placeholder')||el.textContent.trim()||el.tagName).slice(0,55):'正文阅读';}
  function sequential(delta){const list=items();if(!list.length)return notice('当前页面无可操作控件');const i=list.indexOf(focus);return mark(list[Math.max(0,Math.min(list.length-1,i<0?(delta>0?0:list.length-1):i+delta))]);}
  function scrollPage(delta){reading=true;focus?.classList.remove('remote-focus');focus=null;editing=false;const target=scrollTarget();target.scrollBy({top:delta*target.clientHeight*.7,behavior:'instant'});return notice(delta>0?'向下阅读':'向上阅读');}
+ function rotate(forward){
+  if(focus?.matches('video,audio')||focus?.closest('[data-player]')){
+   const media=focus.matches('video,audio')?focus:focus.querySelector('video,audio');
+   if(!media)return notice('播放器尚未加载');
+   media.currentTime=Math.max(0,Math.min(media.duration||Infinity,media.currentTime+(forward?5:-5)));
+   return notice(forward?'快进 5 秒':'回退 5 秒');
+  }
+  const target=scrollTarget();target.scrollBy({top:forward?140:-140,behavior:'instant'});reading=false;
+  return notice(forward?'页面向下滚动':'页面向上滚动');
+ }
  function direction(dir){
-  if(reading||!focus){if(dir==='UP'||dir==='DOWN')return scrollPage(dir==='UP'?-1:1);return sequential(dir==='LEFT'?-1:1);}
+  if(!focus||!items().includes(focus))return items().length?mark(items()[0]):notice('当前页面无可操作控件');
   const r=focus.getBoundingClientRect(),cx=r.x+r.width/2,cy=r.y+r.height/2;
   const candidates=items().filter(el=>el!==focus).map(el=>{const q=el.getBoundingClientRect(),dx=q.x+q.width/2-cx,dy=q.y+q.height/2-cy;const forward={UP:-dy,DOWN:dy,LEFT:-dx,RIGHT:dx}[dir],cross=Math.abs(['UP','DOWN'].includes(dir)?dx:dy);return {el,forward,score:forward+cross*2.5};}).filter(x=>x.forward>4).sort((a,b)=>a.score-b.score);
-  if(candidates.length)return mark(candidates[0].el);if(dir==='UP'||dir==='DOWN')return scrollPage(dir==='UP'?-1:1);return notice('已到控件边界');
+  if(candidates.length)return mark(candidates[0].el);return notice('已到控件边界');
  }
  function home(){navigating=true;sessionStorage.removeItem(storageKey);location.assign('index.html?session='+encodeURIComponent(session));return '返回网页首页';}
  function back(){if(editing){editing=false;focus?.blur();reading=true;return notice('退出文字输入，回到阅读');}if(dialog()){const modal=dialog(),cancel=new Event('cancel',{cancelable:true});modal.dispatchEvent(cancel);if(!cancel.defaultPrevented)modal.close();syncScope();return notice('已关闭当前弹窗，回到原位置');}if(trail.length>1){trail.pop();const previous=trail.at(-1);sessionStorage.setItem(storageKey,JSON.stringify(trail));sessionStorage.setItem(storageKey+'-restore',String(previous.scroll));navigating=true;location.replace(previous.url);return '返回上一页';}reading=true;focus?.classList.remove('remote-focus');focus=null;return notice('已在网页首页');}
@@ -31,6 +41,7 @@
   syncScope();
   if(type==='NEXT_ITEM'||type==='PREV_ITEM')return sequential(type==='NEXT_ITEM'?1:-1);
   if(type.startsWith('NAV_'))return direction(type.slice(4));
+  if(type==='ROTATE_FORWARD'||type==='ROTATE_BACK')return rotate(type==='ROTATE_FORWARD');
   if(type==='PAGE_UP'||type==='PAGE_DOWN')return scrollPage(type==='PAGE_UP'?-1:1);
   if(type==='FIRST_LINK')return mark(items()[0]);
   if(type==='CONFIRM'){

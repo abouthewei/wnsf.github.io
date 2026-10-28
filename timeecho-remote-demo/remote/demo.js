@@ -1,12 +1,12 @@
 (() => {
  'use strict';
- const $=id=>document.getElementById(id),frame=$('nodeFrame'),labels={NEXT_ITEM:'下一件',PREV_ITEM:'上一件',NAV_UP:'向上',NAV_DOWN:'向下',NAV_LEFT:'向左',NAV_RIGHT:'向右',CONFIRM:'确认',BACK:'返回',PLAY_PAUSE:'播放／暂停',VOLUME_UP:'提高音量',VOLUME_DOWN:'降低音量',HOME:'作品首页',MODE_READ:'顺序阅读',MODE_SPACE:'空间观展',MENU:'目录',SCENES:'切换场景',STORY:'作品故事',SCAN:'模拟碰卡',STANDBY:'模拟待机',WAKE:'唤醒',RESET:'重置演示'};
+ const $=id=>document.getElementById(id),frame=$('nodeFrame'),labels={NEXT_ITEM:'下一件',PREV_ITEM:'上一件',ROTATE_FORWARD:'转盘向前',ROTATE_BACK:'转盘向后',NAV_UP:'向上',NAV_DOWN:'向下',NAV_LEFT:'向左',NAV_RIGHT:'向右',CONFIRM:'确认',BACK:'返回',PLAY_PAUSE:'播放／暂停',VOLUME_UP:'提高音量',VOLUME_DOWN:'降低音量',HOME:'作品首页',MODE_READ:'顺序阅读',MODE_SPACE:'空间观展',MENU:'目录',SCENES:'切换场景',STORY:'作品故事',SCAN:'模拟碰卡',STANDBY:'模拟待机',WAKE:'唤醒',RESET:'重置演示'};
  const scenes={
   node:{name:'NODE',subtitle:'光的重生',src:'node/index.html',hint:'圆环逐件浏览，确认进入；四向选择工具。',note:'NODE 作品接口适配：阅读、展厅、详情与影音。',quick:[['MODE_READ','顺序阅读'],['MODE_SPACE','空间观展'],['MENU','目录'],['SCENES','场景']],voice:[['NEXT_ITEM','下一件'],['MODE_SPACE','进入空间观展'],['STORY','显示／收起故事'],['PLAY_PAUSE','播放／暂停讲解']]},
   ai:{name:'AI MUSIC',subtitle:'台灯下的温柔',src:'ai-music/index.html',hint:'圆环调节进度，确认切换沉浸模式；播放键控制歌曲。',note:'按提供的真实页面适配，保留原始歌曲、封面、背景视频和时间戳歌词。',quick:[['SEEK_BACK','回退 5 秒'],['SEEK_FORWARD','快进 5 秒'],['IMMERSIVE','沉浸模式'],['HOME','回到开头']],voice:[['PLAY_PAUSE','播放／暂停歌曲'],['SEEK_FORWARD','快进 5 秒'],['SEEK_BACK','回退 5 秒'],['IMMERSIVE','切换沉浸模式']]},
   music:{name:'MUSIC PLAYER',subtitle:'音乐播放器',src:'music/index.html',hint:'圆环选曲，确认播放；进入进度模式后环滑快进。',note:'通用音乐播放器，支持本地音频导入。预置为程序合成演示音轨。',quick:[['TRACKS','歌曲列表'],['SEEK_MODE','进度调整'],['NEXT_TRACK','下一首'],['REPEAT','循环模式']],voice:[['PLAY_PAUSE','播放／暂停音乐'],['NEXT_TRACK','下一首'],['SEEK_MODE','调整播放进度'],['TRACKS','回到歌曲列表']]},
-  web:{name:'搜狐官网',subtitle:'真实网页浏览',src:'external/index.html?kind=web',hint:'浏览搜狐页面请在左侧外站内操作；跨域限制下遥控器不能操作站内控件。',note:'真实搜狐官网；本次浏览器验证可嵌入。遥控器不能跨域读取或操作站内内容，页面操作请使用左侧官网控件。',quick:[],voice:[]},
-  video:{name:'BILIBILI',subtitle:'Bilibili 整站',src:'external/index.html?kind=video',hint:'先安装本场景提供的 TimeEcho 扩展，再用遥控器操作左侧 Bilibili 页面。',note:'此浏览器需安装 TimeEcho 扩展，遥控器才能操作 Bilibili 的滚动、焦点与视频播放。',quick:[],voice:[]}
+  web:{name:'搜狐官网',subtitle:'真实网页浏览',src:'external/index.html?kind=web',hint:'方向键选择网页控件；转盘滚动页面，焦点进入播放器后转动调节进度。请在安装扩展的 Chrome 中打开。',note:'真实搜狐官网通过 Chrome 扩展接收遥控：方向键选择控件，转盘滚动或调整已聚焦播放器的进度。',quick:[],voice:[]},
+  video:{name:'BILIBILI',subtitle:'Bilibili 整站',src:'external/index.html?kind=video',hint:'方向键选择 Bilibili 页面控件；焦点进入播放器后，转盘调节进度。请在安装扩展的 Chrome 中打开。',note:'真实 Bilibili 整站通过 Chrome 扩展接收遥控：方向键选择控件，转盘滚动或调整播放器进度。',quick:[],voice:[]}
  };
  Object.assign(labels,{TRACKS:'歌曲列表',SEEK_MODE:'进度调整',NEXT_TRACK:'下一首',REPEAT:'循环模式',PAGE_UP:'向上翻页',PAGE_DOWN:'向下翻页',FIRST_LINK:'首个控件',SEEK_BACK:'回退 5 秒',SEEK_FORWARD:'快进 5 秒',IMMERSIVE:'沉浸模式'});
  let ready=false,seq=0,current=null,lastSend=0,flashTimer,pending=new Map(),count=0,sleep=false,ring=null,actionTime=0,activeScene='node',session='',bootTimer;
@@ -17,6 +17,7 @@
   clearPending();ready=false;current=null;activeScene=name;session=crypto.randomUUID();sleep=false;$('sleepOverlay').hidden=true;
   const config=scenes[name];document.body.dataset.experience=name;const address=new URL(location.href);address.searchParams.set('scene',name);history.replaceState(null,'',address);
   document.querySelectorAll('button[data-experience]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.experience===name)));
+  document.getElementById('keyboardHint').textContent=['web','video'].includes(name)?'键盘：方向键选择网页控件 · Enter 确认 · 转盘滚动／调进度':'键盘：←/→ 环滑 · ↑/↓ 方向 · Enter 确认';
   $('sceneName').textContent=config.name;$('sceneSubtitle').textContent=config.subtitle;$('sceneHint').textContent=config.hint;$('compatibilityNote').textContent=config.note;$('sourceLink').hidden=!['node','ai','web','video'].includes(name);$('sourceLink').href=name==='ai'?'https://nfc-web-pre.iwownow.com/fpm6HLBgDknscUyEy_IxrcdS':name==='web'?'https://www.sohu.com/':name==='video'?'https://www.bilibili.com/':'https://nfc-project-demo.iwownow.com/demo/renaissance-journey/index.html';$('sourceLink').textContent=name==='ai'?'原始页面 ↗':name==='web'?'搜狐官网 ↗':name==='video'?'B站视频 ↗':'原始作品 ↗';
   $('quickActions').replaceChildren(...config.quick.map(([command,text])=>{const b=document.createElement('button');b.dataset.command=command;b.textContent=text;b.onclick=()=>send(command);return b;}));
   document.querySelector('.voice-options').replaceChildren(...config.voice.map(([command,text])=>{const b=document.createElement('button');b.textContent=text;b.onclick=()=>{$('voiceDialog').close();send(command);};return b;}));
@@ -26,6 +27,7 @@
  }
  function feedback(title,detail){$('actionLabel').textContent=title;$('actionDetail').textContent=detail;actionTime=Date.now();$('led').classList.add('flash');clearTimeout(flashTimer);flashTimer=setTimeout(()=>$('led').classList.remove('flash'),220);}
  function log(title,detail){count++;$('eventCount').textContent=count;const li=document.createElement('li');li.textContent=`${new Date().toLocaleTimeString('zh-CN',{hour12:false})} ${title} · ${detail}`;$('events').prepend(li);while($('events').children.length>30)$('events').lastChild.remove();}
+ function rotateCommand(forward){return ['web','video'].includes(activeScene)?(forward?'ROTATE_FORWARD':'ROTATE_BACK'):(forward?'NEXT_ITEM':'PREV_ITEM');}
  function send(type){
   if(!ready){feedback('尚未连接','请等待作品加载完成');return;}
   if(sleep&&!['WAKE','RESET'].includes(type))return;
@@ -60,12 +62,12 @@
   if(!ring||ring.id!==e.pointerId)return;const p=point(e);if(p.radius<.55){ring.angle=p.angle;ring.sum=0;return;}
   let d=p.angle-ring.angle;if(d>Math.PI)d-=Math.PI*2;if(d<-Math.PI)d+=Math.PI*2;ring.angle=p.angle;ring.sum+=d;pad.style.setProperty('--angle',`${p.angle*180/Math.PI+90}deg`);
   const step=Math.PI/5;
-  if(Math.abs(ring.sum)>=step&&Date.now()-lastSend>160){if(current?.epoch!==ring.epoch){ring.sum=0;ring.epoch=current?.epoch;}else{send(ring.sum>0?'NEXT_ITEM':'PREV_ITEM');ring.sum=0;lastSend=Date.now();}}
+  if(Math.abs(ring.sum)>=step&&Date.now()-lastSend>160){if(current?.epoch!==ring.epoch){ring.sum=0;ring.epoch=current?.epoch;}else{send(rotateCommand(ring.sum>0));ring.sum=0;lastSend=Date.now();}}
  });
  function endRing(e){if(ring?.id===e.pointerId){ring=null;pad.classList.remove('dragging');}}
  pad.addEventListener('pointerup',endRing);pad.addEventListener('pointercancel',endRing);
- pad.addEventListener('wheel',e=>{e.preventDefault();if(Date.now()-lastSend>190){send(e.deltaY>0?'NEXT_ITEM':'PREV_ITEM');lastSend=Date.now();}},{passive:false});
- addEventListener('keydown',e=>{if($('voiceDialog').open||e.target.closest('input,textarea,select'))return;const map={ArrowLeft:'PREV_ITEM',ArrowRight:'NEXT_ITEM',ArrowUp:'NAV_UP',ArrowDown:'NAV_DOWN',Enter:'CONFIRM',Escape:'BACK',' ':'PLAY_PAUSE',Home:'HOME',m:'MENU'};if(map[e.key]){e.preventDefault();if(!e.repeat||e.key.startsWith('Arrow'))send(map[e.key]);}});
+ pad.addEventListener('wheel',e=>{e.preventDefault();if(Date.now()-lastSend>190){send(rotateCommand(e.deltaY>0));lastSend=Date.now();}},{passive:false});
+ addEventListener('keydown',e=>{if($('voiceDialog').open||e.target.closest('input,textarea,select'))return;const arrows=['web','video'].includes(activeScene)?{ArrowLeft:'NAV_LEFT',ArrowRight:'NAV_RIGHT'}:{ArrowLeft:'PREV_ITEM',ArrowRight:'NEXT_ITEM'};const map={...arrows,ArrowUp:'NAV_UP',ArrowDown:'NAV_DOWN',Enter:'CONFIRM',Escape:'BACK',' ':'PLAY_PAUSE',Home:'HOME',m:'MENU'};if(map[e.key]){e.preventDefault();if(!e.repeat||e.key.startsWith('Arrow'))send(map[e.key]);}});
  // Expose only the semantic dispatch for development and future physical input adapters.
  window.TimeEchoDemo={send,getState:()=>current};
  const initial=new URLSearchParams(location.search).get('scene');loadScene(scenes[initial]?initial:'node');

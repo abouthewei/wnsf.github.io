@@ -1,13 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "TimeEcho Bilibili Remote Bridge",
-  "version": "1.0.0",
-  "description": "让 TimeEcho 演示页通过浏览器扩展遥控当前 Bilibili 页面。",
+  "name": "TimeEcho Web Remote Bridge",
+  "version": "1.1.0",
+  "description": "让 TimeEcho 演示页遥控搜狐和 Bilibili 网页。",
   "permissions": [],
   "host_permissions": [
     "https://abouthewei.github.io/wnsf.github.io/timeecho-remote-demo/*",
     "https://www.bilibili.com/*",
-    "https://player.bilibili.com/*"
+    "https://player.bilibili.com/*",
+    "https://*.sohu.com/*"
   ],
   "background": { "service_worker": "service-worker.js" },
   "content_scripts": [
@@ -18,8 +19,8 @@
       "all_frames": false
     },
     {
-      "matches": ["https://www.bilibili.com/*", "https://player.bilibili.com/*"],
-      "js": ["bilibili-bridge.js"],
+      "matches": ["https://www.bilibili.com/*", "https://player.bilibili.com/*", "https://*.sohu.com/*"],
+      "js": ["site-bridge.js"],
       "run_at": "document_idle",
       "all_frames": true
     }
