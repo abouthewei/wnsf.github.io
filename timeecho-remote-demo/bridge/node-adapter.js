@@ -1,16 +1,16 @@
 /* Local adaptation only. Original NODE content and runtime remain unchanged. */
 (() => {
   'use strict';
-  const origin = location.origin;
+  const origin = location.origin, session = new URLSearchParams(location.search).get('session') || '';
   const styles = document.createElement('style');
   styles.textContent = `.remote-focus{outline:3px solid #bf7842!important;outline-offset:5px!important;border-radius:4px;box-shadow:0 0 0 7px #f4f1e888!important}.remote-art-focus{outline:3px solid #bf7842!important;outline-offset:-5px!important}.remote-volume{position:fixed;bottom:85px;left:50%;transform:translateX(-50%);z-index:99999;background:#302c25ed;color:white;padding:12px 23px;border-radius:8px;font:14px sans-serif;pointer-events:none}`;
   document.head.append(styles);
-  let focus = null, zone = 'art', volume = .5, seqCache = new Map(), epoch = 0, prevContext = '';
+  let focus = null, zone = 'art', volume = .5, seqCache = new Map(), epoch = 0, prevContext = '', disposed = false;
   const $ = id => document.getElementById(id);
   const N = () => window.NODE;
   const visible = el => el && !el.disabled && !el.closest('[hidden],[inert]') && el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden' && getComputedStyle(el).display !== 'none';
   const context = () => `${N().state.mode}:${N().state.index}:${N().state.viewer}:${N().state.panel || ''}`;
-  function post(type, data = {}) { parent.postMessage({ channel: 'timeecho-node-v1', type, ...data }, origin); }
+  function post(type, data = {}) { parent.postMessage({ channel: 'timeecho-node-v1',scene:'node',session, type, ...data }, origin); }
   function focusArt() {
     document.querySelectorAll('.remote-focus,.remote-art-focus').forEach(el => el.classList.remove('remote-focus','remote-art-focus'));
     focus = null; zone = 'art';
@@ -163,7 +163,9 @@
   }
   let chain=Promise.resolve();
   addEventListener('message',e=>{
-    const m=e.data;if(e.origin!==origin||e.source!==parent||m?.channel!=='timeecho-remote-v1')return;
+    const m=e.data;if(e.origin!==origin||e.source!==parent||m?.channel!=='timeecho-remote-v1'||m.scene!=='node'||m.session!==session)return;
+    if(m.type==='DISPOSE'){disposed=true;if(N()){N().stopInlineMedia();N().toggleSound(false);}document.querySelectorAll('video,audio').forEach(el=>el.pause());speechSynthesis.cancel();return;}
+    if(disposed)return;
     if(m.type==='HELLO'){if(N())post('READY',{state:state()});return;}
     if(!N())return;
     if(!allowed.has(m.type)||!Number.isSafeInteger(m.seq))return;
@@ -171,6 +173,7 @@
     // Reserve IDs immediately so a duplicate queued message cannot execute twice.
     seqCache.set(m.seq,{seq:m.seq,status:'pending'});
     chain=chain.then(async()=>{
+      if(disposed)return;
       let result;
       if(Date.now()-m.sentAt>2500)result={seq:m.seq,status:'expired',detail:'指令已过期，未执行'};
       else if(m.epoch!==undefined&&m.epoch!==epoch)result={seq:m.seq,status:'expired',detail:'页面已切换，旧指令已丢弃'};
@@ -178,7 +181,7 @@
       update();result.state=state();seqCache.set(m.seq,result);if(seqCache.size>150)seqCache.delete(seqCache.keys().next().value);post('ACK',result);
     });
   });
-  function update(){const c=context();if(c!==prevContext){prevContext=c;epoch++;if(N().state.panel&&(!visible(focus)||!focus?.closest('#panel')))select(controls()[0]);else if(!N().state.panel&&focus&&!visible(focus))focusArt();}post('STATE',{state:state()});}
-  function init(){if(!N()){setTimeout(init,50);return;}prevContext=context();focusArt();post('READY',{state:state()});setInterval(update,180);}
+  function update(){if(disposed)return;const c=context();if(c!==prevContext){prevContext=c;epoch++;if(N().state.panel&&(!visible(focus)||!focus?.closest('#panel')))select(controls()[0]);else if(!N().state.panel&&focus&&!visible(focus))focusArt();}post('STATE',{state:state()});}
+  function init(){if(disposed)return;if(!N()){setTimeout(init,50);return;}prevContext=context();focusArt();post('READY',{state:state()});setInterval(update,180);}
   init();
 })();
