@@ -14,7 +14,7 @@
   if(ready)frame.contentWindow.postMessage({channel:'timeecho-remote-v1',type:'DISPOSE',scene:activeScene,session},location.origin);
   clearPending();ready=false;current=null;activeScene=name;session=crypto.randomUUID();sleep=false;$('sleepOverlay').hidden=true;
   const config=scenes[name];document.body.dataset.experience=name;const address=new URL(location.href);address.searchParams.set('scene',name);history.replaceState(null,'',address);
-  document.querySelectorAll('[data-experience]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.experience===name)));
+  document.querySelectorAll('button[data-experience]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.experience===name)));
   $('sceneName').textContent=config.name;$('sceneSubtitle').textContent=config.subtitle;$('sceneHint').textContent=config.hint;$('compatibilityNote').textContent=config.note;$('sourceLink').hidden=name!=='node';
   $('quickActions').replaceChildren(...config.quick.map(([command,text])=>{const b=document.createElement('button');b.dataset.command=command;b.textContent=text;b.onclick=()=>send(command);return b;}));
   document.querySelector('.voice-options').replaceChildren(...config.voice.map(([command,text])=>{const b=document.createElement('button');b.textContent=text;b.onclick=()=>{$('voiceDialog').close();send(command);};return b;}));
@@ -50,7 +50,7 @@
  $('wake').onclick=()=>{sleep=false;$('sleepOverlay').hidden=true;send('WAKE');};
  $('scan').onclick=()=>{const captured=session;feedback('正在模拟碰卡','读取当前场景的演示入口');setTimeout(()=>{if(captured===session)send('SCAN');},450);};
  $('voice').onclick=()=>{$('voiceDialog').showModal();};$('closeVoice').onclick=()=>$('voiceDialog').close();
- document.querySelectorAll('[data-experience]').forEach(b=>b.onclick=()=>loadScene(b.dataset.experience));
+ document.querySelectorAll('button[data-experience]').forEach(b=>b.onclick=()=>loadScene(b.dataset.experience));
  const pad=$('touchpad');
  function point(e){const r=pad.getBoundingClientRect(),x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2;return {angle:Math.atan2(y,x),radius:Math.hypot(x,y)/(r.width/2)};}
  pad.addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;const p=point(e);if(p.radius<.74)return;e.preventDefault();ring={id:e.pointerId,angle:p.angle,sum:0,epoch:current?.epoch};pad.setPointerCapture(e.pointerId);pad.classList.add('dragging');});
