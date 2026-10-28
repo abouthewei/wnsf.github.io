@@ -1,0 +1,479 @@
+{
+  "source": "https://nfc-project-demo.iwownow.com/demo/renaissance-journey/",
+  "release": "20261023",
+  "files": {
+    "index.html": {
+      "bytes": 4722,
+      "sha256": "939f079a3e6efa2e6458530afe67194adb18ae529fa79ad21c995460f307275f"
+    },
+    "releases/20261023/images/262d951504877421a64a.webp": {
+      "bytes": 846372,
+      "sha256": "262d951504877421a64a06cc1fcaf5ac7d0b180f01c03a9a69d2104ed0dffa90"
+    },
+    "releases/20261023/images/2437ce8b2a192c2d20d9.jpg": {
+      "bytes": 3775543,
+      "sha256": "2437ce8b2a192c2d20d9efb8f8a22addbbdc1cab9eb374f30c37820f7be36367"
+    },
+    "releases/20261023/images/01e1eaa5be77c1e3fe9d.jpg": {
+      "bytes": 3366457,
+      "sha256": "01e1eaa5be77c1e3fe9dee3d8824a3f2b6fd9fbf1ce60633df36d29c31fcaa3e"
+    },
+    "releases/20261023/images/dc367bc9d02fcc4cdd15.webp": {
+      "bytes": 480346,
+      "sha256": "dc367bc9d02fcc4cdd15df2ac341fda7490210d86dd9efb9a214caff9dab6579"
+    },
+    "releases/20261023/images/0150cd71749f02316043.png": {
+      "bytes": 2435155,
+      "sha256": "0150cd71749f02316043cc4b74901000c8d33b98707e1ba6e16d1dc949cab5d3"
+    },
+    "releases/20261023/images/e2ba80c5528d8403c969.jpg": {
+      "bytes": 5634051,
+      "sha256": "e2ba80c5528d8403c969c407f2244fc4d8b429d9f43c00247c595cb700ab16d4"
+    },
+    "releases/20261023/images/336213776661d7ecac4d.png": {
+      "bytes": 2404872,
+      "sha256": "336213776661d7ecac4d452ddc5267ba4788b798ee2b432f5a81c008d6d0a372"
+    },
+    "releases/20261023/images/474e4329229f3fa07af3.jpg": {
+      "bytes": 2743717,
+      "sha256": "474e4329229f3fa07af31202b5366fdead6c4be8165d0f8bef072ca137dcf157"
+    },
+    "releases/20261023/images/e37f7955eb8237948509.jpg": {
+      "bytes": 3589182,
+      "sha256": "e37f7955eb8237948509d5b352713dd084d5142f60fac7cf0486f796bf742feb"
+    },
+    "releases/20261023/images/07749e923fcbac601bef.jpg": {
+      "bytes": 2000915,
+      "sha256": "07749e923fcbac601bef560a7d7267947aa8e5d030d9dc5a864b26ecd9215fe2"
+    },
+    "releases/20261023/images/eb9d3e59dd18b3610799.jpg": {
+      "bytes": 2669887,
+      "sha256": "eb9d3e59dd18b361079921953237118111f5732b78d4d5cb823ef24e9661d272"
+    },
+    "releases/20261023/images/f7eb1395b5e93aaf5e99.webp": {
+      "bytes": 407476,
+      "sha256": "f7eb1395b5e93aaf5e9927552d6d335f90953237fbcb2d3648d8812aa4c12c17"
+    },
+    "releases/20261023/images/b298c809bb36c2c10ebe.webp": {
+      "bytes": 562844,
+      "sha256": "b298c809bb36c2c10ebe56d31f8401e3f2becdcf40ffcd1bf3c556b6f6b41dd0"
+    },
+    "releases/20261023/images/e061582b48e8fba833a2.webp": {
+      "bytes": 350326,
+      "sha256": "e061582b48e8fba833a2f508663a3ec9e851993161e9c1b28b921101b4c5eafe"
+    },
+    "releases/20261023/images/27f4edaf2153c8abad4b.jpg": {
+      "bytes": 5345814,
+      "sha256": "27f4edaf2153c8abad4b4d1e5cf060bca5d445df448d242c0abf8a4cbc4e2077"
+    },
+    "releases/20261023/images/fb8406b284cf1534504d.jpg": {
+      "bytes": 3235398,
+      "sha256": "fb8406b284cf1534504d89f5b543a4285b9894e08b29f16f77c2c629b6558bc7"
+    },
+    "releases/20261023/images/d73cb30c8feed478a698.jpg": {
+      "bytes": 3173031,
+      "sha256": "d73cb30c8feed478a6982a38637b564821ceae1e8f3ffd41397dbff253d0e945"
+    },
+    "releases/20261023/images/34168a81916c784b33fa.jpg": {
+      "bytes": 4890479,
+      "sha256": "34168a81916c784b33fa77e1fedfb283d0a6beaf06e960d3c71b98a4874b508e"
+    },
+    "releases/20261023/images/570af61301f9e2356dca.webp": {
+      "bytes": 614356,
+      "sha256": "570af61301f9e2356dca8936380ab30eb1207c1d8006ffdac03fe431ecd77776"
+    },
+    "releases/20261023/images/c4dc1dd07025d9d41769.jpg": {
+      "bytes": 2115367,
+      "sha256": "c4dc1dd07025d9d417690e8b94ea04b0ff91db991b4fac36cc602189a926c5b9"
+    },
+    "releases/20261023/images/8220f97f64205f1e8c37.jpg": {
+      "bytes": 2411629,
+      "sha256": "8220f97f64205f1e8c37441136b60cf51785f5fe4b938e3cb3f53fe05b59458a"
+    },
+    "releases/20261023/images/3d3163e51df467f124b1.jpg": {
+      "bytes": 4239571,
+      "sha256": "3d3163e51df467f124b1d4a5d5a621ae1cd1eb1aeb041e6fd9c0ced5e5540feb"
+    },
+    "releases/20261023/images/ac20029a40a424aa37a6.png": {
+      "bytes": 2962437,
+      "sha256": "ac20029a40a424aa37a6787c00e188180335c96ef745470b2c25c0f1f2ac0e45"
+    },
+    "releases/20261023/images/af167bb482bbbc6e84f9.webp": {
+      "bytes": 462276,
+      "sha256": "af167bb482bbbc6e84f958c32b4f739777467e5f7037488495f5392f5bf525c3"
+    },
+    "releases/20261023/images/747b6641ffd1e1bd69f8.png": {
+      "bytes": 3297860,
+      "sha256": "747b6641ffd1e1bd69f8ae4ede050ea306664ac6644a7baeca2122375a834cf7"
+    },
+    "releases/20261023/images/e9107459fffe51949d96.jpg": {
+      "bytes": 1444475,
+      "sha256": "e9107459fffe51949d96c0b1895a588319dcb3c71d48cabc20613b291e2af5dd"
+    },
+    "releases/20261023/images/4b3ae97fd2d726e9471c.jpg": {
+      "bytes": 1439420,
+      "sha256": "4b3ae97fd2d726e9471cdfcc72fa5c40870839141ff52e68ccf378ed432c7ff3"
+    },
+    "releases/20261023/images/5712c1a767de0077d111.webp": {
+      "bytes": 358002,
+      "sha256": "5712c1a767de0077d111b619e94f4f17f8114922dea3a05f77be29cca5803886"
+    },
+    "releases/20261023/images/cf55a8a94503cc561ca3.webp": {
+      "bytes": 684240,
+      "sha256": "cf55a8a94503cc561ca359e5dc2f8944cdbaa615d7759b6cb962fa8c01f9aa6f"
+    },
+    "releases/20261023/images/1830cdff3ccf4599db76.jpg": {
+      "bytes": 2990182,
+      "sha256": "1830cdff3ccf4599db764a1225a3bd5893c9805dff8eee462cb6b30ee5f7b009"
+    },
+    "releases/20261023/images/940a6ce0c3dfdc133e60.jpg": {
+      "bytes": 1639155,
+      "sha256": "940a6ce0c3dfdc133e60671429a08daf101d85568107a5ca409967e33f560250"
+    },
+    "releases/20261023/images/1465544000889b5d9043.webp": {
+      "bytes": 273548,
+      "sha256": "1465544000889b5d904384eab73059f79dff3c239a7df02b227e5456a52f7a00"
+    },
+    "releases/20261023/images/d7a0e54c50a5eb4ebb49.webp": {
+      "bytes": 377364,
+      "sha256": "d7a0e54c50a5eb4ebb491bbc51b78fa940ba3681ea22a48122c52d8dfb5d8d49"
+    },
+    "releases/20261023/images/3a321be2b1dd44536d9d.jpg": {
+      "bytes": 2785349,
+      "sha256": "3a321be2b1dd44536d9da11de2ae0fdb4109fa4acdc3c6fcb126923816221a38"
+    },
+    "releases/20261023/images/a6805252cd945759807e.jpg": {
+      "bytes": 2740832,
+      "sha256": "a6805252cd945759807e903ce94e9edd0901191f84f88a055acbdd217fa2726f"
+    },
+    "releases/20261023/images/abb34e4e2e99b3edec8d.jpg": {
+      "bytes": 2803536,
+      "sha256": "abb34e4e2e99b3edec8d4ddbce153a6c90e9affe46714e4d4954861218d2a6be"
+    },
+    "releases/20261023/images/3d5d238452de5801cd16.webp": {
+      "bytes": 523870,
+      "sha256": "3d5d238452de5801cd16c9c96447903478954d2c09959b9e463ef9898bc4c543"
+    },
+    "releases/20261023/images/2041038af339dc5cf962.jpg": {
+      "bytes": 2408165,
+      "sha256": "2041038af339dc5cf962594e16f3b6383439e56511e2bde1451f1179d0bd1bfe"
+    },
+    "releases/20261023/images/679dfdc8a1c371d76afd.webp": {
+      "bytes": 1038194,
+      "sha256": "679dfdc8a1c371d76afd87c63cf32ff7df8550f44d957813a614a2e2323e8766"
+    },
+    "releases/20261023/images/6a9ff13a3d75994bfea4.webp": {
+      "bytes": 258502,
+      "sha256": "6a9ff13a3d75994bfea4b197bcd50812bcb68725482f4257841e24eff8916bb8"
+    },
+    "releases/20261023/images/464f5ea510f4dc1b87c7.jpg": {
+      "bytes": 8565284,
+      "sha256": "464f5ea510f4dc1b87c7bfd72604409d258e9e6a2c85d0cc48bbf34a54c735e3"
+    },
+    "releases/20261023/images/e2add8b6a1a6b6e4ff20.webp": {
+      "bytes": 1505180,
+      "sha256": "e2add8b6a1a6b6e4ff205f5c3c5cf3f5b1512e37132934dd9d7f36bb97aa521c"
+    },
+    "releases/20261023/images/9506a8574a09e10eecf3.jpg": {
+      "bytes": 1823690,
+      "sha256": "9506a8574a09e10eecf3f856041a79df0dbbaa99dae5ddaa5c196d4dcd6cbe15"
+    },
+    "releases/20261023/images/fbb39670f03faeb6ee85.jpg": {
+      "bytes": 3311924,
+      "sha256": "fbb39670f03faeb6ee85f693efbb1bf1852de443dc2e65d389510ebaa0cc8244"
+    },
+    "releases/20261023/images/d1292e1d9247cc04ed98.webp": {
+      "bytes": 363994,
+      "sha256": "d1292e1d9247cc04ed98ccc3dce5f9804e2753b2a9810a0a58ec3a04f1e8a935"
+    },
+    "releases/20261023/images/036373a1ebb822ab2706.webp": {
+      "bytes": 1912138,
+      "sha256": "036373a1ebb822ab2706084ffc45b12dd03b0b56e09c47faf4fbdc5c20bbb331"
+    },
+    "releases/20261023/images/90e7a6c7777907202f5b.webp": {
+      "bytes": 336164,
+      "sha256": "90e7a6c7777907202f5bc62c62f7467c9429aa8074779d511d6c936933638c96"
+    },
+    "releases/20261023/images/a6fdbecda05ac678c649.webp": {
+      "bytes": 290920,
+      "sha256": "a6fdbecda05ac678c6490c600eb82067444eda800b8a5b75ca70e3c389946d09"
+    },
+    "releases/20261023/images/59e2a2a327dd33a467d8.jpg": {
+      "bytes": 2253725,
+      "sha256": "59e2a2a327dd33a467d8ce53893136179f91e0bceccd61663ed106ac6656cfa9"
+    },
+    "releases/20261023/images/f765cd4017ec416d8514.jpg": {
+      "bytes": 4342434,
+      "sha256": "f765cd4017ec416d85149f7acedc449d6c311902b395a4aec8edd0b3e9ea4d17"
+    },
+    "releases/20261023/images/ddba1157993fa8d706fe.webp": {
+      "bytes": 692900,
+      "sha256": "ddba1157993fa8d706fe00785e06b7572887bddbc1e7ed4a3c5ead22788f17fa"
+    },
+    "releases/20261023/images/da7d31be9abd5150117e.webp": {
+      "bytes": 580078,
+      "sha256": "da7d31be9abd5150117edc511c98c86e9a2a00f4b980ff3351597e8aec5e86fa"
+    },
+    "releases/20261023/images/4be6a444e4afce1694aa.webp": {
+      "bytes": 511862,
+      "sha256": "4be6a444e4afce1694aa2d1dc3df8382e3751f84deb9da61e58434b69b10b036"
+    },
+    "releases/20261023/images/dc1eb07e9244e429de8d.webp": {
+      "bytes": 560360,
+      "sha256": "dc1eb07e9244e429de8ddeb3c3a32f9fe1bb2f5f79e444b0ac3a0be01e4bf8ca"
+    },
+    "releases/20261023/images/76aa6edbf49c25e153b5.webp": {
+      "bytes": 595296,
+      "sha256": "76aa6edbf49c25e153b5708e23ffc2768c048b11ac9e7dc9cba50885aa31713d"
+    },
+    "releases/20261023/images/08852e136ad6e3120db6.webp": {
+      "bytes": 1970462,
+      "sha256": "08852e136ad6e3120db664d1bf7b9e2fc49b7eda0499bd7d7f524c0e67ebb02a"
+    },
+    "releases/20261023/images/056ddaf4882b36a3b3d2.jpg": {
+      "bytes": 4322131,
+      "sha256": "056ddaf4882b36a3b3d277fe42bb543ca7dd4798a89452c8f3f8d1cf11bc0abc"
+    },
+    "releases/20261023/images/fba832ec139c4b0c63b0.webp": {
+      "bytes": 437406,
+      "sha256": "fba832ec139c4b0c63b0bfdf1cb9a0a0a57d26e5ab100a33d8c0bd18755fa2db"
+    },
+    "releases/20261023/images/93cd54a2c342162f8e62.jpg": {
+      "bytes": 3298204,
+      "sha256": "93cd54a2c342162f8e62f72c338ff0a1d883c8393d6f7dccba437a92c23eb717"
+    },
+    "releases/20261023/images/7cf3f694cfe723a113ce.webp": {
+      "bytes": 474392,
+      "sha256": "7cf3f694cfe723a113ceb09997288ba62c99e5c375c1b0783966257229e4c76a"
+    },
+    "releases/20261023/images/225cdd69b1e5aebb7e6f.webp": {
+      "bytes": 731264,
+      "sha256": "225cdd69b1e5aebb7e6f3225f329d8f8aac7603bb44c63ef70b511da29637202"
+    },
+    "releases/20261023/images/05d24c07e6d62901b0d1.webp": {
+      "bytes": 286482,
+      "sha256": "05d24c07e6d62901b0d17553148a76de807d509e2aa1e5f3e829e2f5c4f70be4"
+    },
+    "releases/20261023/images/0f64c5f4c3134ff6b3f2.jpg": {
+      "bytes": 2146884,
+      "sha256": "0f64c5f4c3134ff6b3f2d7692e5d81c357f0f79368c230edfc92269d9461a70d"
+    },
+    "releases/20261023/images/de1dff5293b6792910c3.webp": {
+      "bytes": 246618,
+      "sha256": "de1dff5293b6792910c3b8fbcd05cb90027f75bd54344282be99f8124b04b9eb"
+    },
+    "releases/20261023/images/5941b3ea0c1a06c71048.jpg": {
+      "bytes": 2947205,
+      "sha256": "5941b3ea0c1a06c71048ec10f3175505d4dd5762a66c9bc15c4244d7cd72b4d6"
+    },
+    "releases/20261023/images/bf96e9974a69104196ff.webp": {
+      "bytes": 570072,
+      "sha256": "bf96e9974a69104196ff05243f44774903c608b624afc40daca8ff8c177ce962"
+    },
+    "releases/20261023/images/1c460be97e1f9acf7006.jpg": {
+      "bytes": 4575574,
+      "sha256": "1c460be97e1f9acf7006cde070b555a09c6ffd5920b50fc8b086e2141d8183c3"
+    },
+    "releases/20261023/images/ddff3d63ac0d251ed060.jpg": {
+      "bytes": 4471349,
+      "sha256": "ddff3d63ac0d251ed060415ba839ad9f7fd6b6ce940608b4b4d76b3582590784"
+    },
+    "releases/20261023/images/92846b0dc5070107cf63.webp": {
+      "bytes": 738610,
+      "sha256": "92846b0dc5070107cf635aad81339b2ad5f67e9458c9cf161fd9eb6b7d33a95c"
+    },
+    "releases/20261023/images/e2e52f3aeb6876ccde33.webp": {
+      "bytes": 593436,
+      "sha256": "e2e52f3aeb6876ccde332f1ad7eec3f7bb6186a45a1605be38bb7847f25c4779"
+    },
+    "releases/20261023/images/661d68982255e8e4b921.jpg": {
+      "bytes": 7923498,
+      "sha256": "661d68982255e8e4b9213db19677fb8e1adf7304b45568fcb6f0108ebb172bb7"
+    },
+    "releases/20261023/images/d602d4a72d347e9a79f2.jpg": {
+      "bytes": 1722080,
+      "sha256": "d602d4a72d347e9a79f22fd287a24b6fcf7a3cef41e7d5f4faa93e97134ba726"
+    },
+    "releases/20261023/images/26bd91be1a467a4f3c10.webp": {
+      "bytes": 1141132,
+      "sha256": "26bd91be1a467a4f3c10eb396252899f7ffd68c53e2364a93ac3827007c86f85"
+    },
+    "releases/20261023/images/a7ed8d45c6921cf430d4.webp": {
+      "bytes": 190270,
+      "sha256": "a7ed8d45c6921cf430d49fffa7c4d6a386d351018b933c195c86130c463815dc"
+    },
+    "releases/20261023/images/b3f499dec3bd931405b8.jpg": {
+      "bytes": 1300684,
+      "sha256": "b3f499dec3bd931405b8b9dbe31a97d564afc9bb642105565945493bd44bf009"
+    },
+    "releases/20261023/images/0a424b357b82b56d5299.jpg": {
+      "bytes": 2173475,
+      "sha256": "0a424b357b82b56d529918690a465905b20965478ac1461f8a29f1596c442d8f"
+    },
+    "releases/20261023/images/7b1716382ad634436597.jpg": {
+      "bytes": 1423707,
+      "sha256": "7b1716382ad634436597b22308ad8baec02f00185cfbd94913af118fae886120"
+    },
+    "releases/20261023/images/38f42005ce0df9b6979b.jpg": {
+      "bytes": 2066201,
+      "sha256": "38f42005ce0df9b6979bf56ac9a0991ba2db5239226b70b72ecfaa7b81b09d24"
+    },
+    "releases/20261023/images/be3e5caef8f3ee623a0b.jpg": {
+      "bytes": 5405670,
+      "sha256": "be3e5caef8f3ee623a0b7930fa857fefb2575a1da680ceacb9bf185ac2d0b49b"
+    },
+    "releases/20261023/images/e1ede93f50df5ffd7322.webp": {
+      "bytes": 216496,
+      "sha256": "e1ede93f50df5ffd7322363e5c4f07e376c27bf5b3e398bfa491eb8855295586"
+    },
+    "releases/20261023/images/449a950cc7a07f2e1ad8.png": {
+      "bytes": 2860571,
+      "sha256": "449a950cc7a07f2e1ad8ef5b03551d02701d20afffa66ca306ffb194b52950c7"
+    },
+    "releases/20261023/images/0bb7affd68498481d73a.webp": {
+      "bytes": 1819590,
+      "sha256": "0bb7affd68498481d73a2516cd5d2103dc41c9d0a252def743817bd7b709a800"
+    },
+    "releases/20261023/images/228aa3acb8d6c5d88f38.jpg": {
+      "bytes": 2098414,
+      "sha256": "228aa3acb8d6c5d88f38a7b4b8a8f987159c41f064ecea19b8526dce69d5c1c6"
+    },
+    "releases/20261023/images/969551c47a8a9c691601.png": {
+      "bytes": 3129894,
+      "sha256": "969551c47a8a9c69160112b6e65fc43c83611af4ede8a0d932d954de091dcf04"
+    },
+    "releases/20261023/images/bd7926c24c1b50ec9d3f.webp": {
+      "bytes": 698836,
+      "sha256": "bd7926c24c1b50ec9d3f43b42bd9a2abdf217637b161446eff75c2cf27e02b5e"
+    },
+    "releases/20261023/images/2369dd3fbd156fbecdb5.jpg": {
+      "bytes": 2872944,
+      "sha256": "2369dd3fbd156fbecdb58d5b9d04ed0a6c62ced005bde515d43f0573faab1c45"
+    },
+    "releases/20261023/images/55042a2fccb0b8b5d391.png": {
+      "bytes": 2809488,
+      "sha256": "55042a2fccb0b8b5d3912ac6cd0b30e99206b0dfe251d25509b3cef73e8c19a8"
+    },
+    "releases/20261023/images/c694347467241f82de76.png": {
+      "bytes": 3684782,
+      "sha256": "c694347467241f82de7687bee07394ae2b33d2c90a78227f15fa95105a8f33d2"
+    },
+    "releases/20261023/images/bcb1cbe2620b362aab5e.webp": {
+      "bytes": 1923972,
+      "sha256": "bcb1cbe2620b362aab5ef01a86df6d42c569b62e373d3a82dcecf7ba9cb91691"
+    },
+    "releases/20261023/images/328c5ca43a31f8e28076.jpg": {
+      "bytes": 3435849,
+      "sha256": "328c5ca43a31f8e28076bc2d6c114e0f1ca6632fb34c5a9a1345e7f72ca4d2a5"
+    },
+    "releases/20261023/images/4c26d9d2798b3644802f.webp": {
+      "bytes": 350380,
+      "sha256": "4c26d9d2798b3644802f1c8387bdfeeb47668e06776dee967b95e15896ce130c"
+    },
+    "releases/20261023/images/b6894f6f24ab5287bdea.jpg": {
+      "bytes": 2615202,
+      "sha256": "b6894f6f24ab5287bdea203f84ab7df3b3baa0dcf33bf159bdaca7f2ac608ad3"
+    },
+    "releases/20261023/images/2129aff19b3374153b75.png": {
+      "bytes": 2434115,
+      "sha256": "2129aff19b3374153b75805bbfee000eca062d35a9813457c47ce2aefd7b718f"
+    },
+    "releases/20261023/images/16b8a66f5a6477947ab1.webp": {
+      "bytes": 355062,
+      "sha256": "16b8a66f5a6477947ab1be5cf7584db66f534153431d680e150418b5922eea0b"
+    },
+    "releases/20261023/images/e31fe038d489dbb8b669.png": {
+      "bytes": 2686017,
+      "sha256": "e31fe038d489dbb8b669221c9113f7f00dfc63513bdb4fbcd83bbb58ce751e19"
+    },
+    "releases/20261023/images/2ee2257f49141dfc4c8d.webp": {
+      "bytes": 215094,
+      "sha256": "2ee2257f49141dfc4c8d28d2903acc919ea20428ce468a46356f27930dbfa313"
+    },
+    "releases/20261023/images/65bf5da2d5436f997399.jpg": {
+      "bytes": 4678739,
+      "sha256": "65bf5da2d5436f9973994abdb1c42815e21b39ad167c4cceed1f3fbc29fabc16"
+    },
+    "releases/20261023/images/5cffe836a89a7bc05b77.webp": {
+      "bytes": 2263456,
+      "sha256": "5cffe836a89a7bc05b775fc6e9f28aa750c1fb17be6521e1705f499769ec236d"
+    },
+    "releases/20261023/images/49977f0e53aded8823c7.png": {
+      "bytes": 2748710,
+      "sha256": "49977f0e53aded8823c7777d0a07ddd4f7c2c9db351ad114360cc24302d57b29"
+    },
+    "releases/20261023/images/bbf5e1fe5aca362725a9.webp": {
+      "bytes": 283824,
+      "sha256": "bbf5e1fe5aca362725a9fa65871be4a152f87a7793630a509ec5bcd9e835b9fb"
+    },
+    "releases/20261023/images/9bd3993203d5e8b446b1.png": {
+      "bytes": 2950096,
+      "sha256": "9bd3993203d5e8b446b19b0a7fc5f5e39fc0fe7f06a19900d6677540c3d6634f"
+    },
+    "releases/20261023/images/9170dff33a20b0a7ebe5.webp": {
+      "bytes": 665758,
+      "sha256": "9170dff33a20b0a7ebe5345ec0780ab6e3bbb2ecd48776222924515bdc76642d"
+    },
+    "releases/20261023/images/163593b35044426eab34.webp": {
+      "bytes": 1301512,
+      "sha256": "163593b35044426eab34c4d943b66dfa90edb118522af2f77b1f11b0b1d888a7"
+    },
+    "releases/20261023/images/2866b33aad7f10367e11.webp": {
+      "bytes": 353312,
+      "sha256": "2866b33aad7f10367e115faf421d37f575b4797e496a2bc2de4693da6d8e3604"
+    },
+    "releases/20261023/images/f636f2683e6252d37c7a.webp": {
+      "bytes": 142090,
+      "sha256": "f636f2683e6252d37c7a5881ff7b64e04a9591f40ea551cc7acba8ef4e7aa9ba"
+    },
+    "releases/20261023/images/96844911fece4caa8db4.webp": {
+      "bytes": 861922,
+      "sha256": "96844911fece4caa8db40445a271cd3977afbf9f31b73e9468a8e7fcf9ea63fc"
+    },
+    "releases/20261023/images/321ab251689d8cb8d928.webp": {
+      "bytes": 653882,
+      "sha256": "321ab251689d8cb8d928209dfb625f7bbf87789238ca89ed04300d6794dfa275"
+    },
+    "releases/20261023/images/e1aa38af0ad75b099d5a.webp": {
+      "bytes": 204140,
+      "sha256": "e1aa38af0ad75b099d5a6578e6c54a5604f0c174cd77ba4aadfc4448f54f2e28"
+    },
+    "releases/20261023/styles/exhibition.css": {
+      "bytes": 55845,
+      "sha256": "8c0c3449f37349d884ea07ce5b4457486684a949bfbe7c12431f01fb9d61dce1"
+    },
+    "releases/20261023/styles/loading.css": {
+      "bytes": 229,
+      "sha256": "b3829c2715e2a88b521eb8e4dc881ed5b136815f875cf34bc678c73ebefe2441"
+    },
+    "releases/20261023/videos/90e31312bb02a6bdcf9e.mp4": {
+      "bytes": 13298391,
+      "sha256": "90e31312bb02a6bdcf9ebaf865e4c3bdc1673abceda504a47b79cafc4d340a54"
+    },
+    "releases/20261023/videos/66b0e211da7b39792eac.mp4": {
+      "bytes": 17623311,
+      "sha256": "66b0e211da7b39792eacb18a2c261139d87040b968adaa5b880ec3f168c39c08"
+    },
+    "releases/20261023/videos/2c3999cf00b3d33a8fee.mp4": {
+      "bytes": 10983989,
+      "sha256": "2c3999cf00b3d33a8fee3d7e1855bb08eee933bb751316b5410b669a0c98972e"
+    },
+    "releases/20261023/videos/f79c9414676c744407f5.mp4": {
+      "bytes": 23701245,
+      "sha256": "f79c9414676c744407f5c6ca20a5687c1027502e7406f340de623291bc8db58d"
+    },
+    "releases/20261023/scripts/script-00.js": {
+      "bytes": 67738,
+      "sha256": "d7e30f62d5aa7b3c8fc82dd2b6dc87850bd4a372bc8cff7b12979f2b874fadee"
+    },
+    "releases/20261023/scripts/loader.js": {
+      "bytes": 2035,
+      "sha256": "b076fa0a742a4cdac7f27e2808c8e39c1fcc1923dd86acff5eb4a1ab2ea4840e"
+    },
+    "releases/20261023/data/book-data.json": {
+      "bytes": 183831,
+      "sha256": "3e1529539bc5050251d792aefe798779d31380d16b7893e19e0b2af340505244"
+    }
+  },
+  "errors": []
+}

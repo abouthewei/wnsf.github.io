@@ -1,0 +1,44 @@
+[
+  {
+    "id": "narration-ren-florence-city",
+    "text": "欢迎来到这场寻找文艺复兴印记的旅行。我们不从记住名字开始，而从一座城市的比例开始。请先看看河流，再看看屋顶之上的穹顶。它们属于不同时代，却在同一幅风景里共处。接下来的展厅，也请这样观看：先让作品抵达眼睛，再让知识慢慢抵达。",
+    "title": "抵达：把城市当作第一页",
+    "file": "narration-ren-florence-city.wav",
+    "method": "macOS say · Tingting · 175 words/min; synthetic narration, not human recording"
+  },
+  {
+    "id": "narration-ren-venus",
+    "text": "在波提切利面前，可以暂时把故事放在一边。先追随画面中的风，观察发丝与衣褶怎样彼此回应。再看看人物之间的距离。绘画的意义不只存在于象征，也存在于一条线如何停下，一只手怎样伸出。当目光愿意放慢，熟悉的名作才重新变得鲜活。",
+    "title": "花园里的观看练习",
+    "file": "narration-ren-venus.wav",
+    "method": "macOS say · Tingting · 175 words/min; synthetic narration, not human recording"
+  },
+  {
+    "id": "narration-ren-david",
+    "text": "眼前的身体没有正在奔跑，也没有挥出武器。但你仍能感觉到行动将要发生。请从手开始，沿手臂看向颈部，最后停在眼睛。雕塑把时间压缩在一个姿态里。与多纳泰罗的大卫比较时，不妨问自己：同样一个故事，为什么可以拥有如此不同的呼吸？",
+    "title": "静止，也是一种行动",
+    "file": "narration-ren-david.wav",
+    "method": "macOS say · Tingting · 175 words/min; synthetic narration, not human recording"
+  },
+  {
+    "id": "narration-ren-athens",
+    "text": "雅典学院把不同年代的思想者放进一座共同的建筑。他们交谈、书写、测量，也彼此倾听。请不要只盯住中央的两个人，沿着台阶向两边看。知识在这里不是一座孤独的奖杯，而是一种正在发生的关系。这也是我们希望数字展览保留的品质：给思考留出相遇的空间。",
+    "title": "知识如何成为公共空间",
+    "file": "narration-ren-athens.wav",
+    "method": "macOS say · Tingting · 175 words/min; synthetic narration, not human recording"
+  },
+  {
+    "id": "narration-ren-arnolfini",
+    "text": "请先找到画面深处的小镜子。它让我们意识到，房间还有正面画面之外的空间。衣料、木鞋、果实和灯具都值得细看，但并不是每个细节都只有一个确定的解释。真正的细读，允许证据与疑问同时存在。把发现留在心里，再回到整个房间。",
+    "title": "一面镜子，另一种世界",
+    "file": "narration-ren-arnolfini.wav",
+    "method": "macOS say · Tingting · 175 words/min; synthetic narration, not human recording"
+  },
+  {
+    "id": "narration-ren-ambassadors",
+    "text": "旅行结束之前，再改变一次观看的位置。使节画面里的物件展示知识与身份，前景却藏着需要侧身才能辨认的形状。它提醒我们，理解有时不是增加信息，而是换一个角度。愿这场旅程留下的，不只是一串到访地点，还有一种更耐心、更自由的看世界的方法。",
+    "title": "把观看带回今天",
+    "file": "narration-ren-ambassadors.wav",
+    "method": "macOS say · Tingting · 175 words/min; synthetic narration, not human recording"
+  }
+]
