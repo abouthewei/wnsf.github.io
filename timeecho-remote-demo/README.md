@@ -2,7 +2,9 @@
 
 左侧提供 NODE 作品、AI 音乐、音乐播放器、搜狐官网、B 站视频五个场景，右侧共用一只无屏触控遥控器。顶部切换场景，页面链接可用 `?scene=node`、`?scene=ai`、`?scene=music`、`?scene=web`、`?scene=video` 直接打开。
 
-NODE 保留《光的重生》的原图文、顺序、场景和视频；音乐用真实音频元素验证；搜狐与 B 站用真实官网/官方播放器验证外站加载；浏览器跨域规则限制遥控器读取站内状态。五个场景没有共用虚假的内容状态。
+NODE 保留《光的重生》的原图文、顺序、场景和视频；音乐用真实音频元素验证；搜狐和 Bilibili 使用真实官网页面。搜狐只能在站内用原生控件浏览；Bilibili 安装 TimeEcho Chrome 扩展后可以由遥控器控制。五个场景没有共用虚假的内容状态。
+
+扩展压缩包：`downloads/timeecho-bilibili-extension.zip`，安装说明见 `extension/README.md`。Chrome 会提示扩展可访问 TimeEcho 演示页和 Bilibili 两个站点；用户必须在浏览器中手动加载扩展。
 
 ## 真实 AI 音乐场景
 
@@ -18,7 +20,7 @@ NODE、AI 音乐和音乐播放器可以由遥控器直接操作各自的同源�
 
 普通网页场景直接嵌入搜狐官网首页，提供另开官网链接。此环境中搜狐首页实际嵌入成功；但浏览器跨域规则禁止演示页读取站内 DOM，因此遥控器不能控制搜狐内部导航、焦点或滚动。旧小红书本地示例保留在 `web/` 源码。
 
-视频场景嵌入 Bilibili 整站 https://www.bilibili.com/，不是仅嵌播放器。本次浏览器验证已显示完整首页；若 B 站调整嵌入策略，可使用右上角入口另开官网。浏览器跨域限制下遥控网页无法读取或控制站内内容。
+视频场景嵌入 Bilibili 整站 https://www.bilibili.com/，不是仅嵌播放器。本次浏览器验证已显示完整首页。要让遥控器操作其页面，需要安装 `extension/` 中的 Chrome 扩展；扩展在当前标签页内连接 TimeEcho 控制页和 Bilibili iframe，把方向、确认、返回、播放/暂停、进度和音量指令映射到真实页面元素。浏览器若阻止嵌入，可用右上角另开官网，但跨标签遥控暂不支持。
 
 每次切换场景重新载入该示例，停止旧音频，清空待执行指令。新增 scene/session 校验、过期指令拒绝和序号去重，避免旧场景的消息作用于新场景。本地导入只在当前音乐页面会话有效。
 
@@ -78,7 +80,9 @@ python3 serve.py
 - `ai-music/`：真实 AI 音乐页面的原始运行时、媒体、内容快照与遥控适配层。
 - `music/`：音乐界面、播放器逻辑和可复现的合成音轨生成脚本。
 - `web/`：原小红书本地示例保留在源码；场景入口已指向搜狐官网。
-- `external/`：搜狐与 B 站官方页面/播放器的嵌入入口，明确跨域控制边界。
+- `external/`：搜狐与 Bilibili 整站嵌入页；Bilibili 指令经浏览器扩展传递。
+- `extension/`：Chrome 扩展桥接与安装说明；限制到 TimeEcho 演示页和 Bilibili。
+- `downloads/timeecho-bilibili-extension.zip`：可加载的扩展包。
 - `tests/scene-host.test.cjs`：重复消息、会话隔离、过期上下文和退出场景后的队列取消测试。
 - `node/`：原作品资源与运行时，仅在 index.html 注入适配脚本。
 - `source-manifest.json`：下载来源、版本、文件大小和 SHA-256。

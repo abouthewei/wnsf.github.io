@@ -6,7 +6,7 @@
   ai:{name:'AI MUSIC',subtitle:'台灯下的温柔',src:'ai-music/index.html',hint:'圆环调节进度，确认切换沉浸模式；播放键控制歌曲。',note:'按提供的真实页面适配，保留原始歌曲、封面、背景视频和时间戳歌词。',quick:[['SEEK_BACK','回退 5 秒'],['SEEK_FORWARD','快进 5 秒'],['IMMERSIVE','沉浸模式'],['HOME','回到开头']],voice:[['PLAY_PAUSE','播放／暂停歌曲'],['SEEK_FORWARD','快进 5 秒'],['SEEK_BACK','回退 5 秒'],['IMMERSIVE','切换沉浸模式']]},
   music:{name:'MUSIC PLAYER',subtitle:'音乐播放器',src:'music/index.html',hint:'圆环选曲，确认播放；进入进度模式后环滑快进。',note:'通用音乐播放器，支持本地音频导入。预置为程序合成演示音轨。',quick:[['TRACKS','歌曲列表'],['SEEK_MODE','进度调整'],['NEXT_TRACK','下一首'],['REPEAT','循环模式']],voice:[['PLAY_PAUSE','播放／暂停音乐'],['NEXT_TRACK','下一首'],['SEEK_MODE','调整播放进度'],['TRACKS','回到歌曲列表']]},
   web:{name:'搜狐官网',subtitle:'真实网页浏览',src:'external/index.html?kind=web',hint:'浏览搜狐页面请在左侧外站内操作；跨域限制下遥控器不能操作站内控件。',note:'真实搜狐官网；本次浏览器验证可嵌入。遥控器不能跨域读取或操作站内内容，页面操作请使用左侧官网控件。',quick:[],voice:[]},
-  video:{name:'BILIBILI',subtitle:'Bilibili 整站',src:'external/index.html?kind=video',hint:'这是 Bilibili 整站页面；浏览与视频操作请使用左侧页面原生控件。',note:'使用 Bilibili 整站页面 https://www.bilibili.com/。是否允许嵌入由站点策略决定；跨域限制下遥控器无法操控站内内容。',quick:[],voice:[]}
+  video:{name:'BILIBILI',subtitle:'Bilibili 整站',src:'external/index.html?kind=video',hint:'先安装本场景提供的 TimeEcho 扩展，再用遥控器操作左侧 Bilibili 页面。',note:'此浏览器需安装 TimeEcho 扩展，遥控器才能操作 Bilibili 的滚动、焦点与视频播放。',quick:[],voice:[]}
  };
  Object.assign(labels,{TRACKS:'歌曲列表',SEEK_MODE:'进度调整',NEXT_TRACK:'下一首',REPEAT:'循环模式',PAGE_UP:'向上翻页',PAGE_DOWN:'向下翻页',FIRST_LINK:'首个控件',SEEK_BACK:'回退 5 秒',SEEK_FORWARD:'快进 5 秒',IMMERSIVE:'沉浸模式'});
  let ready=false,seq=0,current=null,lastSend=0,flashTimer,pending=new Map(),count=0,sleep=false,ring=null,actionTime=0,activeScene='node',session='',bootTimer;
@@ -38,7 +38,7 @@
  function render(s){current=s;document.body.dataset.mode=s.mode;document.body.dataset.index=String(s.index);document.body.dataset.viewer=String(!!s.viewer);document.body.dataset.panel=s.panel||'';document.body.dataset.story=String(!!s.story);document.body.dataset.volume=String(s.volume);document.body.dataset.playing=String(!!s.playing);document.body.dataset.progress=String(s.progress||0);$('modeLabel').textContent=activeScene==='node'?(s.panel?'面板 · '+({menu:'目录',scenes:'场景',media:'影音',technical:'设置'}[s.panel]||s.panel):s.viewer?'作品欣赏':s.mode==='space'?'空间观展':'顺序阅读'):s.modeLabel||scenes[activeScene].subtitle;$('chapterLabel').textContent=s.title;$('positionLabel').textContent=s.positionLabel||`${String(s.index+1).padStart(2,'0')} / ${s.total}`;if(Date.now()-actionTime>3500)$('actionDetail').textContent=`焦点：${s.focus}${s.volume!==undefined?' · 音量 '+s.volume+'%':''}`;}
  addEventListener('message',e=>{
   const m=e.data;if(e.origin!==location.origin||e.source!==frame.contentWindow||m?.channel!=='timeecho-node-v1'||m.scene!==activeScene||m.session!==session)return;
-  if(m.type==='READY'){ready=true;clearTimeout(bootTimer);$('boot').hidden=true;render(m.state);feedback(['web','video'].includes(activeScene)?'外站演示已连接':'遥控已连接',scenes[activeScene].hint);}
+  if(m.type==='READY'){ready=true;clearTimeout(bootTimer);$('boot').hidden=true;render(m.state);feedback(activeScene==='web'?'搜狐页面已载入':activeScene==='video'?'Bilibili 页面已载入':'遥控已连接',scenes[activeScene].hint);}
   if(m.type==='STATE')render(m.state);if(m.type==='NOTICE'){feedback('播放提示',m.detail);log('播放提示',m.detail);}
   if(m.type==='ACK'&&m.status!=='pending'){
    const p=pending.get(m.seq);if(!p)return;clearTimeout(p.timer);pending.delete(m.seq);if(m.state)render(m.state);feedback(labels[p.type],m.detail);log(labels[p.type],m.detail);
