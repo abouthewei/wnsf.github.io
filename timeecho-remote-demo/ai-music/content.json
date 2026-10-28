@@ -1,0 +1,20 @@
+{
+  "data": {
+    "status": "ORDER_BOUND",
+    "content": {
+      "contentId": "CONTENT0MQ1U1FUQ_72HI5K3LTA",
+      "type": "music",
+      "link": "",
+      "text": "台灯下的温柔",
+      "contentJson": "{\"artist\": \"于伟文\", \"audioUrl\": \"./assets/song.mp3\", \"backgroundUrl\": \"./assets/background.mp4\", \"coverUrl\": \"./assets/cover.jpg\", \"lrc\": \"[00:00.60]滴答…键盘轻响\\n[00:03.20]光晕温柔铺满纸张\\n[00:06.52]屏幕微光映着倦眼\\n[00:09.12]咖啡凉了第三遍\\n[00:11.36]改到第七版标点\\n[00:13.68]却还笑着调亮台灯\\n[00:15.96]爱我自己，在深夜未眠时\\n[00:19.40]不苛责慢，不否定微光\\n[00:22.84]指尖敲出温柔节奏\\n[00:26.28]原来最深的暖\\n[00:29.72]是陪自己久一点\\n[00:32.48]窗外城市已沉静\\n[00:34.52]而我还在字句里轻轻校准\\n[00:38.12]不是完美才值得被爱\\n[00:40.48]是认真活着的每一刻\\n[00:45.20]关掉闹钟，再留十分钟\\n[00:48.28]和这个努力的我\\n[00:50.92]说声谢谢\\n[00:58.04]键盘停了，心还亮着\\n[01:01.36]台灯下\\n[01:02.80]爱正慢慢成形\", \"shapeType\": \"pendant\", \"shouldUseCoverAsTimetagCover\": true, \"title\": \"台灯下的温柔\"}",
+      "attachments": []
+    },
+    "policyType": "public",
+    "accessPrompt": null,
+    "activation": null,
+    "isPresetContent": false,
+    "presentation": null
+  },
+  "code": 200,
+  "msg": "success"
+}

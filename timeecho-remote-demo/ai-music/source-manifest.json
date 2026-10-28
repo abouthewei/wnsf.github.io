@@ -1,0 +1,96 @@
+{
+  "source_page": "https://nfc-web-pre.iwownow.com/fpm6HLBgDknscUyEy_IxrcdS",
+  "source_build": "0f3d910e1a61ccafa48f1bf169f57a9a7709705e",
+  "adaptations": [
+    "Original relative asset paths normalized for subdirectory hosting",
+    "Read-only NFC content query uses the supplied public content snapshot",
+    "React Router basename follows local scene directory",
+    "Remote bridge added outside original React runtime"
+  ],
+  "files": {
+    "adapter.js": {
+      "bytes": 4251,
+      "sha256": "17510e1b86e33b3e019b3df8b671a75e1842e21edbaed22d1d84aac922b41643"
+    },
+    "assets/Claim-BMdm-DzY.js": {
+      "bytes": 6811,
+      "sha256": "cdf056de427ae7695966d1b2a697b0201a89df1d33e28ede2b571337979961dc"
+    },
+    "assets/MusicPlayer-BAhGB1Gq.js": {
+      "bytes": 30228,
+      "sha256": "7f881ef11bab2955de3aef527fdfe0ae8cfc085d0bd2df9e747b1b38ebd4b4ad"
+    },
+    "assets/background.mp4": {
+      "bytes": 509058,
+      "sha256": "79483da961e6f75067debfc37d1464c8ab51981be9adcc3138eb8f044a78d0af"
+    },
+    "assets/bg-Cy0xdvPP.png": {
+      "bytes": 1432611,
+      "sha256": "a369f379e84791374db9b0c2846825b68e27edcc2d1150222ea4ae7d0eee8650"
+    },
+    "assets/cover.jpg": {
+      "bytes": 202816,
+      "sha256": "eee6d666303ad1190e825b49e51d0f0861a7ba0d5f1b3bec05c28c3b9c72cdb1"
+    },
+    "assets/icon-play-BroMPTit.svg": {
+      "bytes": 4422,
+      "sha256": "8b0375c4696a73c3a57a832f2d17d43884d1687e0eb527b833d9cf1000ba1070"
+    },
+    "assets/icon-stop-DfBd9Bi3.svg": {
+      "bytes": 4519,
+      "sha256": "05c652d39a10b9889b2f3af06e108f66c0890a13397afe01ebfd752c4a60d7a9"
+    },
+    "assets/index-C-ADsNXs.css": {
+      "bytes": 36457,
+      "sha256": "16962851b1b67f4743173a98c35d67cb959f5466d0365ce19fcabe3eeed15857"
+    },
+    "assets/index-DSiSM89B.js": {
+      "bytes": 507945,
+      "sha256": "5c9e1d0571501a317225881bb4f577229b7e8b2e9c29741c3d8289547a94123a"
+    },
+    "assets/pet-page-info-bg-C25e8amD.png": {
+      "bytes": 178747,
+      "sha256": "7b0e40d64f745b490c031f5d732d7cd48720aa4a6d0aa4381d8791b9f5f4ca55"
+    },
+    "assets/pet-page-tips-bg-B_CElq6i.jpg": {
+      "bytes": 32863,
+      "sha256": "dbbc214372cf21dcfde163609a4613a2fc8e4926c7450551941c61623f631c31"
+    },
+    "assets/pet-phone-dialog-bg-DK7U9je9.png": {
+      "bytes": 19381,
+      "sha256": "e4ac84315105de25763aab17ccc08bbcbbf1d69beae318d861dc154a6f5893b4"
+    },
+    "assets/shape-circle-C_k_9ibg.png": {
+      "bytes": 88257,
+      "sha256": "debfb52e9973acaf434c0f256dc4da15ac78b08cffa290927e1c776b7edf4548"
+    },
+    "assets/shape-rectangle-Da7D-7MR.png": {
+      "bytes": 73084,
+      "sha256": "bcf17a3eba92e163641b89011f8bc8e0ce9951af2101d3ed32a408a514fc903b"
+    },
+    "assets/shape-rectangle-h-DvDDuA0m.png": {
+      "bytes": 72072,
+      "sha256": "154315ba195e32bdb5549d086fbbdeaa8564fcc4576d704eaaaf20501a9d8ec3"
+    },
+    "assets/shape-rendant-C4VJchKo.png": {
+      "bytes": 85917,
+      "sha256": "c87d1da6f39046c327cd124862e8d5e9fa19e7130e7cde46c514243692e7481d"
+    },
+    "assets/shape-square-02gyA-bz.png": {
+      "bytes": 87990,
+      "sha256": "0a41f2e1763517eb872d69845945be9617ad5132784f4e817348b23c8238ecc4"
+    },
+    "assets/song.mp3": {
+      "bytes": 2736264,
+      "sha256": "e359d93e0209161a949283da7c63cbf52ac2d32ef5b36a7f6ee62c611e52d594"
+    },
+    "content.json": {
+      "bytes": 1440,
+      "sha256": "b07ff949d1651f343bb6c8e0816dd3af52c5acff62f123327e3318a32bf1b0bf"
+    },
+    "index.html": {
+      "bytes": 594,
+      "sha256": "738905e8372ff87103edf371ad855b7a651ffd62fce4dd05740c549ead4453a3"
+    }
+  }
+}
