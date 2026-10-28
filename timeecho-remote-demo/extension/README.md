@@ -1,6 +1,6 @@
 # TimeEcho Bilibili 浏览器扩展
 
-扩展把演示页右侧遥控器的语义指令转交给同一标签页内嵌入的 Bilibili 整站。它只在 TimeEcho 演示地址和 `www.bilibili.com` 页面运行。
+扩展把演示页右侧遥控器的语义指令转交给同一标签页内嵌入的 Bilibili 整站。它只在 TimeEcho 演示地址、`www.bilibili.com` 和 Bilibili 播放器 `player.bilibili.com` 页面运行。
 
 ## 安装
 
@@ -9,7 +9,7 @@
 3. 打开 [TimeEcho 视频演示](https://abouthewei.github.io/wnsf.github.io/timeecho-remote-demo/?scene=video)。保持演示页在当前标签页内，不要点“在新标签页打开”。
 4. 等待右侧状态显示“Bilibili · 遥控已连接”。如果扩展刚刚加载，刷新演示页即可。
 
-扩展只申请两个站点的访问权限：TimeEcho 演示页用于转发遥控指令，Bilibili 用于在页面中执行滚动、焦点和视频控制。它不读取账号信息，不发送页面数据到外部服务，也不自动点赞、关注、评论或分享。
+扩展只申请三个站点地址的访问权限：TimeEcho 演示页用于转发遥控指令，Bilibili 主站用于页面导航，Bilibili 播放器用于视频控制。它不发送页面数据到外部服务，也不自动点赞、关注、评论或分享。
 
 ## 遥控映射
 
@@ -25,6 +25,6 @@
 ## 文件
 
 - `manifest.json`：MV3 配置与精确站点权限。
-- `service-worker.js`：在同一标签页内连接 TimeEcho 页面和 Bilibili 页面。
+- `service-worker.js`：在同一标签页内连接 TimeEcho 页面、Bilibili 主站和播放器页面。
 - `app-bridge.js`：连接演示页与扩展。
 - `bilibili-bridge.js`：将遥控操作映射到真实网页控件和视频元素。

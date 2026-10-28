@@ -1,5 +1,5 @@
 (() => {
-  if (location.hostname !== 'www.bilibili.com') return;
+  if (!['www.bilibili.com', 'player.bilibili.com'].includes(location.hostname)) return;
   const port = chrome.runtime.connect({ name: 'timeecho-bilibili' });
   let focus = null;
   const visible = el => !!(el?.getClientRects().length) && getComputedStyle(el).visibility !== 'hidden' && !el.disabled;
