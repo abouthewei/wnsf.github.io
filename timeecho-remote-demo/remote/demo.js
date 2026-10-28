@@ -4,7 +4,7 @@
  const scenes={
   node:{name:'NODE',subtitle:'光的重生',src:'node/index.html',hint:'圆环逐件浏览，确认进入；四向选择工具。',note:'NODE 作品接口适配：阅读、展厅、详情与影音。',quick:[['MODE_READ','顺序阅读'],['MODE_SPACE','空间观展'],['MENU','目录'],['SCENES','场景']],voice:[['NEXT_ITEM','下一件'],['MODE_SPACE','进入空间观展'],['STORY','显示／收起故事'],['PLAY_PAUSE','播放／暂停讲解']]},
   music:{name:'AI MUSIC',subtitle:'音乐播放器兼容',src:'music/index.html',hint:'圆环选曲，确认播放；进入进度模式后环滑快进。',note:'支持本地导入真实 AI 音频。预置为程序合成演示音轨，不代表 AI 生成歌曲。',quick:[['TRACKS','歌曲列表'],['SEEK_MODE','进度调整'],['NEXT_TRACK','下一首'],['REPEAT','循环模式']],voice:[['PLAY_PAUSE','播放／暂停音乐'],['NEXT_TRACK','下一首'],['SEEK_MODE','调整播放进度'],['TRACKS','回到歌曲列表']]},
-  web:{name:'WEB',subtitle:'普通网页兼容',src:'web/index.html',hint:'圆环选链接，确认打开；上下滚动，返回上一页。',note:'普通 HTML 示例通过通用 DOM 焦点适配。任意外站仍受 iframe、跨域及第三方控件限制。',quick:[['PAGE_UP','向上翻页'],['PAGE_DOWN','向下翻页'],['FIRST_LINK','首个控件'],['HOME','网页首页']],voice:[['PAGE_DOWN','向下翻页'],['FIRST_LINK','选择首个控件'],['BACK','返回上一页'],['HOME','返回网页首页']]}
+  web:{name:'WEB',subtitle:'小红书交互示例',src:'web/index.html',hint:'圆环选择笔记或控件，确认执行；返回关闭详情。',note:'小红书本地交互示例，非官网。支持瀑布流、详情、多图及本地点赞收藏；不连接真实账号。',quick:[['PAGE_UP','向上翻页'],['PAGE_DOWN','向下翻页'],['FIRST_LINK','首个控件'],['HOME','网页首页']],voice:[['PAGE_DOWN','向下翻页'],['FIRST_LINK','选择首个控件'],['BACK','返回上一页'],['HOME','返回网页首页']]}
  };
  Object.assign(labels,{TRACKS:'歌曲列表',SEEK_MODE:'进度调整',NEXT_TRACK:'下一首',REPEAT:'循环模式',PAGE_UP:'向上翻页',PAGE_DOWN:'向下翻页',FIRST_LINK:'首个控件'});
  let ready=false,seq=0,current=null,lastSend=0,flashTimer,pending=new Map(),count=0,sleep=false,ring=null,actionTime=0,activeScene='node',session='',bootTimer;
