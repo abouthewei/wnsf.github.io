@@ -67,7 +67,7 @@
  function endRing(e){if(ring?.id===e.pointerId){ring=null;pad.classList.remove('dragging');}}
  pad.addEventListener('pointerup',endRing);pad.addEventListener('pointercancel',endRing);
  pad.addEventListener('wheel',e=>{e.preventDefault();const interval=['web','video'].includes(activeScene)?100:190;if(e.deltaY&&Date.now()-lastSend>=interval){send(rotateCommand(e.deltaY>0));lastSend=Date.now();}},{passive:false});
- addEventListener('keydown',e=>{if($('voiceDialog').open||e.target.closest('input,textarea,select'))return;const arrows=['web','video'].includes(activeScene)?{ArrowLeft:'NAV_LEFT',ArrowRight:'NAV_RIGHT'}:{ArrowLeft:'PREV_ITEM',ArrowRight:'NEXT_ITEM'};const map={...arrows,ArrowUp:'NAV_UP',ArrowDown:'NAV_DOWN',Enter:'CONFIRM',Escape:'BACK',' ':'PLAY_PAUSE',Home:'HOME',m:'MENU'};if(map[e.key]){e.preventDefault();if(!e.repeat||e.key.startsWith('Arrow'))send(map[e.key]);}});
+ addEventListener('keydown',e=>{if($('voiceDialog').open||e.target.closest('input,textarea,select,a'))return;const arrows=['web','video'].includes(activeScene)?{ArrowLeft:'NAV_LEFT',ArrowRight:'NAV_RIGHT'}:{ArrowLeft:'PREV_ITEM',ArrowRight:'NEXT_ITEM'};const map={...arrows,ArrowUp:'NAV_UP',ArrowDown:'NAV_DOWN',Enter:'CONFIRM',Escape:'BACK',' ':'PLAY_PAUSE',Home:'HOME',m:'MENU'};if(map[e.key]){e.preventDefault();if(!e.repeat||e.key.startsWith('Arrow'))send(map[e.key]);}});
  // Expose only the semantic dispatch for development and future physical input adapters.
  window.TimeEchoDemo={send,getState:()=>current};
  const initial=new URLSearchParams(location.search).get('scene');loadScene(scenes[initial]?initial:'node');

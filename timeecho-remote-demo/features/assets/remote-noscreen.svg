@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="560" viewBox="0 0 600 560" role="img" aria-labelledby="title desc">
+  <title id="title">TimeEcho 无屏遥控器方案示意</title>
+  <desc id="desc">正面保留状态、麦克风、电量三处简单指示，实体转环和按键。背面保留 NFC 读卡区，无点阵屏。</desc>
+  <rect width="600" height="560" fill="#eeeae1"/>
+  <g font-family="system-ui, sans-serif" fill="#485247" text-anchor="middle">
+    <rect x="72" y="25" width="190" height="465" rx="40" fill="#e1ddd2" stroke="#8e9488" stroke-width="2"/>
+    <rect x="350" y="25" width="180" height="465" rx="40" fill="#e1ddd2" stroke="#8e9488" stroke-width="2"/>
+    <circle cx="122" cy="84" r="5" fill="#688f73"/><circle cx="167" cy="84" r="5" fill="#b77940"/><circle cx="212" cy="84" r="5" fill="#a4ac9b"/>
+    <text x="122" y="110" font-size="14">状态</text><text x="167" y="110" font-size="14">话筒</text><text x="212" y="110" font-size="14">电量</text>
+    <circle cx="167" cy="204" r="66" fill="#d2d0c4" stroke="#93998b" stroke-width="2"/>
+    <circle cx="167" cy="204" r="27" fill="#f0eee6" stroke="#93998b"/>
+    <text x="167" y="211" font-size="20">OK</text>
+    <path d="m161 157 6-6 6 6m-12 94 6 6 6-6m-53-53-6 6 6 6m94-12 6 6-6 6" fill="none" stroke="#687362" stroke-width="2"/>
+    <g fill="#f0eee6" stroke="#a0a596"><circle cx="115" cy="307" r="20"/><circle cx="167" cy="307" r="20"/><circle cx="219" cy="307" r="20"/><rect x="107" y="353" width="120" height="35" rx="17"/></g>
+    <text x="115" y="314" font-size="23">↶</text><text x="167" y="314" font-size="22">⌂</text><text x="219" y="314" font-size="17">Ⅱ</text><text x="133" y="377" font-size="23">−</text><text x="202" y="377" font-size="23">+</text>
+    <rect x="64" y="176" width="9" height="36" rx="3" fill="#7b8574"/><rect x="261" y="176" width="9" height="36" rx="3" fill="#c78349"/>
+    <rect x="150" y="486" width="34" height="5" rx="2" fill="#6b7365"/>
+    <rect x="375" y="70" width="130" height="112" rx="20" fill="#ece9df" stroke="#a0a596" stroke-dasharray="5 5"/>
+    <text x="440" y="122" font-size="24">NFC</text><text x="440" y="153" font-size="16">卡背靠近此处</text>
+    <text x="167" y="447" font-size="16">TimeEcho</text><text x="440" y="447" font-size="16">TimeEcho</text>
+    <text x="167" y="527" font-size="18">正面 · 无屏操作</text><text x="440" y="527" font-size="18">背面 · 碰卡读取</text>
+  </g>
+</svg>

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" href="data:,">
+  <meta name="description" content="依据 TimeEcho V3 PDF 总结盒子与遥控器的功能、交互路径和方案边界。">
+  <title>功能与交互 · TimeEcho</title>
+  <link rel="stylesheet" href="features.css">
+  <script src="features.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="site-header">
+    <a class="wordmark" href="../">TimeEcho<span>交互实验室</span></a>
+    <nav aria-label="页面导航"><a class="back-link" href="../">返回交互演示 <span aria-hidden="true">↗</span></a></nav>
+  </header>
+  <main id="main">
+    <div class="page-heading">
+      <div><h1>功能与交互</h1><p>仅依据 PDF 总结盒子与遥控器的功能和操作路径，每项标注原文页码。</p></div>
+    </div>
+    <section id="explorer" aria-label="设备功能详解">
+      <div class="device-bar">
+        <div class="device-switch" role="tablist" aria-label="功能视图">
+          <button type="button" id="tab-paths" role="tab" data-view="paths" aria-controls="device-panel" aria-selected="true" tabindex="0">交互路径</button>
+          <button type="button" id="tab-table" role="tab" data-view="table" aria-controls="feature-table" aria-selected="false" tabindex="-1">功能总表</button>
+        </div>
+        <p id="device-role">读卡、操作与反馈，都在手边。</p>
+      </div>
+      <div id="device-panel" role="tabpanel" aria-labelledby="tab-paths">
+      <div class="explorer-layout">
+        <aside class="feature-sidebar">
+          <p class="sidebar-label">选择一个功能</p>
+          <nav id="feature-list" aria-label="功能列表"></nav>
+        </aside>
+        <div class="device-content">
+          <div class="feature-main">
+            <article class="feature-detail" aria-labelledby="feature-title">
+              <div class="detail-meta"><span id="feature-number">01 / 07</span><span id="feature-source"></span></div>
+              <h2 id="feature-title" tabindex="-1"></h2>
+              <p id="feature-summary" class="feature-summary"></p>
+              <figure class="journey-illustration">
+                <a id="journey-image-link" href="assets/journeys/nfc.svg" target="_blank" rel="noopener"><img id="journey-image" src="assets/journeys/nfc.svg" width="1200" height="700" alt="NFC 碰读交互路径示意"></a>
+                <figcaption>三步交互示意 · 点击图片放大查看，窄屏可横向滑动。</figcaption>
+              </figure>
+              <section class="source-journey" aria-labelledby="journey-heading"><h3 id="journey-heading">用户交互路径</h3><ol id="feature-journey" class="user-journey"></ol></section>
+              <section class="source-functions" aria-labelledby="functions-heading"><h3 id="functions-heading">功能说明</h3><ul id="feature-points"></ul></section>
+            </article>
+          </div>
+        </div>
+      </div>
+      <details class="baseline"><summary><span id="baseline-title">遥控器 · PDF 功能概览</span><span class="expand-indicator" aria-hidden="true">＋</span></summary><ul id="baseline-list"></ul></details>
+      </div>
+    <section id="feature-table" class="feature-table-section" role="tabpanel" aria-labelledby="tab-table" hidden>
+      <h2 id="feature-table-title">功能总表</h2>
+      <p class="table-note" id="table-note">按遥控器与 TimeEcho Box 的硬件功能分类。定义、操作和反馈均依据 PDF，未明确的细节保留说明。</p>
+      <div id="hardware-tables"></div>
+    </section>
+    </section>
+    <footer class="page-footer"><p>来源：TimeEcho Remote System Design V3 · 2026.10.26<br><span>本页为 PDF 摘要，不补充原文未定义的操作。概念图、尺寸和性能为设计提案与验证目标。</span></p><a href="../">回到交互演示 <span aria-hidden="true">↗</span></a></footer>
+    <noscript><p class="no-script">请启用 JavaScript 查看功能说明与交互路径。项目的 <a href="../README.md">README</a> 提供原有演示说明。</p></noscript>
+  </main>
+</body>
+</html>
