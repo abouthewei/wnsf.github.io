@@ -1,5 +1,7 @@
 (() => {
-  if (window !== window.top || !location.pathname.includes('/timeecho-remote-demo/')) return;
+  const localDemo = location.hostname === '127.0.0.1' && location.port === '8765';
+  const hostedDemo = location.hostname === 'abouthewei.github.io' && location.pathname.startsWith('/wnsf.github.io/timeecho-remote-demo/');
+  if (window !== window.top || (!localDemo && !hostedDemo)) return;
   const CHANNEL = 'timeecho-external-bridge-v1';
   let port;
   const pending = new Map();

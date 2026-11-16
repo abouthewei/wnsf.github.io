@@ -18,7 +18,7 @@
   if(type==='NAV_UP'||type==='NAV_DOWN')return select(type==='NAV_UP'?-1:1);
   if(type==='SEEK_FORWARD'||type==='SEEK_BACK'){activity();const label=type==='SEEK_FORWARD'?'快进 5 秒':'回退 5 秒';document.querySelector(`button[aria-label="${label}"]`)?.click();return label;}
   if(type==='IMMERSIVE'){focus=null;window.onOKBtnPressed?.();return '切换普通／沉浸视图';}
-  if(type==='BACK'){focus=null;document.querySelectorAll('.ai-remote-focus').forEach(el=>el.classList.remove('ai-remote-focus'));activity();return '回到普通播放视图';}
+  if(type==='BACK'){if(focus){focus=null;document.querySelectorAll('.ai-remote-focus').forEach(el=>el.classList.remove('ai-remote-focus'));return '已清除焦点';}activity();return '回到普通播放视图';}
   if(type==='VOLUME_UP'||type==='VOLUME_DOWN'){media.volume=Math.max(0,Math.min(1,media.volume+(type==='VOLUME_UP'?.05:-.05)));return '音量 '+Math.round(media.volume*100)+'%';}
   if(type==='HOME'||type==='RESET'){activity();media.pause();media.currentTime=0;focus=null;document.querySelectorAll(".ai-remote-focus").forEach(el=>el.classList.remove("ai-remote-focus"));epoch++;if(type==='RESET')media.volume=.5;return '歌曲已回到开头';}
   if(type==='SCAN')return '模拟识别《台灯下的温柔》，保留当前进度';

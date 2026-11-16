@@ -7,7 +7,7 @@
  let epoch=0,extensionConnected=false,bridge;
  const pageState={title,focus:'网页浏览',focusMode:'browse',playing:false,progress:0,duration:0,volume:50,scrollY:0,scrollProgress:0,hasVideo:false};
  const connectionNotice=()=>extensionConnected
-  ?`${title} 已连接：方向键选择控件，转盘滚动页面；焦点进入播放器后，转盘调整进度。`
+  ?`${title} 已连接：方向键选择控件，转盘滚动页面；焦点位于进度条时，转盘调整进度。`
   :'未连接扩展。请在安装新版扩展的 Chrome 中打开本页；ChatGPT 内置浏览器不支持 Chrome 扩展。';
 
  frame.addEventListener('load',()=>{notice.textContent=extensionConnected?connectionNotice():`${title}页面已加载；${connectionNotice()}`;});
@@ -37,7 +37,7 @@
   if(!extensionConnected){notice.textContent=connectionNotice();return notice.textContent;}
   const id=crypto.randomUUID();
   return new Promise(resolve=>{
-   const timer=setTimeout(()=>{pending.delete(id);resolve('扩展未及时响应；请确认已重新加载 v1.2.0 并刷新页面。');},3000);
+   const timer=setTimeout(()=>{pending.delete(id);resolve('扩展未及时响应；请确认已重新加载 v1.3.2 并刷新页面。');},3000);
    pending.set(id,Object.assign(resolve,{timer}));
    parent.postMessage({channel,type:'COMMAND',scene,id,command:type},location.origin);
   });

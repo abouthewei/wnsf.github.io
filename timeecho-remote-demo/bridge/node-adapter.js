@@ -28,21 +28,50 @@
   function controls() {
     const s = N().state;
     const scope = s.panel ? $('panel') : s.viewer ? $('viewer') : document.body;
-    return [...scope.querySelectorAll('button,select,summary,a[href]')].filter(el => visible(el) && !el.matches('[data-fullscreen],.skip') && !el.closest('[aria-hidden="true"]'));
+    return [...scope.querySelectorAll('button,select,summary,a[href],input[type=range]')].filter(el => visible(el) && !el.matches('[data-fullscreen],.skip') && !el.closest('[aria-hidden="true"]'));
+  }
+  function scrollContainer(scope) {
+    if (!scope) return null;
+    const candidates = [scope, ...scope.querySelectorAll('*')].filter(el => {
+      const style = getComputedStyle(el);
+      return visible(el) && /auto|scroll/.test(style.overflowY) && el.scrollHeight > el.clientHeight + 2;
+    });
+    if (focus && scope.contains(focus)) {
+      const ancestor = candidates.find(el => el.contains(focus));
+      if (ancestor) return ancestor;
+    }
+    return candidates.sort((a, b) => b.clientHeight * b.clientWidth - a.clientHeight * a.clientWidth)[0] || null;
+  }
+  function scrollByRing(scope, forward) {
+    const target = scrollContainer(scope);
+    if (!target) return '当前面板没有可滚动内容';
+    const before = target.scrollTop;
+    target.scrollBy({top:(forward ? 1 : -1) * Math.max(90, target.clientHeight * .25), behavior:'instant'});
+    if (Math.abs(target.scrollTop - before) < 1) return forward ? '已到当前区域底部' : '已到当前区域顶部';
+    return forward ? '当前区域向下滚动' : '当前区域向上滚动';
   }
   function direction(dir) {
     const s = N().state;
     if(zone==='controls' && focus?.matches('select') && ['LEFT','RIGHT'].includes(dir)){focus.selectedIndex=Math.max(0,Math.min(focus.options.length-1,focus.selectedIndex+(dir==='RIGHT'?1:-1)));return '待确认：'+focus.options[focus.selectedIndex].text;}
     if (zone === 'art' && !s.panel) {
-      if (dir === 'LEFT' || dir === 'RIGHT') { N().dispatch(dir === 'LEFT' ? 'previous' : 'next'); focusArt(); return '已切换作品'; }
-      if (dir === 'DOWN' && s.mode === 'read' && !s.viewer) {
-        const reader = $('reader');
-        if (reader.scrollTop + reader.clientHeight < reader.scrollHeight - 5) { reader.scrollBy({top:reader.clientHeight*.65,behavior:'smooth'}); return '向下阅读正文'; }
-      }
+      if (dir === 'LEFT' || dir === 'RIGHT') { const target=dir==='LEFT'?$('prev'):$('next'); if(select(target))return '已选择章节控件'; return '已到当前区域边界'; }
+
       const target = s.viewer ? $('viewerStory') : document.querySelector(`[data-mode="${s.mode}"]`);
       select(target); return '已进入工具区';
     }
     const list = controls();
+    const scrollScope = s.panel ? $('panel') : s.viewer ? $('viewer') : $('reader');
+    const scrollBox = scrollContainer(scrollScope);
+    if (focus && scrollBox && scrollBox.contains(focus)) {
+      const itemRect = focus.getBoundingClientRect(), boxRect = scrollBox.getBoundingClientRect();
+      if (itemRect.bottom <= boxRect.top || itemRect.top >= boxRect.bottom) {
+        const visibleItems = list.filter(el => {
+          const rect = el.getBoundingClientRect();
+          return scrollBox.contains(el) && rect.bottom > boxRect.top && rect.top < boxRect.bottom;
+        });
+        if (visibleItems.length) { select(['UP','LEFT'].includes(dir) ? visibleItems[visibleItems.length - 1] : visibleItems[0]); return '已选择当前可见项目'; }
+      }
+    }
     if (!visible(focus) || !list.includes(focus)) { select(list[0]); return '已选中首项'; }
     const a = focus.getBoundingClientRect(), ax = a.x+a.width/2, ay = a.y+a.height/2;
     const candidates = list.filter(el=>el!==focus).map(el=>{
@@ -131,9 +160,15 @@
     const n=N(),s=n.state,m=activeMedia();
     return {ready:true,epoch,mode:s.mode,index:s.index,total:n.chapters.length,title:n.chapters[s.index]?.title,viewer:s.viewer,story:s.story,panel:s.panel,scene:s.scene,sceneTitle:n.book.scenes?.[s.scene]?.title,focus:focus?.isConnected?(focus.getAttribute('aria-label')||focus.textContent.trim()).slice(0,60):'当前作品',volume:Math.round(volume*100),playing:!!(m&&!m.paused)||!!(speechSynthesis.speaking&&!speechSynthesis.paused),chapterId:n.chapters[s.index]?.id};
   }
-  const allowed=new Set(['NEXT_ITEM','PREV_ITEM','NAV_UP','NAV_DOWN','NAV_LEFT','NAV_RIGHT','CONFIRM','BACK','PLAY_PAUSE','VOLUME_UP','VOLUME_DOWN','HOME','MODE_READ','MODE_SPACE','MENU','SCENES','STORY','SCAN','STANDBY','WAKE','RESET']);
+  const allowed=new Set(['NEXT_ITEM','PREV_ITEM','ROTATE_FORWARD','ROTATE_BACK','NAV_UP','NAV_DOWN','NAV_LEFT','NAV_RIGHT','CONFIRM','BACK','PLAY_PAUSE','VOLUME_UP','VOLUME_DOWN','HOME','MODE_READ','MODE_SPACE','MENU','SCENES','STORY','SCAN','STANDBY','WAKE','RESET']);
   async function dispatch(type){
     const n=N(),s=n.state;
+    if(type==='ROTATE_FORWARD'||type==='ROTATE_BACK'){
+      const forward=type==='ROTATE_FORWARD';
+      if(focus?.matches('[data-remote-progress]')){const media=focus._remoteMedia;if(!media||!Number.isFinite(media.duration))return '当前内容不支持进度调整';media.currentTime=Math.max(0,Math.min(media.duration,media.currentTime+(forward?5:-5)));return '播放进度 '+Math.floor(media.currentTime)+' 秒';}
+      const scope=s.panel?$('panel'):s.viewer?$('viewer'):$('reader');
+      return scrollByRing(scope,forward);
+    }
     if(type==='NEXT_ITEM'||type==='PREV_ITEM'){
       if(s.panel)return panelStep(type==='NEXT_ITEM'?1:-1);
       const old=s.index;n.dispatch(type==='NEXT_ITEM'?'next':'previous');focusArt();return old===s.index?'已到作品边界':'已切换作品';
@@ -181,7 +216,8 @@
       update();result.state=state();seqCache.set(m.seq,result);if(seqCache.size>150)seqCache.delete(seqCache.keys().next().value);post('ACK',result);
     });
   });
-  function update(){if(disposed)return;const c=context();if(c!==prevContext){prevContext=c;epoch++;if(N().state.panel&&(!visible(focus)||!focus?.closest('#panel')))select(controls()[0]);else if(!N().state.panel&&focus&&!visible(focus))focusArt();}post('STATE',{state:state()});}
+  function syncProgress(){document.querySelectorAll('video[controls],audio[controls]').forEach(media=>{if(!visible(media))return;let bar=media.nextElementSibling;if(!bar?.matches('[data-remote-progress]')){bar=document.createElement('input');bar.type='range';bar.min='0';bar.max='100';bar.step='0.1';bar.dataset.remoteProgress='';bar.setAttribute('aria-label','播放进度，旋钮调整进度');bar.style.cssText='display:block;width:90%;margin:10px auto;accent-color:#bf7842';bar._remoteMedia=media;media.insertAdjacentElement('afterend',bar);bar.addEventListener('input',()=>{if(Number.isFinite(media.duration))media.currentTime=Number(bar.value)*media.duration/100;});}if(Number.isFinite(media.duration)&&media.duration)bar.value=media.currentTime/media.duration*100;});}
+  function update(){if(disposed)return;syncProgress();const c=context();if(c!==prevContext){prevContext=c;epoch++;if(N().state.panel&&(!visible(focus)||!focus?.closest('#panel')))select(controls()[0]);else if(!N().state.panel&&focus&&!visible(focus))focusArt();}post('STATE',{state:state()});}
   function init(){if(disposed)return;if(!N()){setTimeout(init,50);return;}prevContext=context();focusArt();post('READY',{state:state()});setInterval(update,180);}
   init();
 })();

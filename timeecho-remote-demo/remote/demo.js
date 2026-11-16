@@ -2,11 +2,11 @@
  'use strict';
  const $=id=>document.getElementById(id),frame=$('nodeFrame'),labels={NEXT_ITEM:'下一件',PREV_ITEM:'上一件',ROTATE_FORWARD:'转盘向前',ROTATE_BACK:'转盘向后',NAV_UP:'向上',NAV_DOWN:'向下',NAV_LEFT:'向左',NAV_RIGHT:'向右',CONFIRM:'确认',BACK:'返回',PLAY_PAUSE:'播放／暂停',VOLUME_UP:'提高音量',VOLUME_DOWN:'降低音量',HOME:'作品首页',MODE_READ:'顺序阅读',MODE_SPACE:'空间观展',MENU:'目录',SCENES:'切换场景',STORY:'作品故事',SCAN:'模拟碰卡',STANDBY:'模拟待机',WAKE:'唤醒',RESET:'重置演示'};
  const scenes={
-  node:{name:'NODE',subtitle:'光的重生',src:'node/index.html',hint:'圆环逐件浏览，确认进入；四向选择工具。',note:'NODE 作品接口适配：阅读、展厅、详情与影音。',quick:[['MODE_READ','顺序阅读'],['MODE_SPACE','空间观展'],['MENU','目录'],['SCENES','场景']],voice:[['NEXT_ITEM','下一件'],['MODE_SPACE','进入空间观展'],['STORY','显示／收起故事'],['PLAY_PAUSE','播放／暂停讲解']]},
+  node:{name:'NODE',subtitle:'光的重生',src:'node/index.html',hint:'四向选择焦点，圆环滚动页面；进度条焦点下调整进度。',note:'NODE 作品接口适配：阅读、展厅、详情与影音。',quick:[['MODE_READ','顺序阅读'],['MODE_SPACE','空间观展'],['MENU','目录'],['SCENES','场景']],voice:[['NEXT_ITEM','下一件'],['MODE_SPACE','进入空间观展'],['STORY','显示／收起故事'],['PLAY_PAUSE','播放／暂停讲解']]},
   ai:{name:'AI MUSIC',subtitle:'台灯下的温柔',src:'ai-music/index.html',hint:'圆环调节进度，确认切换沉浸模式；播放键控制歌曲。',note:'按提供的真实页面适配，保留原始歌曲、封面、背景视频和时间戳歌词。',quick:[['SEEK_BACK','回退 5 秒'],['SEEK_FORWARD','快进 5 秒'],['IMMERSIVE','沉浸模式'],['HOME','回到开头']],voice:[['PLAY_PAUSE','播放／暂停歌曲'],['SEEK_FORWARD','快进 5 秒'],['SEEK_BACK','回退 5 秒'],['IMMERSIVE','切换沉浸模式']]},
-  music:{name:'MUSIC PLAYER',subtitle:'音乐播放器',src:'music/index.html',hint:'圆环选曲，确认播放；进入进度模式后环滑快进。',note:'通用音乐播放器，支持本地音频导入。预置为程序合成演示音轨。',quick:[['TRACKS','歌曲列表'],['SEEK_MODE','进度调整'],['NEXT_TRACK','下一首'],['REPEAT','循环模式']],voice:[['PLAY_PAUSE','播放／暂停音乐'],['NEXT_TRACK','下一首'],['SEEK_MODE','调整播放进度'],['TRACKS','回到歌曲列表']]},
-  web:{name:'搜狐官网',subtitle:'真实网页浏览',src:'external/index.html?kind=web',hint:'方向键选择网页控件；转盘滚动页面，焦点进入播放器后转动调节进度。请使用扩展 v1.2.0。',note:'真实搜狐官网通过 Chrome 扩展接收遥控：方向键选择控件，转盘滚动或调整已聚焦播放器的进度。请使用扩展 v1.2.0。',quick:[],voice:[]},
-  video:{name:'BILIBILI',subtitle:'Bilibili 整站',src:'external/index.html?kind=video',hint:'方向键选择 Bilibili 页面控件；焦点进入播放器后，转盘调节进度。请使用扩展 v1.2.0。',note:'真实 Bilibili 整站通过 Chrome 扩展接收遥控：方向键选择控件，转盘滚动或调整播放器进度。请使用扩展 v1.2.0。',quick:[],voice:[]}
+  music:{name:'MUSIC PLAYER',subtitle:'音乐播放器',src:'music/index.html',hint:'圆环调整进度；四向选择控件或列表，返回清除焦点。',note:'通用音乐播放器，支持本地音频导入。预置为程序合成演示音轨。',quick:[['TRACKS','歌曲列表'],['NEXT_TRACK','下一首'],['REPEAT','循环模式']],voice:[['PLAY_PAUSE','播放／暂停音乐'],['NEXT_TRACK','下一首'],['SEEK_MODE','调整播放进度'],['TRACKS','回到歌曲列表']]},
+  web:{name:'搜狐官网',subtitle:'真实网页浏览',src:'external/index.html?kind=web',hint:'方向键选择网页控件；转盘滚动页面，焦点位于进度条时转动调节进度。请使用扩展 v1.3.2。',note:'真实搜狐官网通过 Chrome 扩展接收遥控：方向键选择控件，转盘滚动或调整已聚焦进度条的进度。请使用扩展 v1.3.2。',quick:[],voice:[]},
+  video:{name:'BILIBILI',subtitle:'Bilibili 整站',src:'external/index.html?kind=video',hint:'方向键选择 Bilibili 页面控件；焦点位于进度条时，转盘调节进度。请使用扩展 v1.3.2。',note:'真实 Bilibili 整站通过 Chrome 扩展接收遥控：方向键选择控件，转盘滚动或调整播放器进度。请使用扩展 v1.3.2。',quick:[],voice:[]}
  };
  Object.assign(labels,{TRACKS:'歌曲列表',SEEK_MODE:'进度调整',NEXT_TRACK:'下一首',REPEAT:'循环模式',PAGE_UP:'向上翻页',PAGE_DOWN:'向下翻页',FIRST_LINK:'首个控件',SEEK_BACK:'回退 5 秒',SEEK_FORWARD:'快进 5 秒',IMMERSIVE:'沉浸模式'});
  let ready=false,seq=0,current=null,lastSend=0,flashTimer,pending=new Map(),count=0,sleep=false,ring=null,actionTime=0,activeScene='node',session='',bootTimer;
@@ -17,7 +17,7 @@
   clearPending();ready=false;current=null;activeScene=name;session=crypto.randomUUID();sleep=false;$('sleepOverlay').hidden=true;
   const config=scenes[name];document.body.dataset.experience=name;const address=new URL(location.href);address.searchParams.set('scene',name);history.replaceState(null,'',address);
   document.querySelectorAll('button[data-experience]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.experience===name)));
-  document.getElementById('keyboardHint').textContent=['web','video'].includes(name)?'键盘：方向键选择网页控件 · Enter 确认 · 转盘滚动／调进度':'键盘：←/→ 环滑 · ↑/↓ 方向 · Enter 确认';
+  document.getElementById('keyboardHint').textContent=['web','video'].includes(name)?'键盘：方向键选择网页控件 · Enter 确认 · 转盘滚动／调进度':'键盘：方向键移动焦点 · Enter 确认 · 圆环滚轮调整';
   $('sceneName').textContent=config.name;$('sceneSubtitle').textContent=config.subtitle;$('sceneHint').textContent=config.hint;$('compatibilityNote').textContent=config.note;$('sourceLink').hidden=!['node','ai','web','video'].includes(name);$('sourceLink').href=name==='ai'?'https://nfc-web-pre.iwownow.com/fpm6HLBgDknscUyEy_IxrcdS':name==='web'?'https://www.sohu.com/':name==='video'?'https://www.bilibili.com/':'https://nfc-project-demo.iwownow.com/demo/renaissance-journey/index.html';$('sourceLink').textContent=name==='ai'?'原始页面 ↗':name==='web'?'搜狐官网 ↗':name==='video'?'B站视频 ↗':'原始作品 ↗';
   $('quickActions').replaceChildren(...config.quick.map(([command,text])=>{const b=document.createElement('button');b.dataset.command=command;b.textContent=text;b.onclick=()=>send(command);return b;}));
   document.querySelector('.voice-options').replaceChildren(...config.voice.map(([command,text])=>{const b=document.createElement('button');b.textContent=text;b.onclick=()=>{$('voiceDialog').close();send(command);};return b;}));
@@ -25,9 +25,10 @@
   feedback('正在切换场景',config.subtitle);frame.title=config.subtitle+'互动页面';frame.src=config.src+(config.src.includes('?')?'&':'?')+'session='+encodeURIComponent(session);
   clearTimeout(bootTimer);bootTimer=setTimeout(()=>{if(!ready){$('bootText').textContent='页面尚未连接，请重试。';$('retry').hidden=false;}},18000);
  }
+ function actionName(type){if(['ai','music'].includes(activeScene)&&['NEXT_ITEM','PREV_ITEM'].includes(type))return type==='NEXT_ITEM'?'圆环顺时针':'圆环逆时针';return labels[type]||type;}
  function feedback(title,detail){$('actionLabel').textContent=title;$('actionDetail').textContent=detail;actionTime=Date.now();$('led').classList.add('flash');clearTimeout(flashTimer);flashTimer=setTimeout(()=>$('led').classList.remove('flash'),220);}
  function log(title,detail){count++;$('eventCount').textContent=count;const li=document.createElement('li');li.textContent=`${new Date().toLocaleTimeString('zh-CN',{hour12:false})} ${title} · ${detail}`;$('events').prepend(li);while($('events').children.length>30)$('events').lastChild.remove();}
- function rotateCommand(forward){return ['web','video'].includes(activeScene)?(forward?'ROTATE_FORWARD':'ROTATE_BACK'):(forward?'NEXT_ITEM':'PREV_ITEM');}
+ function rotateCommand(forward){return ['web','video','node'].includes(activeScene)?(forward?'ROTATE_FORWARD':'ROTATE_BACK'):(forward?'NEXT_ITEM':'PREV_ITEM');}
  function send(type){
   if(!ready){feedback('尚未连接','请等待作品加载完成');return;}
   if(sleep&&!['WAKE','RESET'].includes(type))return;
@@ -35,7 +36,7 @@
   // HOME/RESET are recovery actions and are safe against an older focus context.
   if(['RESET','HOME','WAKE','STANDBY'].includes(type))delete m.epoch;
   pending.set(id,{type,timer:setTimeout(()=>{if(pending.has(id)){pending.delete(id);feedback('页面暂未响应','请重试，或重置演示');log(labels[type],'响应超时');}},7000)});
-  frame.contentWindow.postMessage(m,location.origin);feedback(labels[type]||type,'正在执行…');
+  frame.contentWindow.postMessage(m,location.origin);feedback(actionName(type),'正在执行…');
  }
  function render(s){current=s;document.body.dataset.mode=s.mode;document.body.dataset.index=String(s.index);document.body.dataset.viewer=String(!!s.viewer);document.body.dataset.panel=s.panel||'';document.body.dataset.story=String(!!s.story);document.body.dataset.volume=String(s.volume);document.body.dataset.playing=String(!!s.playing);document.body.dataset.progress=String(s.progress||0);$('modeLabel').textContent=activeScene==='node'?(s.panel?'面板 · '+({menu:'目录',scenes:'场景',media:'影音',technical:'设置'}[s.panel]||s.panel):s.viewer?'作品欣赏':s.mode==='space'?'空间观展':'顺序阅读'):s.modeLabel||scenes[activeScene].subtitle;$('chapterLabel').textContent=s.title;$('positionLabel').textContent=s.positionLabel||`${String(s.index+1).padStart(2,'0')} / ${s.total}`;if(Date.now()-actionTime>3500)$('actionDetail').textContent=`焦点：${s.focus}${s.volume!==undefined?' · 音量 '+s.volume+'%':''}`;}
  addEventListener('message',e=>{
@@ -43,7 +44,7 @@
   if(m.type==='READY'){ready=true;clearTimeout(bootTimer);$('boot').hidden=true;render(m.state);feedback(activeScene==='web'?'搜狐页面已载入':activeScene==='video'?'Bilibili 页面已载入':'遥控已连接',scenes[activeScene].hint);}
   if(m.type==='STATE')render(m.state);if(m.type==='NOTICE'){feedback('播放提示',m.detail);log('播放提示',m.detail);}
   if(m.type==='ACK'&&m.status!=='pending'){
-   const p=pending.get(m.seq);if(!p)return;clearTimeout(p.timer);pending.delete(m.seq);if(m.state)render(m.state);feedback(labels[p.type],m.detail);log(labels[p.type],m.detail);
+   const p=pending.get(m.seq);if(!p)return;clearTimeout(p.timer);pending.delete(m.seq);if(m.state)render(m.state);feedback(actionName(p.type),m.detail);log(actionName(p.type),m.detail);
    if(p.type==='STANDBY'&&m.status==='executed'){sleep=true;$('sleepOverlay').hidden=false;}
   }
  });
@@ -67,7 +68,7 @@
  function endRing(e){if(ring?.id===e.pointerId){ring=null;pad.classList.remove('dragging');}}
  pad.addEventListener('pointerup',endRing);pad.addEventListener('pointercancel',endRing);
  pad.addEventListener('wheel',e=>{e.preventDefault();const interval=['web','video'].includes(activeScene)?100:190;if(e.deltaY&&Date.now()-lastSend>=interval){send(rotateCommand(e.deltaY>0));lastSend=Date.now();}},{passive:false});
- addEventListener('keydown',e=>{if($('voiceDialog').open||e.target.closest('input,textarea,select,a'))return;const arrows=['web','video'].includes(activeScene)?{ArrowLeft:'NAV_LEFT',ArrowRight:'NAV_RIGHT'}:{ArrowLeft:'PREV_ITEM',ArrowRight:'NEXT_ITEM'};const map={...arrows,ArrowUp:'NAV_UP',ArrowDown:'NAV_DOWN',Enter:'CONFIRM',Escape:'BACK',' ':'PLAY_PAUSE',Home:'HOME',m:'MENU'};if(map[e.key]){e.preventDefault();if(!e.repeat||e.key.startsWith('Arrow'))send(map[e.key]);}});
+ addEventListener('keydown',e=>{if($('voiceDialog').open||e.target.closest('input,textarea,select,a'))return;const arrows={ArrowLeft:'NAV_LEFT',ArrowRight:'NAV_RIGHT'};const map={...arrows,ArrowUp:'NAV_UP',ArrowDown:'NAV_DOWN',Enter:'CONFIRM',Escape:'BACK',' ':'PLAY_PAUSE',Home:'HOME',m:'MENU'};if(map[e.key]){e.preventDefault();if(!e.repeat||e.key.startsWith('Arrow'))send(map[e.key]);}});
  // Expose only the semantic dispatch for development and future physical input adapters.
  window.TimeEchoDemo={send,getState:()=>current};
  const initial=new URLSearchParams(location.search).get('scene');loadScene(scenes[initial]?initial:'node');

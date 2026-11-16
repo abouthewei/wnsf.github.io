@@ -4,13 +4,35 @@
   if (!scene) return;
 
   const port = chrome.runtime.connect({ name: 'timeecho-site' });
-  const selector = 'a[href],button,input:not([type="hidden"]):not([type="file"]),select,textarea,[role="button"],[tabindex]:not([tabindex="-1"]),video[controls],audio[controls],iframe[src*="player.bilibili.com"],iframe[src*="tv.sohu.com"]';
+  const selector = '[role=slider],a[href],button,input:not([type="hidden"]):not([type="file"]),select,textarea,[role="button"],[tabindex]:not([tabindex="-1"]),video[controls],audio[controls],iframe[src*="player.bilibili.com"],iframe[src*="tv.sohu.com"]';
   const marked = new WeakMap();
   let focus = null;
   let playerModeOverride = null;
 
   const visible = el => !!el?.getClientRects().length && getComputedStyle(el).visibility !== 'hidden' && getComputedStyle(el).display !== 'none' && !el.disabled;
   const controls = () => [...document.querySelectorAll(selector)].filter(visible);
+  function inViewport(el) {
+    const rect = el.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0 && rect.right > 0 && rect.bottom > 0 && rect.left < innerWidth && rect.top < innerHeight;
+  }
+  function visibleStart(list, direction) {
+    let candidates = list.filter(inViewport);
+    const content = candidates.filter(el => {
+      for (let parent = el; parent && parent !== document.body; parent = parent.parentElement) {
+        if (['fixed', 'sticky'].includes(getComputedStyle(parent).position)) return false;
+      }
+      return true;
+    });
+    if (content.length) candidates = content;
+    if (!candidates.length) return null;
+    candidates.sort((a, b) => {
+      const ar = a.getBoundingClientRect(), br = b.getBoundingClientRect();
+      const ay = Math.max(0, ar.top), by = Math.max(0, br.top);
+      if (Math.abs(ay - by) > 8) return ay - by;
+      return Math.max(0, ar.left) - Math.max(0, br.left);
+    });
+    return direction === 'UP' ? candidates[candidates.length - 1] : candidates[0];
+  }
   const playerFrame = () => [...document.querySelectorAll('iframe[src*="player.bilibili.com"],iframe[src*="tv.sohu.com"]')].find(visible);
   const media = () => [...document.querySelectorAll('video,audio')].find(el => el.getClientRects().length) || null;
   const label = el => (el?.getAttribute('aria-label') || el?.getAttribute('title') || el?.getAttribute('placeholder') || el?.innerText || el?.textContent || el?.tagName || '网页').trim().slice(0, 48);
@@ -19,10 +41,7 @@
     return !!el && (el.matches('video,audio,iframe[src*="player.bilibili.com"],iframe[src*="tv.sohu.com"]') || !!el.closest('[data-player],.bpx-player-container,.bilibili-player'));
   }
   function playerActive() {
-    if (focus) return isPlayerElement(focus);
-    if (playerModeOverride !== null) return playerModeOverride;
-    if (host === 'player.bilibili.com') return !!media();
-    return (scene === 'video' && location.pathname.startsWith('/video/') && !!playerFrame()) || (scene === 'web' && host !== 'www.sohu.com' && !!media());
+    return !!focus && (focus.matches('input[type="range"],[role="slider"]') && !!focus.closest('[data-player],.bpx-player-container,.bilibili-player'));
   }
   function restoreMark(el) {
     const previous = marked.get(el);
@@ -49,9 +68,17 @@
     return focus ? `已选中：${label(focus)}` : '已清除网页焦点';
   }
   function move(direction) {
+    if (!focus || !focus.isConnected || !visible(focus) || !inViewport(focus)) {
+      const nearby = [...document.querySelectorAll(selector)].filter(el => inViewport(el) && visible(el));
+      const target = visibleStart(nearby, direction);
+      return target ? mark(target) : '当前屏幕没有可选控件，请继续滚动';
+    }
     const list = controls();
     if (!list.length) return '当前页面没有可选控件';
-    if (!focus || !list.includes(focus)) return mark(list[0]);
+    if (!list.includes(focus)) {
+      const target = visibleStart(list, direction);
+      return target ? mark(target) : '当前屏幕没有可选控件，请继续滚动';
+    }
     const from = focus.getBoundingClientRect(), cx = from.left + from.width / 2, cy = from.top + from.height / 2;
     const candidates = list.filter(el => el !== focus).map(el => {
       const r = el.getBoundingClientRect(), dx = r.left + r.width / 2 - cx, dy = r.top + r.height / 2 - cy;
@@ -107,7 +134,10 @@
     if (command === 'PAGE_UP' || command === 'PAGE_DOWN') return scrollPage(command === 'PAGE_DOWN');
     if (command === 'FIRST_LINK') return mark(controls()[0] || null);
     if (command === 'CONFIRM') {
-      if (!focus || !controls().includes(focus)) return mark(controls()[0] || null);
+      if (!focus || !controls().includes(focus) || !inViewport(focus)) {
+        const target = visibleStart(controls(), 'DOWN');
+        return target ? mark(target) : '当前屏幕没有可选控件，请继续滚动';
+      }
       focus.click();
       return `已执行：${label(focus)}`;
     }
@@ -124,16 +154,14 @@
       return '返回网站首页';
     }
     if (command === 'PLAY_PAUSE') {
-      if (!playerActive()) return '请先用方向键选择播放器';
       const video = media();
       if (!video) return '当前页面没有已加载的音视频';
       if (video.paused) { try { await video.play(); return '视频正在播放'; } catch { return '浏览器阻止自动播放，请先点击播放器'; } }
       video.pause();
       return '视频已暂停';
     }
-    if (command === 'SEEK_FORWARD' || command === 'SEEK_BACK') return playerActive() ? seek(command === 'SEEK_FORWARD') : '请先用方向键选择播放器';
+    if (command === 'SEEK_FORWARD' || command === 'SEEK_BACK') return seek(command === 'SEEK_FORWARD');
     if (command === 'VOLUME_UP' || command === 'VOLUME_DOWN') {
-      if (!playerActive()) return '请先用方向键选择播放器';
       const video = media();
       if (!video) return '当前页面没有可调音视频';
       video.volume = Math.max(0, Math.min(1, video.volume + (command === 'VOLUME_UP' ? 0.05 : -0.05)));

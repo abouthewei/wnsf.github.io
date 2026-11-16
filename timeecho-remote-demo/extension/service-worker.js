@@ -50,7 +50,7 @@ function targetFor(tabId, scene, command) {
   if (!main) return null;
   if (mediaCommands.has(command)) {
     if (command === 'STANDBY') return mediaPageFor(tabId, scene) || main;
-    return main.state?.focusMode === 'player' ? (mediaPageFor(tabId, scene) || main) : main;
+    return mediaPageFor(tabId, scene) || main;
   }
   if (rotateCommands.has(command) && main.state?.focusMode === 'player') return mediaPageFor(tabId, scene) || main;
   return main;
@@ -74,7 +74,10 @@ chrome.runtime.onConnect.addListener(port => {
         sendApp(tabId, { type: 'RESULT', id: message.id, ok: false, detail: `未连接${message.scene === 'web' ? '搜狐' : 'Bilibili'}页面；请在安装扩展的 Chrome 中刷新演示。` });
         return;
       }
-      try { target.port.postMessage({ type: 'COMMAND', id: message.id, scene: message.scene, command: message.command }); }
+      const command = rotateCommands.has(message.command) && target !== mainPageFor(tabId, message.scene)
+        ? (message.command === 'ROTATE_FORWARD' ? 'SEEK_FORWARD' : 'SEEK_BACK')
+        : message.command;
+      try { target.port.postMessage({ type: 'COMMAND', id: message.id, scene: message.scene, command }); }
       catch { sendApp(tabId, { type: 'RESULT', id: message.id, ok: false, detail: '网页连接已断开，请刷新当前场景。' }); }
     });
     port.onDisconnect.addListener(() => {
